@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AlertController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 import { User } from '../../../services/models/user';
-
 
 @Component({
   selector: 'app-user-manage',
@@ -21,27 +21,10 @@ export class UserManagePage implements OnInit {
   memberSince: string;
 
   userDetails: FormGroup;
-  error_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-    ],
-    'firstName': [
-      { type: 'required', message: 'First name is required' }
-    ],
-    'lastName': [
-      { type: 'required', message: 'Last name is required' }
-    ],
-  };
+  error_messages = environment.error_messages;
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     public platform: Platform,
     private formBuilder: FormBuilder,
     public _sanitizer: DomSanitizer,
@@ -49,17 +32,20 @@ export class UserManagePage implements OnInit {
     public alertCtrl: AlertController,
     private authenticationService: AuthenticationService,
     private userService: UserService
-  ) { }
-
-  ngOnInit() {
-    let uid = this.activatedRoute.snapshot.paramMap.get('uid');
-    this.getUser(uid);
+  ) {
   }
 
-  getUser(uid: string) {
+  ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.getUser();
+  }
+
+  getUser() {
     this.authUser = this.authenticationService.getUserAuth();
     this.memberSince = this.authUser.metadata.creationTime;
-    this.userService.getUser(uid).subscribe(result => { this.user = result; this.createFormGroup(); });
+    this.userService.getUser(this.authUser.uid).subscribe(result => { this.user = result; this.createFormGroup(); });
   }
 
   createFormGroup() {
@@ -77,9 +63,8 @@ export class UserManagePage implements OnInit {
       email: new FormControl(this.authUser.email, { validators: [] }),
       new_password: new FormControl('', {
         validators: Validators.compose([
-          Validators.required,
           Validators.minLength(5),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+          Validators.pattern(environment.password_regex)
         ]), updateOn: 'blur'
       }),
     });
@@ -113,7 +98,13 @@ export class UserManagePage implements OnInit {
   }
 
   async submit() {
-    this.userService.updateUser(this.user).then(() => {
+    let showSuccess = false;
+    this.user.firstName = this.userDetails.controls.firstName.value;
+    this.user.lastName = this.userDetails.controls.lastName.value;
+
+    this.userService.updateUser(this.user).then((result) => {
+      showSuccess = result;
+
       // Check if password needs to be updated
       if (this.userDetails.controls.new_password.value != '') {
         this.authUser.updatePassword(this.userDetails.controls.new_password.value);
@@ -121,14 +112,17 @@ export class UserManagePage implements OnInit {
     });
 
     // Show success alert
-    if (true) {
+    if (showSuccess) {
       const alert = await this.alertCtrl.create({
         header: 'Success',
         message: 'Profile sucessfully updated!',
-        buttons: ['OK']
+        buttons: [{
+          text: 'OK', handler: () => {
+            this.router.navigate(['home']);
+          }
+        }]
       });
       await alert.present();
     }
-    this.router.navigate(['home']);
   }
 }

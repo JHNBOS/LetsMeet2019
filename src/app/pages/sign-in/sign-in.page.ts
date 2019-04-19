@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
 
@@ -11,17 +12,7 @@ import { AuthenticationService } from '../../services/helpers/authentication.ser
 })
 export class SignInPage implements OnInit {
   user: FormGroup;
-  error_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-    ]
-  };
+  error_messages = environment.error_messages;
 
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
     public alertCtrl: AlertController) { }
@@ -35,14 +26,14 @@ export class SignInPage implements OnInit {
       email: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+          Validators.pattern(environment.email_regex)
         ]), updateOn: 'blur'
       }),
       password: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
           Validators.minLength(5),
-          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+          Validators.pattern(environment.password_regex)
         ]), updateOn: 'blur'
       }),
     });

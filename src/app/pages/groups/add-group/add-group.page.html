@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Group</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <ion-row class="form-row" *ngIf="groupDetails">
+    <ion-col>
+      <ion-list>
+        <form novalidate [formGroup]="groupDetails">
+
+          <ion-item>
+            <ion-label position="floating">Group Name</ion-label>
+            <ion-input type="text" formControlName="groupName">
+            </ion-input>
+          </ion-item>
+
+          <!-- Group name error message -->
+          <ng-container *ngFor="let error of error_messages.groupName">
+            <div class="error"
+              *ngIf="groupDetails.get('groupName').hasError(error.type) && (groupDetails.get('groupName').dirty || groupDetails.get('groupName').touched)">
+              {{ error.message }}
+            </div>
+          </ng-container>
+
+          <ion-row class="button-row">
+            <ion-col text-center>
+              <ion-button expand="full" fill="solid" color="primary" (click)="submit()">
+                CREATE
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>

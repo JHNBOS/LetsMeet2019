@@ -1,6 +1,6 @@
 export class Group {
-    id: number;
+    id: string;
     name: string;
-    created_on: Date;
-    created_by: string;
+    createdOn: Date;
+    createdBy: string;
 }

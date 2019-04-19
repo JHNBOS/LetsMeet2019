@@ -1,0 +1,56 @@
+ion-header {
+  backdrop-filter: blur(8px);
+}
+
+ion-toolbar {
+  --ion-toolbar-background: rgba(255, 255, 255, 0.2);
+  --color: #fff;
+}
+
+ion-back-button {
+  --color: #fff;
+}
+
+ion-content {
+  width: 100%;
+  --background: none;
+  --background: #43cea2;
+  --background: -webkit-linear-gradient(to left, #185a9d, #43cea2);
+  --background: linear-gradient(to left, #185a9d, #43cea2);
+}
+
+ion-grid {
+  width: 100%;
+}
+
+.form-row {
+  margin-top: 2.5rem;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0px 3px 3px 1px rgba(0, 0, 0, 0.25);
+}
+
+.button-row {
+  margin-top: 2rem;
+}
+
+ion-list {
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+  --ion-item-background: transparent;
+
+  ion-item {
+    margin: 0.5rem auto;
+    --background: transparent;
+    color: #fff;
+
+    ion-label {
+      font-weight: 300;
+    }
+
+    ion-input {
+      color: #fff;
+    }
+  }
+}

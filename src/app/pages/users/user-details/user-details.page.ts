@@ -19,19 +19,24 @@ export class UserDetailsPage implements OnInit {
 		private authenticationService: AuthenticationService,
 		private userService: UserService,
 		public _sanitizer: DomSanitizer,
-	) { }
+	) {
+	}
 
 	ngOnInit() {
+	}
+
+	ionViewWillEnter() {
 		this.getUser();
 	}
 
 	navigateToManage() {
-		this.router.navigateByUrl(`/manage/${this.user.uid}`);
+		this.router.navigate(['user-manage']);
 	}
 
 	getUser() {
-		let userId = this.authenticationService.getUID();
-		this.memberSince = this.authenticationService.getUserAuth().metadata.creationTime;
-		this.userService.getUser(userId).subscribe(result => (this.user = result));
+		let authUser = this.authenticationService.getUserAuth();
+
+		this.memberSince = authUser.metadata.creationTime;
+		this.userService.getUser(authUser.uid).subscribe(result => (this.user = result));
 	}
 }

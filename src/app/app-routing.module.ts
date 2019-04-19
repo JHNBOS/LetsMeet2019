@@ -10,9 +10,7 @@ const routes: Routes = [
   { path: 'sign-in', loadChildren: './pages/sign-in/sign-in.module#SignInPageModule' },
   { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
   { path: 'forgot-password', loadChildren: './pages/forgot-password/forgot-password.module#ForgotPasswordPageModule' },
-  { path: '**', redirectTo: 'home' },
-  { path: 'user-details', canActivate: [AuthGuard], loadChildren: './pages/users/user-details/user-details.module#UserDetailsPageModule' },
-  { path: 'user-manage/:uid', canActivate: [AuthGuard], loadChildren: './pages/users/user-manage/user-manage.module#UserManagePageModule' },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

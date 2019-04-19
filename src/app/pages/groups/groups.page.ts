@@ -13,4 +13,8 @@ export class GroupsPage implements OnInit {
   ngOnInit() {
   }
 
+  navigateToAdd() {
+    this.router.navigate(['add-group']);
+  }
+
 }

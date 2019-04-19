@@ -37,21 +37,42 @@ export class UserService {
   }
 
   addUser(user: User): Promise<boolean> {
-    return this.userCollection.doc(user.uid).set({
-      uid: user.uid,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      color: user.color,
-      avatar: user.avatar
-    }).then(() => true);
-  }
-
-  updateUser(user: User): Promise<void> {
     return this.userCollection.doc(user.uid)
-      .update({ firstName: user.firstName, lastName: user.lastName, color: user.color, avatar: user.avatar });
+      .set({
+        uid: user.uid,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        color: user.color,
+        avatar: user.avatar
+      })
+      .then(() => true)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
   }
 
-  deleteIdea(id: string): Promise<void> {
+  updateUser(user: User): Promise<boolean> {
+    return this.userCollection.doc(user.uid)
+      .set({
+        uid: user.uid,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        color: user.color,
+        avatar: user.avatar
+      })
+      .then(() => true)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
+  }
+
+  deleteUser(id: string): Promise<void> {
     return this.userCollection.doc(id).delete();
+  }
+
+  private handleError(error) {
+    throw error;
   }
 }

@@ -42,6 +42,12 @@ export class GlobalErrorHandler implements ErrorHandler {
             case 'auth/weak-password':
                 errorMsg = 'Password is not strong enough!';
                 break;
+            case 'auth/invalid-argument':
+                errorMsg = 'Oops, something went wrong. Please try again';
+                break;
+            default:
+                errorMsg = 'Oops, something went wrong. Please try again';
+                break;
         }
 
         const alert = await this.alertCtrl.create({

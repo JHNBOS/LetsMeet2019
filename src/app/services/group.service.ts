@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
+import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { Group } from './models/group';
 
@@ -7,58 +9,66 @@ import { Group } from './models/group';
   providedIn: 'root'
 })
 export class GroupService {
-  private basePath = '/groups';
+  private groups: Observable<Group[]>;
+  private groupCollection: AngularFirestoreCollection<Group>;
 
-  groups: AngularFireList<Group> = null;
-  group: AngularFireObject<Group> = null;
-
-  constructor(private db: AngularFireDatabase) {
-    this.groups = db.list('groups');
+  constructor(private afs: AngularFirestore) {
+    this.groupCollection = this.afs.collection<Group>('groups');
+    this.groups = this.groupCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
   }
 
-  getGroupsList(query: any): AngularFireList<Group> {
-    this.groups = this.db.list(this.basePath, ref => query);
+  getGroups(): Observable<Group[]> {
     return this.groups;
   }
 
-  getGroup(id: number): AngularFireObject<Group> {
-    const itemPath = `${this.basePath}/${id}`;
-    this.group = this.db.object(itemPath);
-
-    return this.group;
+  getGroup(id: string): Observable<Group> {
+    return this.groupCollection.doc<Group>(id).valueChanges().pipe(
+      take(1),
+      map(group => group)
+    );
   }
 
-  getGroupByName(name: string): AngularFireObject<Group> {
-    const itemPath = `${this.basePath}/${name}`;
-    this.group = this.db.object(itemPath);
-
-    return this.group;
+  addGroup(group: Group): Promise<boolean> {
+    group.id = group.name.replace(/\s+/g, '') + new Date().getTime();
+    return this.groupCollection.doc(group.id)
+      .set({
+        id: group.id,
+        name: group.name,
+        createdBy: group.createdBy,
+        createdOn: new Date()
+      })
+      .then(() => true)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
   }
 
-  createGroup(group: Group): void {
-    this.groups.query.ref.child(group.id.toString()).set({
-      name: group.name,
-      created_by: group.created_by,
-      created_on: group.created_on
-    });
-
-    this.groups.push(group)
-      .catch(error => this.handleError(error));
+  updateGroup(group: Group): Promise<boolean> {
+    return this.groupCollection.doc(group.id)
+      .set({
+        id: group.id,
+        name: group.name,
+        createdBy: group.createdBy,
+        createdOn: group.createdOn
+      })
+      .then(() => true)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
   }
 
-  updateGroup(key: string, value: any): void {
-    this.groups.update(key, value)
-      .catch(error => this.handleError(error));
-  }
-
-  deleteGroup(key: string): void {
-    this.groups.remove(key)
-      .catch(error => this.handleError(error));
-  }
-
-  deleteAll(): void {
-    this.groups.remove()
-      .catch(error => this.handleError(error));
+  deleteGroup(id: string): Promise<void> {
+    return this.groupCollection.doc(id).delete();
   }
 
   private handleError(error) {

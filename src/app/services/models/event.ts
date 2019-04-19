@@ -2,8 +2,8 @@ export class Event {
     id: number;
     title: string;
     description: string;
-    created_by: string;
+    createdBy: string;
     start: Date;
     end: Date;
-    group_id: number;
+    groupId: number;
 }

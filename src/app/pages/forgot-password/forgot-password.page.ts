@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AlertController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,12 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ForgotPasswordPage implements OnInit {
   user: FormGroup;
-  error_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ]
-  };
+  error_messages = environment.error_messages;
 
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
     public alertCtrl: AlertController, private userService: UserService) {
@@ -31,7 +27,7 @@ export class ForgotPasswordPage implements OnInit {
       email: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
-          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+          Validators.pattern(environment.email_regex)
         ]), updateOn: 'blur'
       })
     });
@@ -45,10 +41,13 @@ export class ForgotPasswordPage implements OnInit {
         const alert = await this.alertCtrl.create({
           header: 'Success',
           message: 'An email with further instructions has been sent to this account!',
-          buttons: ['OK']
+          buttons: [{
+            text: 'OK', handler: () => {
+              this.navController.navigateBack(['sign-in']);
+            }
+          }]
         });
         await alert.present();
-        this.navController.navigateBack(['sign-in']);
       });
   }
 
