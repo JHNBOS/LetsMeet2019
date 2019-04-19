@@ -1,0 +1,67 @@
+<ion-content fullscreen="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h1 class="title" text-center>Let's Meet</h1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="form-row">
+      <ion-col>
+        <ion-list>
+          <form novalidate [formGroup]="user">
+
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" formControlName="email">
+              </ion-input>
+            </ion-item>
+
+            <!-- Email error message -->
+            <ng-container *ngFor="let error of error_messages.email">
+              <div class="error"
+                *ngIf="user.get('email').hasError(error.type) && (user.get('email').dirty || user.get('email').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+
+            <!-- Password error message -->
+            <ng-container *ngFor="let error of error_messages.password">
+              <div class="error"
+                *ngIf="user.get('password').hasError(error.type) && (user.get('password').dirty || user.get('password').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+
+            <ion-row class="login-button-row">
+              <ion-col text-center>
+                <ion-button id="registerButton" expand="full" fill="solid" color="light" (click)="goToSignUp()">
+                  SIGN UP
+                </ion-button>
+              </ion-col>
+              <ion-col text-center>
+                <ion-button expand="full" fill="solid" color="primary" (click)="submit()">
+                  SIGN IN
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col text-center>
+                <ion-button id="resetButton" expand="block" fill="clear" color="light" (click)="goToForgotPass()">
+                  FORGOT PASSWORD?
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

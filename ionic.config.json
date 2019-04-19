@@ -1,0 +1,7 @@
+{
+  "name": "Let's Meet",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

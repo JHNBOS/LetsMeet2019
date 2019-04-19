@@ -1,0 +1,23 @@
+<ion-content class="ion-padding" *ngIf="user" fullscreen="true">
+	<ion-row>
+		<ion-col text-center align-self-center>
+			<ion-avatar>
+				<img [src]="_sanitizer.bypassSecurityTrustResourceUrl(user.avatar)" />
+			</ion-avatar>
+			<h2>{{ user.firstName }} {{ user.lastName }}</h2>
+			<small>Member since {{ memberSince | date: 'MMMM dd, yyyy' }}</small>
+		</ion-col>
+	</ion-row>
+
+	<ion-row class="ion-margin-top" text-center>
+		<ion-col>
+			<ion-list>
+				<ion-item detail (click)="navigateToManage()">
+					<ion-label>
+						User Details
+					</ion-label>
+				</ion-item>
+			</ion-list>
+		</ion-col>
+	</ion-row>
+</ion-content>

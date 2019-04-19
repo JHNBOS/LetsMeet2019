@@ -1,0 +1,22 @@
+// http://ionicframework.com/docs/theming/
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.error {
+  margin: 0rem 0.3rem;
+  padding: 0.1rem 0.5rem;
+  text-align: left;
+  word-break: break-word;
+  color: var(--ion-color-danger);
+  font-size: 0.7rem;
+  font-weight: 400;
+  font-family: "Montserrat", sans-serif;
+}

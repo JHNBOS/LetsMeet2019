@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-grid>
+    <ion-row class="form-row">
+      <ion-col>
+        <ion-list>
+          <form novalidate [formGroup]="user">
+
+            <ion-item>
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input type="text" formControlName="firstName">
+              </ion-input>
+            </ion-item>
+
+            <!-- First name error message -->
+            <ng-container *ngFor="let error of error_messages.firstName">
+              <div class="error"
+                *ngIf="user.get('firstName').hasError(error.type) && (user.get('firstName').dirty || user.get('firstName').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+
+            <ion-item>
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input type="text" formControlName="lastName">
+              </ion-input>
+            </ion-item>
+
+            <!-- Last name error message -->
+            <ng-container *ngFor="let error of error_messages.lastName">
+              <div class="error"
+                *ngIf="user.get('lastName').hasError(error.type) && (user.get('lastName').dirty || user.get('lastName').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" formControlName="email">
+              </ion-input>
+            </ion-item>
+
+            <!-- Email error message -->
+            <ng-container *ngFor="let error of error_messages.email">
+              <div class="error"
+                *ngIf="user.get('email').hasError(error.type) && (user.get('email').dirty || user.get('email').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+
+            <!-- Password error message -->
+            <ng-container *ngFor="let error of error_messages.password">
+              <div class="error"
+                *ngIf="user.get('password').hasError(error.type) && (user.get('password').dirty || user.get('password').touched)">
+                {{ error.message }}
+              </div>
+            </ng-container>
+
+            <ion-row class="button-row">
+              <ion-col text-center>
+                <ion-button expand="full" fill="solid" color="primary" (click)="submit()">
+                  SIGN UP
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

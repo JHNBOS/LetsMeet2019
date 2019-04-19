@@ -1,0 +1,4 @@
+#Fri Apr 19 15:09:37 CEST 2019
+base.0=D\:\\Software Projects\\Node.js\\LetsMeet\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

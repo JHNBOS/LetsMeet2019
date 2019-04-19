@@ -1,0 +1,9 @@
+ion-tab-bar {
+  --ion-tab-bar-background: none;
+  --ion-tab-bar-background: #43cea2;
+  --ion-tab-bar-background: -webkit-linear-gradient(to left, #185a9d, #43cea2);
+  --ion-tab-bar-background: linear-gradient(to left, #185a9d, #43cea2);
+  opacity: 0.8;
+  --color: rgba(255, 255, 255, 0.5);
+  --color-selected: #fff;
+}
