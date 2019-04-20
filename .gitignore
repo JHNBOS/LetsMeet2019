@@ -120,3 +120,4 @@ core/loader/
 angular/build/
 platforms
 /src/app/firebase.config.ts
+www
