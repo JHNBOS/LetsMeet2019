@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupService } from 'src/app/services/group.service';
+import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Group } from 'src/app/services/models/group';
 
 @Component({
@@ -12,7 +13,8 @@ export class GroupsPage implements OnInit {
 
   groups: Group[] = null;
 
-  constructor(private router: Router, private groupService: GroupService) { }
+  constructor(private router: Router, private groupService: GroupService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
   }
@@ -30,4 +32,8 @@ export class GroupsPage implements OnInit {
     this.router.navigate(['add-group']);
   }
 
+  signOut() {
+    this.authenticationService.signOut();
+    this.router.navigate(['sign-in']);
+  }
 }
