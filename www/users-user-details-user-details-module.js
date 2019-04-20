@@ -1,5 +1,23 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["users-user-details-user-details-module"],{
 
+/***/ "./node_modules/angularfire2/firestore/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/angularfire2/firestore/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js"));
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi93cmFwcGVyL3NyYy9maXJlc3RvcmUvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSw2Q0FBd0MifQ==
+
+/***/ }),
+
 /***/ "./src/app/pages/users/user-details/user-details.module.ts":
 /*!*****************************************************************!*\
   !*** ./src/app/pages/users/user-details/user-details.module.ts ***!
@@ -58,7 +76,7 @@ var UserDetailsPageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-content class=\"ion-padding\" *ngIf=\"user\" fullscreen=\"true\">\n\t<ion-row>\n\t\t<ion-col text-center align-self-center>\n\t\t\t<ion-avatar>\n\t\t\t\t<img [src]=\"_sanitizer.bypassSecurityTrustResourceUrl(user.avatar)\" />\n\t\t\t</ion-avatar>\n\t\t\t<h2>{{ user.firstName }} {{ user.lastName }}</h2>\n\t\t\t<small>Member since {{ memberSince | date: 'MMMM dd, yyyy' }}</small>\n\t\t</ion-col>\n\t</ion-row>\n\n\t<ion-row class=\"ion-margin-top\" text-center>\n\t\t<ion-col>\n\t\t\t<ion-list>\n\t\t\t\t<ion-item detail (click)=\"navigateToManage()\">\n\t\t\t\t\t<ion-label>\n\t\t\t\t\t\tUser Details\n\t\t\t\t\t</ion-label>\n\t\t\t\t</ion-item>\n\t\t\t</ion-list>\n\t\t</ion-col>\n\t</ion-row>\n</ion-content>"
+module.exports = "<ion-content class=\"ion-padding\" *ngIf=\"user\" fullscreen=\"true\">\n\t<ion-row>\n\t\t<ion-col text-center align-self-center>\n\t\t\t<ion-avatar>\n\t\t\t\t<img [src]=\"_sanitizer.bypassSecurityTrustResourceUrl(user.avatar)\" />\n\t\t\t</ion-avatar>\n\t\t\t<h2>{{ user.firstName }} {{ user.lastName }}</h2>\n\t\t\t<small>Member since {{ memberSince | date: 'MMMM dd, yyyy' }}</small>\n\t\t</ion-col>\n\t</ion-row>\n\n\t<ion-row class=\"ion-margin-top\" text-center>\n\t\t<ion-col>\n\t\t\t<ion-list>\n\t\t\t\t<ion-item detail (click)=\"navigateToManage()\">\n\t\t\t\t\t<ion-label>\n\t\t\t\t\t\tUser Details\n\t\t\t\t\t</ion-label>\n\t\t\t\t</ion-item>\n\t\t\t\t<ion-item detail (click)=\"navigateToContacts()\">\n\t\t\t\t\t<ion-label>\n\t\t\t\t\t\tContacts\n\t\t\t\t\t</ion-label>\n\t\t\t\t</ion-item>\n\t\t\t</ion-list>\n\t\t</ion-col>\n\t</ion-row>\n</ion-content>"
 
 /***/ }),
 
@@ -69,7 +87,7 @@ module.exports = "<ion-content class=\"ion-padding\" *ngIf=\"user\" fullscreen=\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "ion-avatar {\n  max-width: 200px;\n  max-height: 200px;\n  width: 100%;\n  height: 100%;\n  margin: 0 auto; }\n  ion-avatar img {\n    width: 200px;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover; }\n  ion-content {\n  width: 100%;\n  --background: none;\n  --background: #43cea2;\n  --background: -webkit-linear-gradient(to left, #185a9d, #43cea2);\n  --background: linear-gradient(to left, #185a9d, #43cea2); }\n  ion-grid {\n  width: 100%; }\n  h2,\nsmall {\n  color: #fff; }\n  ion-list {\n  margin-right: 0.3rem;\n  margin-left: 0.3rem;\n  --ion-item-background: transparent; }\n  ion-list ion-item {\n    margin: 0.5rem auto;\n    --background: transparent;\n    color: #fff; }\n  ion-list ion-item ion-label {\n      font-weight: 300; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdXNlcnMvdXNlci1kZXRhaWxzL0Q6XFxTb2Z0d2FyZSBQcm9qZWN0c1xcTm9kZS5qc1xcTGV0c01lZXQvc3JjXFxhcHBcXHBhZ2VzXFx1c2Vyc1xcdXNlci1kZXRhaWxzXFx1c2VyLWRldGFpbHMucGFnZS5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZ0JBQWdCO0VBQ2hCLGlCQUFpQjtFQUNqQixXQUFXO0VBQ1gsWUFBWTtFQUNaLGNBQWMsRUFBQTtFQUxoQjtJQVFJLFlBQVk7SUFDWixhQUFhO0lBQ2Isb0JBQWlCO09BQWpCLGlCQUFpQixFQUFBO0VBSXJCO0VBQ0UsV0FBVztFQUNYLGtCQUFhO0VBQ2IscUJBQWE7RUFDYixnRUFBYTtFQUNiLHdEQUFhLEVBQUE7RUFHZjtFQUNFLFdBQVcsRUFBQTtFQUdiOztFQUVFLFdBQVcsRUFBQTtFQUdiO0VBQ0Usb0JBQW9CO0VBQ3BCLG1CQUFtQjtFQUNuQixrQ0FBc0IsRUFBQTtFQUh4QjtJQU1JLG1CQUFtQjtJQUNuQix5QkFBYTtJQUNiLFdBQVcsRUFBQTtFQVJmO01BV00sZ0JBQWdCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9wYWdlcy91c2Vycy91c2VyLWRldGFpbHMvdXNlci1kZXRhaWxzLnBhZ2Uuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImlvbi1hdmF0YXIge1xyXG4gIG1heC13aWR0aDogMjAwcHg7XHJcbiAgbWF4LWhlaWdodDogMjAwcHg7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIG1hcmdpbjogMCBhdXRvO1xyXG5cclxuICBpbWcge1xyXG4gICAgd2lkdGg6IDIwMHB4O1xyXG4gICAgaGVpZ2h0OiAyMDBweDtcclxuICAgIG9iamVjdC1maXQ6IGNvdmVyO1xyXG4gIH1cclxufVxyXG5cclxuaW9uLWNvbnRlbnQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIC0tYmFja2dyb3VuZDogbm9uZTtcclxuICAtLWJhY2tncm91bmQ6ICM0M2NlYTI7XHJcbiAgLS1iYWNrZ3JvdW5kOiAtd2Via2l0LWxpbmVhci1ncmFkaWVudCh0byBsZWZ0LCAjMTg1YTlkLCAjNDNjZWEyKTtcclxuICAtLWJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCh0byBsZWZ0LCAjMTg1YTlkLCAjNDNjZWEyKTtcclxufVxyXG5cclxuaW9uLWdyaWQge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG5oMixcclxuc21hbGwge1xyXG4gIGNvbG9yOiAjZmZmO1xyXG59XHJcblxyXG5pb24tbGlzdCB7XHJcbiAgbWFyZ2luLXJpZ2h0OiAwLjNyZW07XHJcbiAgbWFyZ2luLWxlZnQ6IDAuM3JlbTtcclxuICAtLWlvbi1pdGVtLWJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG5cclxuICBpb24taXRlbSB7XHJcbiAgICBtYXJnaW46IDAuNXJlbSBhdXRvO1xyXG4gICAgLS1iYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICAgIGNvbG9yOiAjZmZmO1xyXG5cclxuICAgIGlvbi1sYWJlbCB7XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiAzMDA7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiJdfQ== */"
+module.exports = "ion-avatar {\n  max-width: 200px;\n  max-height: 200px;\n  width: 100%;\n  height: 100%;\n  margin: 0 auto; }\n  ion-avatar img {\n    width: 200px;\n    height: 200px;\n    -o-object-fit: cover;\n       object-fit: cover; }\n  ion-content {\n  width: 100%;\n  --background: none;\n  --background: #43cea2;\n  --background: -webkit-linear-gradient(to left, #185a9d, #43cea2);\n  --background: linear-gradient(to left, #185a9d, #43cea2); }\n  ion-grid {\n  width: 100%; }\n  h2,\nsmall {\n  color: #fff; }\n  ion-list {\n  margin-right: 0.3rem;\n  margin-left: 0.3rem;\n  --ion-item-background: transparent; }\n  ion-list ion-item {\n    margin: 0.5rem auto;\n    --background: transparent;\n    color: #fff; }\n  ion-list ion-item ion-label {\n      font-weight: 300; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvcGFnZXMvdXNlcnMvdXNlci1kZXRhaWxzL0Q6XFxHaXRcXExldHNNZWV0MjAxOS9zcmNcXGFwcFxccGFnZXNcXHVzZXJzXFx1c2VyLWRldGFpbHNcXHVzZXItZGV0YWlscy5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxnQkFBZ0I7RUFDaEIsaUJBQWlCO0VBQ2pCLFdBQVc7RUFDWCxZQUFZO0VBQ1osY0FBYyxFQUFBO0VBTGhCO0lBUUksWUFBWTtJQUNaLGFBQWE7SUFDYixvQkFBaUI7T0FBakIsaUJBQWlCLEVBQUE7RUFJckI7RUFDRSxXQUFXO0VBQ1gsa0JBQWE7RUFDYixxQkFBYTtFQUNiLGdFQUFhO0VBQ2Isd0RBQWEsRUFBQTtFQUdmO0VBQ0UsV0FBVyxFQUFBO0VBR2I7O0VBRUUsV0FBVyxFQUFBO0VBR2I7RUFDRSxvQkFBb0I7RUFDcEIsbUJBQW1CO0VBQ25CLGtDQUFzQixFQUFBO0VBSHhCO0lBTUksbUJBQW1CO0lBQ25CLHlCQUFhO0lBQ2IsV0FBVyxFQUFBO0VBUmY7TUFXTSxnQkFBZ0IsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3BhZ2VzL3VzZXJzL3VzZXItZGV0YWlscy91c2VyLWRldGFpbHMucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW9uLWF2YXRhciB7XHJcbiAgbWF4LXdpZHRoOiAyMDBweDtcclxuICBtYXgtaGVpZ2h0OiAyMDBweDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgbWFyZ2luOiAwIGF1dG87XHJcblxyXG4gIGltZyB7XHJcbiAgICB3aWR0aDogMjAwcHg7XHJcbiAgICBoZWlnaHQ6IDIwMHB4O1xyXG4gICAgb2JqZWN0LWZpdDogY292ZXI7XHJcbiAgfVxyXG59XHJcblxyXG5pb24tY29udGVudCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgLS1iYWNrZ3JvdW5kOiBub25lO1xyXG4gIC0tYmFja2dyb3VuZDogIzQzY2VhMjtcclxuICAtLWJhY2tncm91bmQ6IC13ZWJraXQtbGluZWFyLWdyYWRpZW50KHRvIGxlZnQsICMxODVhOWQsICM0M2NlYTIpO1xyXG4gIC0tYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KHRvIGxlZnQsICMxODVhOWQsICM0M2NlYTIpO1xyXG59XHJcblxyXG5pb24tZ3JpZCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbmgyLFxyXG5zbWFsbCB7XHJcbiAgY29sb3I6ICNmZmY7XHJcbn1cclxuXHJcbmlvbi1saXN0IHtcclxuICBtYXJnaW4tcmlnaHQ6IDAuM3JlbTtcclxuICBtYXJnaW4tbGVmdDogMC4zcmVtO1xyXG4gIC0taW9uLWl0ZW0tYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcblxyXG4gIGlvbi1pdGVtIHtcclxuICAgIG1hcmdpbjogMC41cmVtIGF1dG87XHJcbiAgICAtLWJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgY29sb3I6ICNmZmY7XHJcblxyXG4gICAgaW9uLWxhYmVsIHtcclxuICAgICAgZm9udC13ZWlnaHQ6IDMwMDtcclxuICAgIH1cclxuICB9XHJcbn1cclxuIl19 */"
 
 /***/ }),
 
@@ -104,16 +122,21 @@ var UserDetailsPage = /** @class */ (function () {
         this.user = null;
     }
     UserDetailsPage.prototype.ngOnInit = function () {
+    };
+    UserDetailsPage.prototype.ionViewWillEnter = function () {
         this.getUser();
     };
     UserDetailsPage.prototype.navigateToManage = function () {
-        this.router.navigateByUrl("/manage/" + this.user.uid);
+        this.router.navigate(['user-manage']);
+    };
+    UserDetailsPage.prototype.navigateToContacts = function () {
+        this.router.navigate(['contacts']);
     };
     UserDetailsPage.prototype.getUser = function () {
         var _this = this;
-        var userId = this.authenticationService.getUID();
-        this.memberSince = this.authenticationService.getUserAuth().metadata.creationTime;
-        this.userService.getUser(userId).subscribe(function (result) { return (_this.user = result); });
+        var authUser = this.authenticationService.getUserAuth();
+        this.memberSince = authUser.metadata.creationTime;
+        this.userService.getUser(authUser.uid).subscribe(function (result) { return (_this.user = result); });
     };
     UserDetailsPage = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
