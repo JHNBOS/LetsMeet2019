@@ -11,7 +11,6 @@ import { Contact } from 'src/app/services/models/contact';
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
-  authUser: firebase.User = null;
   contacts: Contact[] = null;
 
   constructor(private router: Router, private contactService: ContactService, private alertController: AlertController,

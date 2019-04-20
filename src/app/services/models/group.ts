@@ -3,6 +3,6 @@ export class Group {
     name: string;
     createdOn: Date;
     createdBy: string;
-    members: [{ 'uid': boolean }];
+    members: [];
     picture: string;
 }

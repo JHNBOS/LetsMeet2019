@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
+import { of } from 'rxjs';
+import { Observable } from 'rxjs/observable';
 import { map, take } from 'rxjs/operators';
 
 import { Group } from './models/group';
@@ -26,14 +27,39 @@ export class GroupService {
     );
   }
 
-  getGroups(): Observable<Group[]> {
-    return this.groups;
+  getGroups(uid: string): Observable<Group[]> {
+    let groups: Group[] = [];
+    this.groupCollection.ref.where('members', 'array-contains', uid)
+      .get()
+      .then((result) => {
+        if (result.docs.length > 0) {
+          result.docs.forEach(groupDoc => {
+            let data = groupDoc.data();
+
+            let newGroup = new Group();
+            newGroup.id = data.id;
+            newGroup.name = data.name;
+            newGroup.createdOn = data.createdOn;
+            newGroup.createdBy = data.createdBy;
+            newGroup.picture = data.picture;
+            newGroup.members = data.members;
+
+            groups.push(newGroup);
+          });
+        }
+      }).catch((error) => {
+        this.handleError(error);
+        return null;
+      });
+
+    return of(groups);
+
   }
 
   addMember(id: string, uid: string): Promise<boolean> {
     return this.groupCollection.doc(id)
       .update({
-        members: firebase.firestore.FieldValue.arrayUnion({ [uid]: true })
+        members: firebase.firestore.FieldValue.arrayUnion(uid)
       })
       .then(() => true)
       .catch((error) => {

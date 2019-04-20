@@ -11,53 +11,13 @@
 
 <ion-content fullscreen="true">
   <ion-list>
-    <ion-item button>
-      <ion-avatar slot="start">
-        <img src="../../../assets/shapes.svg">
-      </ion-avatar>
+    <ion-item button *ngFor="let group of groups">
+      <ion-thumbnail slot="start">
+        <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)">
+      </ion-thumbnail>
 
       <ion-label text-wrap>
-        <h3>Group Name</h3>
-        <small>Last Edited: 2019-01-01</small>
-      </ion-label>
-
-      <ion-icon slot="end" name="arrow-dropright"></ion-icon>
-    </ion-item>
-
-    <ion-item button>
-      <ion-avatar slot="start">
-        <img src="../../../assets/shapes.svg">
-      </ion-avatar>
-
-      <ion-label text-wrap>
-        <h3>Group Name</h3>
-        <small>Last Edited: 2019-01-01</small>
-      </ion-label>
-
-      <ion-icon slot="end" name="arrow-dropright"></ion-icon>
-    </ion-item>
-
-    <ion-item button>
-      <ion-avatar slot="start">
-        <img src="../../../assets/shapes.svg">
-      </ion-avatar>
-
-      <ion-label text-wrap>
-        <h3>Group Name</h3>
-        <small>Last Edited: 2019-01-01</small>
-      </ion-label>
-
-      <ion-icon slot="end" name="arrow-dropright"></ion-icon>
-    </ion-item>
-
-    <ion-item button>
-      <ion-avatar slot="start">
-        <img src="../../../assets/shapes.svg">
-      </ion-avatar>
-
-      <ion-label text-wrap>
-        <h3>Group Name</h3>
-        <small>Last Edited: 2019-01-01</small>
+        <h2>{{ group.name }}</h2>
       </ion-label>
 
       <ion-icon slot="end" name="arrow-dropright"></ion-icon>

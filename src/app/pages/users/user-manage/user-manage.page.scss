@@ -1,3 +1,5 @@
+@import "../../../../theme/variables.scss";
+
 ion-avatar {
   max-width: 200px;
   max-height: 200px;
@@ -27,10 +29,7 @@ ion-back-button {
 
 ion-content {
   width: 100%;
-  --background: none;
-  --background: #43cea2;
-  --background: -webkit-linear-gradient(to left, #185a9d, #43cea2);
-  --background: linear-gradient(to left, #185a9d, #43cea2);
+  @include gradient;
 }
 
 ion-grid {

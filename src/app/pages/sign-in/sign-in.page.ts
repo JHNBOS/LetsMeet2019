@@ -34,7 +34,7 @@ export class SignInPage implements OnInit {
           Validators.required,
           Validators.minLength(5),
           Validators.pattern(environment.password_regex)
-        ]), updateOn: 'blur'
+        ]), updateOn: 'blur',
       }),
     });
   }
