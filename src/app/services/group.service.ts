@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
@@ -29,6 +30,18 @@ export class GroupService {
     return this.groups;
   }
 
+  addMember(id: string, uid: string): Promise<boolean> {
+    return this.groupCollection.doc(id)
+      .update({
+        members: firebase.firestore.FieldValue.arrayUnion({ [uid]: true })
+      })
+      .then(() => true)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
+  }
+
   getGroup(id: string): Observable<Group> {
     return this.groupCollection.doc<Group>(id).valueChanges().pipe(
       take(1),
@@ -36,16 +49,18 @@ export class GroupService {
     );
   }
 
-  addGroup(group: Group): Promise<boolean> {
+  addGroup(group: Group): Promise<any> {
     group.id = group.name.replace(/\s+/g, '') + new Date().getTime();
     return this.groupCollection.doc(group.id)
       .set({
         id: group.id,
         name: group.name,
         createdBy: group.createdBy,
-        createdOn: new Date()
+        createdOn: new Date(),
+        members: [],
+        picture: ''
       })
-      .then(() => true)
+      .then(() => group)
       .catch((error) => {
         this.handleError(error);
         return false;
@@ -58,7 +73,9 @@ export class GroupService {
         id: group.id,
         name: group.name,
         createdBy: group.createdBy,
-        createdOn: group.createdOn
+        createdOn: group.createdOn,
+        members: group.members,
+        picture: group.picture
       })
       .then(() => true)
       .catch((error) => {

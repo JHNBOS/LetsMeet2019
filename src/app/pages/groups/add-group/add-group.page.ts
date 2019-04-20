@@ -56,6 +56,15 @@ export class AddGroupPage implements OnInit {
     group.createdBy = this.authUser.uid;
 
     this.groupService.addGroup(group).then(async (result) => {
+      // Add user to group
+      if (typeof result !== 'boolean') {
+        this.addUserToGroup(result.id);
+      }
+    });
+  }
+
+  addUserToGroup(id: string) {
+    this.groupService.addMember(id, this.authUser.uid).then(async (result) => {
       // Show success alert
       if (result) {
         const alert = await this.alertCtrl.create({

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GroupService } from 'src/app/services/group.service';
+import { Group } from 'src/app/services/models/group';
 
 @Component({
   selector: 'app-groups',
@@ -8,9 +10,20 @@ import { Router } from '@angular/router';
 })
 export class GroupsPage implements OnInit {
 
-  constructor(private router: Router) { }
+  groups: Group[] = null;
+
+  constructor(private router: Router, private groupService: GroupService) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+  }
+
+  getGroups() {
+    this.groupService.getGroups().subscribe(
+      (result) => this.groups = result
+    );
   }
 
   navigateToAdd() {

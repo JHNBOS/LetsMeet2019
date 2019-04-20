@@ -33,6 +33,10 @@ export class UserDetailsPage implements OnInit {
 		this.router.navigate(['user-manage']);
 	}
 
+	navigateToContacts() {
+		this.router.navigate(['contacts']);
+	}
+
 	getUser() {
 		let authUser = this.authenticationService.getUserAuth();
 

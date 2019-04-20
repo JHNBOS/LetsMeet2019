@@ -81,6 +81,7 @@ export class RegisterPage implements OnInit {
   createUser(uid: string): Promise<boolean> {
     const newUser: User = {
       uid: uid,
+      email: this.user.controls.email.value,
       color: '',
       avatar: '',
       firstName: this.user.controls.firstName.value,

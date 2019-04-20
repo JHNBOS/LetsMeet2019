@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contacts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true">
+  <ion-list>
+    <ion-item button *ngFor="let contact of contacts">
+      <ion-avatar slot="start">
+        <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
+      </ion-avatar>
+
+      <ion-label text-wrap>
+        <h3>{{ contact.name }}</h3>
+        <small>{{ contact.email }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light" (click)="showPrompt()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
