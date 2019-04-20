@@ -118,3 +118,4 @@ core/css/
 core/loader/
 .stencil/
 angular/build/
+platforms
