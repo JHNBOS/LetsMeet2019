@@ -837,8 +837,21 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"../contacts/contacts.module": [
+		"./src/app/pages/contacts/contacts.module.ts",
+		"common",
+		"contacts-contacts-module"
+	],
+	"../groups/add-group/add-group.module": [
+		"./src/app/pages/groups/add-group/add-group.module.ts",
+		"default~groups-add-group-add-group-module~groups-groups-module",
+		"common",
+		"groups-add-group-add-group-module"
+	],
 	"../groups/groups.module": [
 		"./src/app/pages/groups/groups.module.ts",
+		"default~groups-add-group-add-group-module~groups-groups-module",
+		"common",
 		"groups-groups-module"
 	],
 	"../users/user-details/user-details.module": [
@@ -868,16 +881,6 @@ var map = {
 	"./pages/sign-in/sign-in.module": [
 		"./src/app/pages/sign-in/sign-in.module.ts",
 		"pages-sign-in-sign-in-module"
-	],
-	"./pages/users/user-details/user-details.module": [
-		"./src/app/pages/users/user-details/user-details.module.ts",
-		"common",
-		"users-user-details-user-details-module"
-	],
-	"./pages/users/user-manage/user-manage.module": [
-		"./src/app/pages/users/user-manage/user-manage.module.ts",
-		"common",
-		"users-user-manage-user-manage-module"
 	]
 };
 function webpackAsyncContext(req) {
@@ -927,9 +930,7 @@ var routes = [
     { path: 'sign-in', loadChildren: './pages/sign-in/sign-in.module#SignInPageModule' },
     { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
     { path: 'forgot-password', loadChildren: './pages/forgot-password/forgot-password.module#ForgotPasswordPageModule' },
-    { path: '**', redirectTo: 'home' },
-    { path: 'user-details', canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]], loadChildren: './pages/users/user-details/user-details.module#UserDetailsPageModule' },
-    { path: 'user-manage/:uid', canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]], loadChildren: './pages/users/user-manage/user-manage.module#UserManagePageModule' },
+    { path: '**', redirectTo: 'home' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -1343,6 +1344,12 @@ var GlobalErrorHandler = /** @class */ (function () {
                             case 'auth/weak-password':
                                 errorMsg = 'Password is not strong enough!';
                                 break;
+                            case 'auth/invalid-argument':
+                                errorMsg = 'Oops, something went wrong. Please try again';
+                                break;
+                            default:
+                                errorMsg = 'Oops, something went wrong. Please try again';
+                                break;
                         }
                         return [4 /*yield*/, this.alertCtrl.create({
                                 header: 'Error',
@@ -1384,7 +1391,29 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    production: false
+    production: false,
+    email_regex: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$',
+    password_regex: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$',
+    error_messages: {
+        'email': [
+            { type: 'required', message: 'Email is required' },
+            { type: 'pattern', message: 'Enter a valid email' }
+        ],
+        'password': [
+            { type: 'required', message: 'Password is required' },
+            { type: 'minlength', message: 'Password must be at least 5 characters long' },
+            { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
+        ],
+        'firstName': [
+            { type: 'required', message: 'First name is required' }
+        ],
+        'lastName': [
+            { type: 'required', message: 'Last name is required' }
+        ],
+        'groupName': [
+            { type: 'required', message: 'Group name is required' }
+        ],
+    }
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -1431,7 +1460,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Software Projects\Node.js\LetsMeet\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! D:\Git\LetsMeet2019\src\main.ts */"./src/main.ts");
 
 
 /***/ })

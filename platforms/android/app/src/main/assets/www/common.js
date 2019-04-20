@@ -85,21 +85,23 @@ var _sPassive,GestureController=function(){function t(t){this.doc=t,this.gesture
 
 /***/ }),
 
-/***/ "./node_modules/angularfire2/firestore/index.js":
-/*!******************************************************!*\
-  !*** ./node_modules/angularfire2/firestore/index.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/app/services/models/user.ts":
+/*!*****************************************!*\
+  !*** ./src/app/services/models/user.ts ***!
+  \*****************************************/
+/*! exports provided: User */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
+var User = /** @class */ (function () {
+    function User() {
+    }
+    return User;
+}());
 
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/index.js"));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi93cmFwcGVyL3NyYy9maXJlc3RvcmUvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSw2Q0FBd0MifQ==
+
 
 /***/ }),
 
@@ -118,13 +120,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angularfire2/firestore */ "./node_modules/angularfire2/firestore/index.js");
 /* harmony import */ var angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _helpers_authentication_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./helpers/authentication.service */ "./src/app/services/helpers/authentication.service.ts");
+/* harmony import */ var _models_user__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./models/user */ "./src/app/services/models/user.ts");
+
+
 
 
 
 
 var UserService = /** @class */ (function () {
-    function UserService(afs) {
+    function UserService(afs, authenticationService) {
         this.afs = afs;
+        this.authenticationService = authenticationService;
         this.userCollection = this.afs.collection('users');
         this.users = this.userCollection.snapshotChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (actions) {
             return actions.map(function (a) {
@@ -140,27 +147,71 @@ var UserService = /** @class */ (function () {
     UserService.prototype.getUser = function (id) {
         return this.userCollection.doc(id).valueChanges().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (user) { return user; }));
     };
+    UserService.prototype.getUserByEmail = function (email) {
+        var _this = this;
+        return this.userCollection.ref.where('email', '==', email).get().then(function (result) {
+            if (result.docs.length > 0) {
+                var data = result.docs[0].data();
+                var user = new _models_user__WEBPACK_IMPORTED_MODULE_5__["User"]();
+                user.uid = data.uid;
+                user.email = data.email;
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.color = data.color;
+                user.avatar = data.avatar;
+                return user;
+            }
+            return null;
+        }).catch(function (error) {
+            _this.handleError(error);
+            return null;
+        });
+    };
     UserService.prototype.addUser = function (user) {
-        return this.userCollection.doc(user.uid).set({
+        var _this = this;
+        return this.userCollection.doc(user.uid)
+            .set({
             uid: user.uid,
+            email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
             color: user.color,
             avatar: user.avatar
-        }).then(function () { return true; });
+        })
+            .then(function () { return true; })
+            .catch(function (error) {
+            _this.handleError(error);
+            return false;
+        });
     };
     UserService.prototype.updateUser = function (user) {
+        var _this = this;
         return this.userCollection.doc(user.uid)
-            .update({ firstName: user.firstName, lastName: user.lastName, color: user.color, avatar: user.avatar });
+            .set({
+            uid: user.uid,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            color: user.color,
+            avatar: user.avatar
+        })
+            .then(function () { return true; })
+            .catch(function (error) {
+            _this.handleError(error);
+            return false;
+        });
     };
-    UserService.prototype.deleteIdea = function (id) {
+    UserService.prototype.deleteUser = function (id) {
         return this.userCollection.doc(id).delete();
+    };
+    UserService.prototype.handleError = function (error) {
+        throw error;
     };
     UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
             providedIn: 'root'
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [angularfire2_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"], _helpers_authentication_service__WEBPACK_IMPORTED_MODULE_4__["AuthenticationService"]])
     ], UserService);
     return UserService;
 }());
