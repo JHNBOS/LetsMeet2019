@@ -125,4 +125,8 @@ export class UserManagePage implements OnInit {
       await alert.present();
     }
   }
+
+  navigateBack() {
+    this.router.navigate(['home/profile']);
+  }
 }

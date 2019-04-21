@@ -11,7 +11,7 @@
 
 <ion-content fullscreen="true">
   <ion-list>
-    <ion-item button *ngFor="let group of groups">
+    <ion-item button *ngFor="let group of groups" (click)="navigateToCalendar(group)">
       <ion-thumbnail slot="start">
         <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)">
       </ion-thumbnail>

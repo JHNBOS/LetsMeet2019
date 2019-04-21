@@ -76,4 +76,7 @@ export class ContactsPage implements OnInit {
     await alert.present();
   }
 
+  navigateBack() {
+    this.router.navigate(['home/profile']);
+  }
 }

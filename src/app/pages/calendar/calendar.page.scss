@@ -1,0 +1,31 @@
+@import "../../../theme/variables.scss";
+
+ion-header {
+  backdrop-filter: blur(8px);
+}
+
+ion-toolbar {
+  --ion-toolbar-background: rgba(255, 255, 255, 0.2);
+  --color: #fff;
+}
+
+ion-back-button {
+  --color: #fff;
+}
+
+ion-button {
+  ion-icon {
+    color: #fff;
+  }
+}
+
+ion-content {
+  width: 100%;
+  @include gradient;
+}
+
+ion-label h2 {
+  margin-bottom: 1rem;
+  font-size: 17px;
+  color: #fff;
+}

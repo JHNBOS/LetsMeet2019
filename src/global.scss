@@ -20,3 +20,113 @@
   font-weight: 400;
   font-family: "Montserrat", sans-serif;
 }
+
+// Calendar popover styling
+
+.pop-over-style {
+  --width: 150px;
+  --ion-item-background: transparent;
+
+  .popover-content {
+    top: 8vh !important;
+    right: 0.2rem !important;
+    left: unset !important;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
+
+// ionic2-calendar styling
+
+.swiper-slide {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.table-bordered td {
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.table-bordered thead tr th {
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-right-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.text-muted {
+  color: #6b6b6b;
+}
+
+.monthview-primary-with-event.monthview-current {
+  background-color: rgba(74, 102, 195, 0.7) !important;
+  color: white !important;
+
+  &:before {
+    content: "";
+    height: 0%;
+    width: 0%;
+  }
+}
+
+.monthview-selected {
+  background-color: rgba(139, 195, 74, 0.7) !important;
+  color: white !important;
+}
+
+.monthview-primary-with-event.monthview-selected {
+  background-color: rgba(139, 195, 74, 0.7) !important;
+  color: white !important;
+
+  &:before {
+    content: "";
+    height: 0%;
+    width: 0%;
+  }
+}
+
+.monthview-primary-with-event {
+  background-color: transparent !important;
+  color: white !important;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    background: #8bc34a;
+    z-index: -1;
+    transform: rotate(-45deg);
+    left: 35px;
+    top: 15px;
+  }
+}
+
+ion-list.event-detail-container {
+  --ion-item-background: rgba(255, 255, 255, 0.05);
+  border-top: 2px solid rgba(255, 255, 255, 0.6) !important;
+
+  ion-item {
+    --color: #fff;
+  }
+}
+
+.dayview-allday-table,
+.weekview-allday-table {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;
+}
+
+.weekview-allday-content-table td {
+  border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.calendar-event-inner {
+  background-color: rgba(21, 101, 192, 0.6) !important;
+}
+
+.no-events-label {
+  color: #fff !important;
+}

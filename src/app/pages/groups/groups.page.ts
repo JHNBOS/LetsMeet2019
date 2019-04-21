@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { DataService } from 'src/app/services/data.service';
 import { GroupService } from 'src/app/services/group.service';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Group } from 'src/app/services/models/group';
@@ -16,7 +17,7 @@ export class GroupsPage implements OnInit {
   groups: Group[] = null;
 
   constructor(private router: Router, private groupService: GroupService, public _sanitizer: DomSanitizer,
-    private authenticationService: AuthenticationService, private alertController: AlertController) { }
+    private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -34,6 +35,11 @@ export class GroupsPage implements OnInit {
 
   navigateToAdd() {
     this.router.navigate(['add-group']);
+  }
+
+  navigateToCalendar(group: Group) {
+    this.dataService.changeData(group);
+    this.router.navigate(['calendar']);
   }
 
   async signOut() {

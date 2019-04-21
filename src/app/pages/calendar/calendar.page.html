@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ group.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showPopOver()">
+        <ion-icon slot="icon-only" name="more"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-top" fullscreen="true">
+  <ion-label class="ion-text-center">
+    <h2>{{ viewTitle }}</h2>
+  </ion-label>
+  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)"
+    formatMonthTitle="MMMM, yyyy" formatHourColumn="HH:mm" step="30" [lockSwipeToPrev]="calendar.lockSwipeToPrev">
+  </calendar>
+</ion-content>
