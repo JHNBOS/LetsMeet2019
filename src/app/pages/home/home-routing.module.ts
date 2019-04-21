@@ -28,7 +28,7 @@ const routes: Routes = [
 	{ path: 'user-manage', canActivate: [AuthGuard], loadChildren: '../users/user-manage/user-manage.module#UserManagePageModule' },
 	{ path: 'add-group', canActivate: [AuthGuard], loadChildren: '../groups/add-group/add-group.module#AddGroupPageModule' },
 	{ path: 'contacts', canActivate: [AuthGuard], loadChildren: '../contacts/contacts.module#ContactsPageModule' },
-	{ path: 'calendar', canActivate: [AuthGuard], loadChildren: './pages/calendar/calendar.module#CalendarPageModule' },
+	{ path: 'calendar', canActivate: [AuthGuard], loadChildren: '../calendar/calendar.module#CalendarPageModule' },
 	{
 		path: '',
 		redirectTo: '/home/groups',
