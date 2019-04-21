@@ -6,7 +6,6 @@ import { map, take } from 'rxjs/operators';
 import { AuthenticationService } from './helpers/authentication.service';
 import { User } from './models/user';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -39,9 +38,9 @@ export class UserService {
   }
 
   getUserByEmail(email: string): Promise<User> {
-    return this.userCollection.ref.where('email', '==', email).get().then((result) => {
-      if (result.docs.length > 0) {
-        let data = result.docs[0].data();
+    return this.userCollection.ref.where('email', '==', email).get().then((response) => {
+      if (response.docs.length > 0) {
+        let data = response.docs[0].data();
         let user = new User();
         user.uid = data.uid;
         user.email = data.email;

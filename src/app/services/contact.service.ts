@@ -6,7 +6,6 @@ import { map, take } from 'rxjs/operators';
 
 import { AuthenticationService } from './helpers/authentication.service';
 import { Contact } from './models/contact';
-import { User } from './models/user';
 import { UserService } from './user.service';
 
 
@@ -16,27 +15,32 @@ import { UserService } from './user.service';
 export class ContactService {
   private authUser: firebase.User;
 
-  private contacts: Observable<Contact[]>;
-  private contactCollection: AngularFirestoreCollection<Contact>;
+  private contactCollection: AngularFirestoreCollection<any>;
 
   constructor(private afs: AngularFirestore, private authenticationService: AuthenticationService,
     private userService: UserService) {
     this.authUser = this.authenticationService.getUserAuth();
+    this.contactCollection = this.afs.collection('users').doc(this.authUser.uid).collection('contacts');
+  }
 
-    this.contactCollection = this.afs.collection<Contact>('users').doc(this.authUser.uid).collection('contacts');
-    this.contacts = this.contactCollection.snapshotChanges().pipe(
+  getContacts(uid: string): Observable<Contact[]> {
+    let contacts = this.contactCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
-          return { id, ...data };
+          const contact = new Contact();
+          contact.id = id;
+          contact.name = data.name;
+          contact.email = data.email;
+          contact.avatar = data.avatar;
+
+          return contact;
         });
       })
     );
-  }
 
-  getContacts(): Observable<Contact[]> {
-    return this.contacts;
+    return contacts;
   }
 
   getContact(id: string): Observable<Contact> {

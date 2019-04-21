@@ -11,29 +11,19 @@ import { Group } from './models/group';
   providedIn: 'root'
 })
 export class GroupService {
-  private groups: Observable<Group[]>;
   private groupCollection: AngularFirestoreCollection<Group>;
 
   constructor(private afs: AngularFirestore) {
     this.groupCollection = this.afs.collection<Group>('groups');
-    this.groups = this.groupCollection.snapshotChanges().pipe(
-      map(actions => {
-        return actions.map(a => {
-          const data = a.payload.doc.data();
-          const id = a.payload.doc.id;
-          return { id, ...data };
-        });
-      })
-    );
   }
 
   getGroups(uid: string): Observable<Group[]> {
     let groups: Group[] = [];
     this.groupCollection.ref.where('members', 'array-contains', uid)
       .get()
-      .then((result) => {
-        if (result.docs.length > 0) {
-          result.docs.forEach(groupDoc => {
+      .then((response) => {
+        if (response.docs.length > 0) {
+          response.docs.forEach(groupDoc => {
             let data = groupDoc.data();
 
             let newGroup = new Group();
@@ -53,7 +43,6 @@ export class GroupService {
       });
 
     return of(groups);
-
   }
 
   addMember(id: string, uid: string): Promise<boolean> {

@@ -41,6 +41,6 @@ export class UserDetailsPage implements OnInit {
 		let authUser = this.authenticationService.getUserAuth();
 
 		this.memberSince = authUser.metadata.creationTime;
-		this.userService.getUser(authUser.uid).subscribe(result => (this.user = result));
+		this.userService.getUser(authUser.uid).subscribe(response => (this.user = response));
 	}
 }

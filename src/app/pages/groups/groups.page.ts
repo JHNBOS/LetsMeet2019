@@ -28,7 +28,7 @@ export class GroupsPage implements OnInit {
 
   getGroups() {
     this.groupService.getGroups(this.authUser.uid).subscribe(
-      (result) => this.groups = result
+      (response) => this.groups = response
     );
   }
 

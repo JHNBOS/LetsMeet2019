@@ -55,18 +55,18 @@ export class AddGroupPage implements OnInit {
     group.name = this.groupDetails.controls.groupName.value;
     group.createdBy = this.authUser.uid;
 
-    this.groupService.addGroup(group).then(async (result) => {
+    this.groupService.addGroup(group).then(async (response) => {
       // Add user to group
-      if (typeof result !== 'boolean') {
-        this.addUserToGroup(result.id);
+      if (typeof response !== 'boolean') {
+        this.addUserToGroup(response.id);
       }
     });
   }
 
   addUserToGroup(id: string) {
-    this.groupService.addMember(id, this.authUser.uid).then(async (result) => {
+    this.groupService.addMember(id, this.authUser.uid).then(async (response) => {
       // Show success alert
-      if (result) {
+      if (response) {
         const alert = await this.alertCtrl.create({
           header: 'Success',
           message: 'Group was sucessfully created!',

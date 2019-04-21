@@ -55,26 +55,23 @@ export class RegisterPage implements OnInit {
     const credentials = { email: this.user.controls.email.value, password: this.user.controls.password.value };
     await this.authService.signUp(credentials)
       .then(async (response: firebase.auth.UserCredential) => {
-        let showAlert = false;
 
         // Create user in database
         if (response) {
-          this.createUser(response.user.uid).then((result) => showAlert = result);
+          this.createUser(response.user.uid);
         }
 
         // Show success alert
-        if (showAlert) {
-          const alert = await this.alertCtrl.create({
-            header: 'Success',
-            message: 'Sign up was successful!',
-            buttons: [{
-              text: 'OK', handler: () => {
-                this.navController.navigateBack(['sign-in']);
-              }
-            }]
-          });
-          await alert.present();
-        }
+        const alert = await this.alertCtrl.create({
+          header: 'Success',
+          message: 'Sign up was successful!',
+          buttons: [{
+            text: 'OK', handler: () => {
+              this.navController.navigateBack(['sign-in']);
+            }
+          }]
+        });
+        await alert.present();
       }, (rejected: firebase.auth.Error) => { throw rejected; });
   }
 
@@ -83,12 +80,12 @@ export class RegisterPage implements OnInit {
       uid: uid,
       email: this.user.controls.email.value,
       color: '',
-      avatar: '',
+      avatar: environment.profile_avatar,
       firstName: this.user.controls.firstName.value,
       lastName: this.user.controls.lastName.value
     };
 
-    return this.userService.addUser(newUser);
+    return this.userService.addUser(newUser).then((response) => response);
   }
 
 }

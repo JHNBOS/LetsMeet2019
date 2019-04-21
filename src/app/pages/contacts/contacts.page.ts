@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { ContactService } from 'src/app/services/contact.service';
+import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Contact } from 'src/app/services/models/contact';
 
 @Component({
@@ -11,22 +12,23 @@ import { Contact } from 'src/app/services/models/contact';
   styleUrls: ['./contacts.page.scss'],
 })
 export class ContactsPage implements OnInit {
+  authUser: firebase.User = null;
   contacts: Contact[] = null;
 
-  constructor(private router: Router, private contactService: ContactService, private alertController: AlertController,
-    public _sanitizer: DomSanitizer) { }
+  constructor(private router: Router, private contactService: ContactService, public _sanitizer: DomSanitizer,
+    private authenticationService: AuthenticationService, private alertController: AlertController) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
+    this.authUser = this.authenticationService.getUserAuth();
     this.getContacts();
   }
 
   getContacts() {
-    this.contactService.getContacts().subscribe(
-      (result) => this.contacts = result
-    );
+    this.contactService.getContacts(this.authUser.uid).subscribe(
+      (response) => this.contacts = response);
   }
 
   async showPrompt() {

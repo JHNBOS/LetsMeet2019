@@ -45,7 +45,7 @@ export class UserManagePage implements OnInit {
   getUser() {
     this.authUser = this.authenticationService.getUserAuth();
     this.memberSince = this.authUser.metadata.creationTime;
-    this.userService.getUser(this.authUser.uid).subscribe(result => { this.user = result; this.createFormGroup(); });
+    this.userService.getUser(this.authUser.uid).subscribe(response => { this.user = response; this.createFormGroup(); });
   }
 
   createFormGroup() {
@@ -102,8 +102,8 @@ export class UserManagePage implements OnInit {
     this.user.firstName = this.userDetails.controls.firstName.value;
     this.user.lastName = this.userDetails.controls.lastName.value;
 
-    this.userService.updateUser(this.user).then((result) => {
-      showSuccess = result;
+    this.userService.updateUser(this.user).then((response) => {
+      showSuccess = response;
 
       // Check if password needs to be updated
       if (this.userDetails.controls.new_password.value != '') {
