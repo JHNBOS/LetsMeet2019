@@ -48,6 +48,11 @@ export class GroupsPage implements OnInit {
       message: 'Are you sure you want to sign out?',
       buttons: [
         {
+          text: 'No',
+          role: 'cancel',
+          handler: () => alert.dismiss()
+        },
+        {
           text: 'Yes',
           handler: () => {
             alert.dismiss();
@@ -55,11 +60,6 @@ export class GroupsPage implements OnInit {
             this.router.navigate(['sign-in']);
           }
         },
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => alert.dismiss()
-        }
       ]
     });
     await alert.present();

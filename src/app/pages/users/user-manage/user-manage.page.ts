@@ -53,19 +53,19 @@ export class UserManagePage implements OnInit {
       firstName: new FormControl(this.user.firstName, {
         validators: Validators.compose([
           Validators.required
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
       lastName: new FormControl(this.user.lastName, {
         validators: Validators.compose([
           Validators.required
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
       email: new FormControl(this.authUser.email, { validators: [] }),
       new_password: new FormControl('', {
         validators: Validators.compose([
           Validators.minLength(5),
           Validators.pattern(environment.password_regex)
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
     });
   }

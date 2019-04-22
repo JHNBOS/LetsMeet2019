@@ -14,32 +14,15 @@ ion-avatar {
   }
 }
 
-ion-content {
-  width: 100%;
-  @include gradient;
-}
-
-ion-grid {
-  width: 100%;
-}
-
-h2,
-small {
-  color: #fff;
-}
-
 ion-list {
   margin-right: 0.3rem;
   margin-left: 0.3rem;
-  --ion-item-background: transparent;
 
   ion-item {
     margin: 0.5rem auto;
-    --background: transparent;
-    color: #fff;
 
     ion-label {
-      font-weight: 300;
+      font-weight: 500;
     }
   }
 }

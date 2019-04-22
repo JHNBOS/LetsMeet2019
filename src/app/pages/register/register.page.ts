@@ -28,25 +28,25 @@ export class RegisterPage implements OnInit {
       firstName: new FormControl('', {
         validators: Validators.compose([
           Validators.required
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
       lastName: new FormControl('', {
         validators: Validators.compose([
           Validators.required
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
       email: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
           Validators.pattern(environment.email_regex)
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
       password: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
           Validators.minLength(5),
           Validators.pattern(environment.password_regex)
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       }),
     });
   }

@@ -98,7 +98,7 @@ export class CalendarPage implements OnInit {
     if (this.calendar.mode === 'month') {
       if (event.getFullYear() < today.getFullYear() || (event.getFullYear() === today.getFullYear() && event.getMonth() <= today.getMonth())) {
         this.calendar.lockSwipeToPrev = true;
-      } else if (event.getFullYear() < today.getFullYear() || (event.getFullYear() === today.getFullYear() && event.getMonth() <= today.getMonth())) {
+      } else {
         this.calendar.lockSwipeToPrev = false;
       }
     }

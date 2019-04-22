@@ -1,24 +1,33 @@
 @import "../../../theme/variables.scss";
 
-ion-header {
-  backdrop-filter: blur(8px);
-}
-
-ion-toolbar {
-  --ion-toolbar-background: rgba(255, 255, 255, 0.2);
-}
-
 ion-content {
-  width: 100%;
-  @include gradient;
+  --background: var(--ion-color-primary);
+}
+
+ion-list {
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+  --ion-item-background: var(--ion-color-primary);
+
+  ion-item {
+    margin: 1rem auto 0 auto;
+    --background: #fff;
+    --border-radius: 4px;
+
+    ion-label {
+      font-weight: 500;
+      --color: #fff;
+    }
+
+    ion-input {
+      --placeholder-color: rgb(92, 92, 92);
+      color: rgb(51, 51, 51);
+    }
+  }
 }
 
 .form-row {
-  margin-top: 2.5rem;
-  padding: 0;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 3px 3px 1px rgba(0, 0, 0, 0.25);
+  margin-top: 3rem;
 }
 
 .title {
@@ -34,24 +43,4 @@ ion-content {
 #resetButton {
   margin-top: 0.4rem;
   font-size: 0.7rem;
-}
-
-ion-list {
-  margin-right: 0.3rem;
-  margin-left: 0.3rem;
-  --ion-item-background: transparent;
-
-  ion-item {
-    margin: 0.5rem auto;
-    --background: transparent;
-    color: #fff;
-
-    ion-label {
-      font-weight: 300;
-    }
-
-    ion-input {
-      color: #fff;
-    }
-  }
 }

@@ -11,14 +11,12 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 .error {
-  margin: 0rem 0.3rem;
-  padding: 0.1rem 0.5rem;
-  text-align: left;
-  word-break: break-word;
-  color: var(--ion-color-danger);
-  font-size: 0.7rem;
-  font-weight: 400;
-  font-family: "Montserrat", sans-serif;
+  margin-left: 10px;
+  font-size: 0.85rem;
+  color: #d6d6d6;
+  width: 100%;
+  display: block;
+  padding-top: 2px;
 }
 
 // Calendar popover styling
@@ -40,22 +38,54 @@
 
 // ionic2-calendar styling
 
-.swiper-slide {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-}
-
 .table-bordered td {
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 
 .table-bordered thead tr th {
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  border-right-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(0, 0, 0, 0.3) !important;
+  border-right-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .text-muted {
-  color: #6b6b6b;
+  color: #c3c3c3;
+}
+
+.monthview-primary-with-event {
+  background-color: transparent !important;
+  color: #333 !important;
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0px 0px 7px 7px;
+    border-color: transparent transparent var(--ion-color-success) transparent;
+    border-radius: 50%;
+    right: 2px;
+    top: 2px;
+    position: absolute;
+  }
+}
+
+.monthview-primary-with-event.monthview-selected {
+  background-color: #eee;
+
+  &:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0px 0px 7px 7px;
+    border-color: transparent transparent var(--ion-color-primary) transparent;
+    border-radius: 50%;
+    right: 2px;
+    top: 2px;
+    position: absolute;
+  }
 }
 
 .monthview-primary-with-event.monthview-current {
@@ -64,52 +94,49 @@
 
   &:before {
     content: "";
-    height: 0%;
-    width: 0%;
+    opacity: 0;
   }
+}
+
+.monthview-selected.monthview-current {
+  background-color: rgb(231, 231, 231) !important;
+}
+
+.monthview-current {
+  background-color: rgb(231, 231, 231) !important;
+  font-weight: bold;
 }
 
 .monthview-selected {
-  background-color: rgba(139, 195, 74, 0.7) !important;
-  color: white !important;
-}
-
-.monthview-primary-with-event.monthview-selected {
-  background-color: rgba(139, 195, 74, 0.7) !important;
-  color: white !important;
-
-  &:before {
-    content: "";
-    height: 0%;
-    width: 0%;
-  }
-}
-
-.monthview-primary-with-event {
   background-color: transparent !important;
-  color: white !important;
+  color: #111 !important;
   position: relative;
   overflow: hidden;
 
   &:before {
     content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0px 0px 7px 7px;
+    border-color: transparent transparent var(--ion-color-primary) transparent;
+    border-radius: 50%;
+    right: 2px;
+    top: 2px;
     position: absolute;
-    height: 50%;
-    width: 100%;
-    background: #8bc34a;
-    z-index: -1;
-    transform: rotate(-45deg);
-    left: 35px;
-    top: 15px;
   }
 }
 
+.monthview-eventdetail-timecolumn {
+  font-family: "Lato", sans-serif !important;
+  font-weight: 600 !important;
+}
+
 ion-list.event-detail-container {
-  --ion-item-background: rgba(255, 255, 255, 0.05);
   border-top: 2px solid rgba(255, 255, 255, 0.6) !important;
 
   ion-item {
-    --color: #fff;
+    --color: #333;
   }
 }
 
@@ -124,9 +151,9 @@ ion-list.event-detail-container {
 }
 
 .calendar-event-inner {
-  background-color: rgba(21, 101, 192, 0.6) !important;
+  background-color: var(--ion-color-primary) !important;
 }
 
 .no-events-label {
-  color: #fff !important;
+  color: #333 !important;
 }

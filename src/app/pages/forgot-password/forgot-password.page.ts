@@ -28,7 +28,7 @@ export class ForgotPasswordPage implements OnInit {
         validators: Validators.compose([
           Validators.required,
           Validators.pattern(environment.email_regex)
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       })
     });
   }

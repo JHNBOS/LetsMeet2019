@@ -1,4 +1,4 @@
-<ion-content fullscreen="true">
+<ion-content class="ion-padding" fullscreen="true">
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -9,33 +9,29 @@
     <ion-row class="form-row">
       <ion-col>
         <ion-list>
-          <form novalidate [formGroup]="user">
+          <form novalidate="true" [formGroup]="user">
 
             <ion-item>
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="email" formControlName="email">
+              <ion-input type="email" formControlName="email" placeholder="Email">
               </ion-input>
             </ion-item>
-
-            <!-- Email error message -->
             <ng-container *ngFor="let error of error_messages.email">
-              <div class="error"
-                *ngIf="user.get('email').hasError(error.type) && (user.get('email').dirty || user.get('email').touched)">
-                {{ error.message }}
-              </div>
+              <ion-label class="error" *ngIf="user.get('email').hasError(error.type) && 
+                  (user.get('email').dirty || user.get('email').touched)">
+                <small>
+                  {{ error.message }}
+                </small>
+              </ion-label>
             </ng-container>
 
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" formControlName="password"></ion-input>
+              <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
             </ion-item>
-
-            <!-- Password error message -->
             <ng-container *ngFor="let error of error_messages.password">
-              <div class="error"
-                *ngIf="user.get('password').hasError(error.type) && (user.get('password').dirty || user.get('password').touched)">
+              <small class="error" *ngIf="user.get('password').hasError(error.type) && 
+                (user.get('password').dirty || user.get('password').touched)">
                 {{ error.message }}
-              </div>
+              </small>
             </ng-container>
 
             <ion-row class="login-button-row">
@@ -45,7 +41,7 @@
                 </ion-button>
               </ion-col>
               <ion-col text-center>
-                <ion-button expand="full" fill="solid" color="primary" (click)="submit()">
+                <ion-button expand="full" fill="solid" color="success" (click)="submit()">
                   SIGN IN
                 </ion-button>
               </ion-col>
