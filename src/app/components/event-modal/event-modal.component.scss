@@ -66,19 +66,22 @@ app-event-modal {
           font-size: 16px;
           color: rgb(85, 85, 85);
         }
-
-        ion-textarea {
-          padding-left: 25px;
-        }
       }
     }
   }
 
   .modal-footer {
     width: 100%;
-    padding: 0.3rem;
+    padding: 0rem;
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
     background: var(--ion-color-light);
+
+    ion-button {
+      width: 100%;
+      margin: 0 auto;
+      border-bottom-right-radius: 15px;
+      border-bottom-left-radius: 15px;
+    }
   }
 }

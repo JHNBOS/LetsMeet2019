@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController, ModalController, PopoverController } from '@ionic/angular';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { CalendarPopoverComponent } from 'src/app/components/calendar-popover/calendar-popover.component';
 import { EventModalComponent } from 'src/app/components/event-modal/event-modal.component';
 import { DataService } from 'src/app/services/data.service';
+import { EventService } from 'src/app/services/event.service';
+import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Group } from 'src/app/services/models/group';
 
 @Component({
@@ -11,46 +13,39 @@ import { Group } from 'src/app/services/models/group';
   templateUrl: './calendar.page.html',
   styleUrls: ['./calendar.page.scss'],
 })
-export class CalendarPage implements OnInit {
-  eventSource;
+export class CalendarPage implements OnInit, AfterViewInit {
+  authUser: firebase.User;
   group: Group = null;
-  isToday: boolean;
-  viewTitle: any = new Date().toLocaleString("en", { month: "long" });
+
+  @ViewChild(CalendarComponent) calendarComponent: CalendarComponent;
   calendar = {
     mode: 'month',
     currentDate: new Date(),
-    lockSwipeToPrev: true
+    lockSwipeToPrev: true,
+    queryMode: 'remote'
   };
+  eventSource = [];
+  isToday: boolean;
+  viewTitle: any = new Date().toLocaleString("en", { month: "long" });
 
-  constructor(private router: Router, private popoverController: PopoverController,
-    private alertController: AlertController, private dataService: DataService, private modal: ModalController) {
+  constructor(private popoverController: PopoverController, private dataService: DataService, private eventService: EventService,
+    private authenticationService: AuthenticationService, private modal: ModalController) {
     this.dataService.serviceData.subscribe((response) => this.group = response);
-  }
-
-  ionViewWillEnter() {
+    this.authUser = this.authenticationService.getUserAuth();
   }
 
   ngOnInit() {
-    this.eventSource = [
-      {
-        title: 'Test',
-        description: 'This is a test',
-        location: 'Boomgaardsstraat 159, 3012XC Rotterdam',
-        startTime: new Date(2019, 3, 21, 12, 0, 0),
-        endTime: new Date(2019, 3, 21, 19, 30, 0),
-        allDay: false,
-        createdBy: 'Johan Bos'
-      },
-      {
-        title: 'Test',
-        description: 'This is a test',
-        location: 'Boomgaardsstraat 159, 3012XC Rotterdam',
-        startTime: new Date(2019, 3, 24, 12, 0, 0),
-        endTime: new Date(2019, 3, 24, 19, 30, 0),
-        allDay: false,
-        createdBy: 'Johan Bos'
-      }
-    ];
+    this.getEvents();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+  }
+
+  getEvents() {
+    this.eventService.getEvents(this.group.id).subscribe((response) => {
+      this.eventSource = response;
+    });
   }
 
   async showPopOver(event: any) {
@@ -66,9 +61,6 @@ export class CalendarPage implements OnInit {
     popover.onDidDismiss().then((data) => {
       let choice = data.data;
       switch (choice) {
-        case 0:
-          this.today();
-          break;
         case 1:
           this.changeMode('day');
           break;
@@ -89,8 +81,15 @@ export class CalendarPage implements OnInit {
   }
 
   today() {
+    // Enable swipe to previous month
+    this.calendar.lockSwipeToPrev = false;
+
+    // Set date to today
     this.isToday = true;
     this.calendar.currentDate = new Date();
+
+    // Disable swipe to previous month
+    this.calendar.lockSwipeToPrev = true;
   }
 
   onCurrentDateChanged(event: Date) {
@@ -114,7 +113,20 @@ export class CalendarPage implements OnInit {
         component: EventModalComponent,
         showBackdrop: true,
         backdropDismiss: true,
-        componentProps: { event: event }
+        componentProps: { type: 'details', event: event }
+      }
+    );
+    modal.present();
+  }
+
+  async createEvent() {
+    console.log(this.authUser.uid);
+    const modal = await this.modal.create(
+      {
+        component: EventModalComponent,
+        showBackdrop: true,
+        backdropDismiss: true,
+        componentProps: { type: 'create', group: this.group, uid: this.authUser.uid }
       }
     );
     modal.present();
@@ -123,16 +135,11 @@ export class CalendarPage implements OnInit {
   reloadSource(startTime, endTime) {
   }
 
-  onTimeSelected(event) {
-    console.log('Selected time: ' + event.selectedTime + ', hasEvents: ' +
-      (event.events !== undefined && event.events.length !== 0) + ', disabled: ' + event.disabled);
+  onRangeChanged(ev) {
+    console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
   }
 
   onViewTitleChanged(title) {
     this.viewTitle = title;
-  }
-
-  onRangeChanged(event) {
-    console.log('range changed: startTime: ' + event.startTime + ', endTime: ' + event.endTime);
   }
 }

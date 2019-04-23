@@ -13,12 +13,24 @@
 </ion-header>
 
 <ion-content class="ion-padding-top" fullscreen="true">
+
   <ion-label class="ion-text-center">
     <h2>{{ viewTitle }}</h2>
   </ion-label>
+
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
     (onCurrentDateChanged)="onCurrentDateChanged($event)" (onEventSelected)="onEventSelected($event)"
-    (onTitleChanged)="onViewTitleChanged($event)" (onTimeSelected)="onTimeSelected($event)"
-    formatMonthTitle="MMMM, yyyy" formatHourColumn="HH:mm" step="30" [lockSwipeToPrev]="calendar.lockSwipeToPrev">
+    (onTitleChanged)="onViewTitleChanged($event)" [lockSwipeToPrev]="calendar.lockSwipeToPrev"
+    formatMonthTitle="MMMM, yyyy" formatHourColumn="HH:mm" step="30">
   </calendar>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary" [hidden]="isToday" (click)="today()">
+      <ion-icon name="home"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="tertiary" (click)="createEvent()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

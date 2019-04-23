@@ -1,11 +1,13 @@
 export class Event {
-    id: number;
-    groupId: number;
+    id: string;
+    groupId: string;
     createdBy: string;
     title: string;
     description: string;
     location: string;
-    startTime: Date;
-    endTime: Date;
+    startTime: any;
+    endTime: any;
+    start: any;
+    end: any;
     allDay: boolean;
 }
