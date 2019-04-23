@@ -1,0 +1,30 @@
+<div class="custom-modal">
+  <div class="modal-header">
+    <div class="close">
+      <ion-button class="close-button" fill="clear" (click)="close()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </div>
+    <div class="title">
+      <h2>{{ event.title }}</h2>
+      <p>{{ eventDate }}</p>
+    </div>
+  </div>
+  <div class="modal-body">
+    <ion-list>
+      <ion-item *ngIf="event.location">
+        <ion-label class="ion-align-self-start" position="fixed">Where</ion-label>
+        <ion-input style="margin-bottom:5px;margin-top:11px;" readonly>{{ event.location }}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Description</ion-label>
+        <ion-textarea value="{{event.description}}" readonly></ion-textarea>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="fixed">Created By</ion-label>
+        <ion-input readonly>{{ event.createdBy }}</ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="modal-footer"></div>
+</div>

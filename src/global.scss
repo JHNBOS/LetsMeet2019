@@ -19,6 +19,10 @@
   padding-top: 2px;
 }
 
+ion-modal {
+  --background: transparent !important;
+}
+
 // Calendar popover styling
 
 .pop-over-style {

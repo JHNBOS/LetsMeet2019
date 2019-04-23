@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, PopoverController } from '@ionic/angular';
-import * as moment from 'moment';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 import { CalendarPopoverComponent } from 'src/app/components/calendar-popover/calendar-popover.component';
+import { EventModalComponent } from 'src/app/components/event-modal/event-modal.component';
 import { DataService } from 'src/app/services/data.service';
 import { Group } from 'src/app/services/models/group';
 
@@ -23,7 +23,7 @@ export class CalendarPage implements OnInit {
   };
 
   constructor(private router: Router, private popoverController: PopoverController,
-    private alertController: AlertController, private dataService: DataService) {
+    private alertController: AlertController, private dataService: DataService, private modal: ModalController) {
     this.dataService.serviceData.subscribe((response) => this.group = response);
   }
 
@@ -34,17 +34,21 @@ export class CalendarPage implements OnInit {
     this.eventSource = [
       {
         title: 'Test',
-        desc: 'This is a test',
+        description: 'This is a test',
+        location: 'Boomgaardsstraat 159, 3012XC Rotterdam',
         startTime: new Date(2019, 3, 21, 12, 0, 0),
         endTime: new Date(2019, 3, 21, 19, 30, 0),
-        allDay: false
+        allDay: false,
+        createdBy: 'Johan Bos'
       },
       {
         title: 'Test',
-        desc: 'This is a test',
+        description: 'This is a test',
+        location: 'Boomgaardsstraat 159, 3012XC Rotterdam',
         startTime: new Date(2019, 3, 24, 12, 0, 0),
         endTime: new Date(2019, 3, 24, 19, 30, 0),
-        allDay: false
+        allDay: false,
+        createdBy: 'Johan Bos'
       }
     ];
   }
@@ -105,18 +109,15 @@ export class CalendarPage implements OnInit {
   }
 
   async onEventSelected(event) {
-    const alert = await this.alertController.create({
-      header: event.title,
-      subHeader: event.desc,
-      message: `
-        <hr style="margin:0;border-bottom: 1px solid #8e8e8e;margin-bottom: 6px;">
-        <p style="margin:0;">Starts:&ensp;${moment(event.startTime).format('ddd D MMM [at] HH:mm')}</p>
-        <p style="margin:0;">Ends:&emsp;${moment(event.endTime).format('ddd D MMM [at] HH:mm')}</p>
-      `,
-      buttons: ['Close']
-    });
-
-    await alert.present();
+    const modal = await this.modal.create(
+      {
+        component: EventModalComponent,
+        showBackdrop: true,
+        backdropDismiss: true,
+        componentProps: { event: event }
+      }
+    );
+    modal.present();
   }
 
   reloadSource(startTime, endTime) {

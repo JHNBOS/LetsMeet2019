@@ -1,13 +1,13 @@
 @import "../../../theme/variables.scss";
 
 ion-content {
-  --background: var(--ion-color-primary);
+  --background: linear-gradient(to bottom, #008fd6, #003f80);
 }
 
 ion-list {
   margin-right: 0.3rem;
   margin-left: 0.3rem;
-  --ion-item-background: var(--ion-color-primary);
+  --ion-item-background: transparent;
 
   ion-item {
     margin: 1rem auto 0 auto;
