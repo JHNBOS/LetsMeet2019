@@ -26,47 +26,61 @@
             <ion-input type="text" formControlName="firstName">
             </ion-input>
           </ion-item>
-          <ng-container *ngFor="let error of error_messages.firstName">
-            <small class="error" *ngIf="userDetails.get('firstName').hasError(error.type) && 
-                  (userDetails.get('firstName').dirty || userDetails.get('firstName').touched)">
-              {{ error.message }}
+          <ion-label class="error">
+            <small class="dark" class="dark"
+              [style.transform]="userDetails.get('firstName').hasError('required') && 
+                (userDetails.get('firstName').dirty || userDetails.get('firstName').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              {{ error_messages.firstName[0].message }}
             </small>
-          </ng-container>
+          </ion-label>
 
           <ion-item>
             <ion-label position="floating">Last Name</ion-label>
             <ion-input type="text" formControlName="lastName">
             </ion-input>
           </ion-item>
-          <ng-container *ngFor="let error of error_messages.lastName">
-            <small class="error" *ngIf="userDetails.get('lastName').hasError(error.type) && 
-                  (userDetails.get('lastName').dirty || userDetails.get('lastName').touched)">
-              {{ error.message }}
+          <ion-label class="error">
+            <small class="dark"
+              [style.transform]="userDetails.get('lastName').hasError('required') && 
+                  (userDetails.get('lastName').dirty || userDetails.get('lastName').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              {{ error_messages.lastName[0].message }}
             </small>
-          </ng-container>
+          </ion-label>
 
           <ion-item>
             <ion-label position="floating">Email</ion-label>
             <ion-input type="email" formControlName="email" readonly="true">
             </ion-input>
           </ion-item>
-          <ng-container *ngFor="let error of error_messages.email">
-            <small class="error" *ngIf="userDetails.get('email').hasError(error.type) && 
-                  (userDetails.get('email').dirty || userDetails.get('email').touched)">
-              {{ error.message }}
+          <ion-label class="error">
+            <small class="dark"
+              [style.transform]="userDetails.get('email').hasError('required') && 
+                (userDetails.get('email').dirty || userDetails.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              {{ error_messages.email[0].message }}
             </small>
-          </ng-container>
+            <small class="dark"
+              [style.transform]="userDetails.get('email').hasError('pattern') && 
+                (userDetails.get('email').dirty || userDetails.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              {{ error_messages.email[1].message }}
+            </small>
+          </ion-label>
 
           <ion-item>
             <ion-label position="floating">New Password</ion-label>
             <ion-input type="password" formControlName="new_password"></ion-input>
           </ion-item>
-          <ng-container *ngFor="let error of error_messages.password">
-            <small class="error" *ngIf="userDetails.get('new_password').hasError(error.type) && 
-                  (userDetails.get('new_password').dirty || userDetails.get('new_password').touched)">
-              {{ error.message }}
+          <ion-label class="error">
+            <small class="dark"
+              [style.transform]="userDetails.get('new_password').hasError('required') && 
+                (userDetails.get('new_password').dirty || userDetails.get('new_password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              {{ error_messages.password[0].message }}
             </small>
-          </ng-container>
+            <small class="dark"
+              [style.transform]="userDetails.get('new_password').hasError('pattern') && 
+                (userDetails.get('new_password').dirty || userDetails.get('new_password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              {{ error_messages.password[2].message }}
+            </small>
+          </ion-label>
 
           <ion-row class="button-row">
             <ion-col text-center>

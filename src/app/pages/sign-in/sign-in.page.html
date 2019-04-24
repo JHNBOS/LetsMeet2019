@@ -15,24 +15,30 @@
               <ion-input type="email" formControlName="email" placeholder="Email">
               </ion-input>
             </ion-item>
-            <ng-container *ngFor="let error of error_messages.email">
-              <ion-label class="error" *ngIf="user.get('email').hasError(error.type) && 
-                  (user.get('email').dirty || user.get('email').touched)">
-                <small>
-                  {{ error.message }}
-                </small>
-              </ion-label>
-            </ng-container>
+            <ion-label class="error">
+              <small [style.transform]="user.get('email').hasError('required') && 
+                (user.get('email').dirty || user.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+                {{ error_messages.email[0].message }}
+              </small>
+              <small [style.transform]="user.get('email').hasError('pattern') && 
+                (user.get('email').dirty || user.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+                {{ error_messages.email[1].message }}
+              </small>
+            </ion-label>
 
             <ion-item>
               <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
             </ion-item>
-            <ng-container *ngFor="let error of error_messages.password">
-              <small class="error" *ngIf="user.get('password').hasError(error.type) && 
-                (user.get('password').dirty || user.get('password').touched)">
-                {{ error.message }}
+            <ion-label class="error">
+              <small [style.transform]="user.get('password').hasError('required') && 
+                (user.get('password').dirty || user.get('password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+                {{ error_messages.password[0].message }}
               </small>
-            </ng-container>
+              <small [style.transform]="user.get('password').hasError('pattern') && 
+                (user.get('password').dirty || user.get('password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+                {{ error_messages.password[2].message }}
+              </small>
+            </ion-label>
 
             <ion-row class="login-button-row">
               <ion-col text-center>

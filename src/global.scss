@@ -12,11 +12,28 @@
 
 .error {
   margin-left: 10px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: #d6d6d6;
   width: 100%;
   display: block;
   padding-top: 2px;
+  padding-bottom: 10px;
+  position: relative;
+
+  small {
+    position: absolute;
+    transform: translateX(0px);
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    font-family: "Montserrat";
+    font-weight: 600;
+    text-shadow: 0px 0px 4px #0165a0;
+
+    &.dark {
+      color: #920000;
+      font-family: "Lato";
+      text-shadow: none;
+    }
+  }
 }
 
 ion-modal {

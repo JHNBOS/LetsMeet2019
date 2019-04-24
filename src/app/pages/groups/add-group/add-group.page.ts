@@ -45,7 +45,7 @@ export class AddGroupPage implements OnInit {
       groupName: new FormControl('', {
         validators: Validators.compose([
           Validators.required
-        ]), updateOn: 'blur'
+        ]), updateOn: 'change'
       })
     });
   }

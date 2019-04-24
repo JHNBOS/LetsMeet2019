@@ -44,7 +44,7 @@ export class GroupsPage implements OnInit {
 
   async signOut() {
     const alert = await this.alertController.create({
-      header: 'Sign Out',
+      header: 'Sign out',
       message: 'Are you sure you want to sign out?',
       buttons: [
         {
