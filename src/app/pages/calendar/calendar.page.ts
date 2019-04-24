@@ -24,8 +24,11 @@ export class CalendarPage implements OnInit, AfterViewInit {
     lockSwipeToPrev: true,
     queryMode: 'remote'
   };
-  eventSource = [];
+
   isToday: boolean;
+  currentMonth: boolean;
+
+  eventSource = [];
   viewTitle: any = new Date().toLocaleString("en", { month: "long" });
 
   constructor(private popoverController: PopoverController, private dataService: DataService, private eventService: EventService,
@@ -86,6 +89,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
 
     // Set date to today
     this.isToday = true;
+    this.currentMonth = true;
     this.calendar.currentDate = new Date();
 
     // Disable swipe to previous month
@@ -93,10 +97,12 @@ export class CalendarPage implements OnInit, AfterViewInit {
   }
 
   onCurrentDateChanged(event: Date) {
-    var today = new Date();
+    let today = new Date();
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
+
     this.isToday = today.getTime() === event.getTime();
+    this.currentMonth = today.getUTCMonth() === event.getUTCMonth();
 
     if (this.calendar.mode === 'month') {
       if (event.getFullYear() < today.getFullYear() || (event.getFullYear() === today.getFullYear() && event.getMonth() <= today.getMonth())) {
@@ -120,7 +126,6 @@ export class CalendarPage implements OnInit, AfterViewInit {
   }
 
   async createEvent() {
-    console.log(this.authUser.uid);
     const modal = await this.modal.create(
       {
         component: EventModalComponent,
@@ -129,6 +134,10 @@ export class CalendarPage implements OnInit, AfterViewInit {
         componentProps: { type: 'create', group: this.group, uid: this.authUser.uid }
       }
     );
+    modal.onDidDismiss().then(() => {
+      this.getEvents();
+      setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+    });
     modal.present();
   }
 

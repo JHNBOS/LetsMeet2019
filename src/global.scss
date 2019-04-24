@@ -93,13 +93,7 @@ ion-modal {
 }
 
 .monthview-primary-with-event.monthview-current {
-  background-color: rgba(74, 102, 195, 0.7) !important;
-  color: white !important;
-
-  &:before {
-    content: "";
-    opacity: 0;
-  }
+  background-color: rgb(231, 231, 231) !important;
 }
 
 .monthview-selected.monthview-current {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController, NavParams } from '@ionic/angular';
 import * as moment from 'moment';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/services/models/event';
@@ -15,6 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 export class EventModalComponent implements OnInit {
   private uid: string;
   private user: User = null;
+  eventDetails: FormGroup;
 
   createEvent: boolean = false;
   group: Group = null;
@@ -27,7 +29,7 @@ export class EventModalComponent implements OnInit {
   end: string = this.today.toISOString();
 
   constructor(private navParams: NavParams, private modal: ModalController, private eventService: EventService,
-    private userService: UserService, private alertCtrl: AlertController) {
+    private userService: UserService, private formBuilder: FormBuilder) {
     let typeModal = this.navParams.get('type');
 
     if (typeModal === 'create') {
@@ -36,34 +38,70 @@ export class EventModalComponent implements OnInit {
       this.createEvent = true;
 
       this.event = new Event();
-      this.event.allDay = false;
-
       this.getUser();
     } else {
       this.event = this.navParams.get('event');
-      this.eventDate = moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm');
-      this.eventDate += ` - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
+
+      this.event.startTime = moment.unix(this.event.start.seconds).toISOString();
+      this.event.endTime = moment.unix(this.event.end.seconds).toISOString();
+      this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
     }
   }
 
   ngOnInit() {
+    this.createFormGroup();
   }
 
-  ionViewWillEnter() {
+  createFormGroup() {
+    this.eventDetails = this.formBuilder.group({
+      title: new FormControl('', {
+        validators: Validators.compose([
+          Validators.required
+        ]), updateOn: 'change'
+      }),
+      description: new FormControl('', {
+        validators: Validators.compose([
+          Validators.required
+        ]), updateOn: 'change'
+      }),
+      location: new FormControl('', {
+        validators: Validators.compose([
+          Validators.required,
+        ]), updateOn: 'change'
+      }),
+      allDay: new FormControl(false, {
+        validators: Validators.compose([
+          Validators.required,
+        ]), updateOn: 'change'
+      }),
+      start: new FormControl(this.start, {
+        validators: Validators.compose([
+          Validators.required,
+        ]), updateOn: 'change'
+      }),
+      end: new FormControl(this.end, {
+        validators: Validators.compose([
+          Validators.required,
+        ]), updateOn: 'change'
+      }),
+    });
   }
 
   getUser() {
-    console.log(this.uid);
     this.userService.getUser(this.uid).subscribe((response) => this.user = response);
   }
 
   submit() {
+    // Set form control values to event object
+    this.event.title = this.eventDetails.controls.title.value;
+    this.event.description = this.eventDetails.controls.description.value;
+    this.event.location = this.eventDetails.controls.location.value;
+    this.event.allDay = this.eventDetails.controls.allDay.value;
+    this.event.start = moment(this.eventDetails.controls.start.value).toDate();
+    this.event.end = moment(this.eventDetails.controls.end.value).toDate();
+
     this.event.createdBy = `${this.user.firstName} ${this.user.lastName}`;
     this.event.groupId = this.group.id;
-
-    // Convert datetime strings to Date objects
-    this.event.start = moment(this.start).toDate();
-    this.event.end = moment(this.end).toDate();
 
     this.eventService.addEvent(this.event).then((response) => {
       if (response) {

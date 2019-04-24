@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NgCalendarModule } from 'ionic2-calendar';
@@ -20,9 +20,14 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     NgCalendarModule,
     RouterModule.forChild(routes)
+  ],
+  exports: [
+    ReactiveFormsModule,
+    FormsModule,
   ],
   entryComponents: [CalendarPopoverComponent, EventModalComponent],
   declarations: [CalendarPage, CalendarPopoverComponent, EventModalComponent]

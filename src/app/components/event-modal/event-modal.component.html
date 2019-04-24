@@ -14,51 +14,35 @@
   <div class="modal-body">
     <div *ngIf="createEvent && event">
       <ion-list>
-        <ion-item>
-          <ion-input [(ngModel)]="event.title" placeholder="Title">
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">All day</ion-label>
-          <ion-toggle color="primary" slot="end" [(ngModel)]="event.allDay"></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">From</ion-label>
-          <ion-datetime [(ngModel)]="start" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
-            min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">Till</ion-label>
-          <ion-datetime [(ngModel)]="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
-            min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-input [(ngModel)]="event.location" placeholder="Location">
-          </ion-input>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-textarea [(ngModel)]="event.description" placeholder="Description"></ion-textarea>
-        </ion-item>
+        <form novalidate [formGroup]="eventDetails">
+          <ion-item>
+            <ion-input type="text" formControlName="title" placeholder="Title">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">All day</ion-label>
+            <ion-toggle formControlName="allDay" color="primary" slot="end"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">From</ion-label>
+            <ion-datetime formControlName="start" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
+              min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">Till</ion-label>
+            <ion-datetime formControlName="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
+              min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" formControlName="location" placeholder="Location">
+            </ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-textarea formControlName="description" placeholder="Description"></ion-textarea>
+          </ion-item>
+        </form>
       </ion-list>
     </div>
-
-    <!-- <div *ngIf="!createEvent && event">
-      <ion-list>
-        <ion-item *ngIf="event.location">
-          <ion-label class="ion-align-self-start" position="fixed">Where</ion-label>
-          <ion-input style="margin-bottom:5px;margin-top:11px;" readonly>{{ event.location }}</ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Description</ion-label>
-          <ion-textarea value="{{event.description}}" readonly></ion-textarea>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-label position="fixed">Created By</ion-label>
-          <ion-input readonly>{{ event.createdBy }}</ion-input>
-        </ion-item>
-      </ion-list>
-    </div>
-  </div> -->
 
     <div *ngIf="!createEvent && event">
       <ion-list>
@@ -72,13 +56,15 @@
         </ion-item>
         <ion-item>
           <ion-label position="fixed">From</ion-label>
-          <ion-datetime [value]="start" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
-            min="{{today.toISOString()}}" style="margin-left: auto;" readonly></ion-datetime>
+          <ion-datetime [value]="event.startTime" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
+            style="margin-left: auto;" readonly>
+          </ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Till</ion-label>
-          <ion-datetime [value]="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
-            min="{{today.toISOString()}}" style="margin-left: auto;" readonly></ion-datetime>
+          <ion-datetime [value]="event.endTime" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
+            style="margin-left: auto;" readonly>
+          </ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Location</ion-label>
@@ -96,7 +82,8 @@
     </div>
 
     <div class="modal-footer">
-      <ion-button expand="full" fill="solid" color="primary" (click)="submit()" *ngIf="createEvent">
+      <ion-button expand="full" fill="solid" color="primary" (click)="submit()" *ngIf="createEvent"
+        [disabled]="eventDetails.invalid">
         SAVE
       </ion-button>
     </div>

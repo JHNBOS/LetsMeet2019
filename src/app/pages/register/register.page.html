@@ -63,7 +63,7 @@
 
             <ion-row class="button-row">
               <ion-col text-center>
-                <ion-button expand="full" fill="solid" color="primary" (click)="submit()">
+                <ion-button expand="full" fill="solid" color="primary" (click)="submit()" [disabled]="user.invalid">
                   SIGN UP
                 </ion-button>
               </ion-col>

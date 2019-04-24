@@ -25,7 +25,7 @@
   </calendar>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="secondary" [hidden]="isToday" (click)="today()">
+    <ion-fab-button color="secondary" [hidden]="currentMonth" (click)="today()">
       <ion-icon name="home"></ion-icon>
     </ion-fab-button>
     <ion-fab-button color="tertiary" (click)="createEvent()">
