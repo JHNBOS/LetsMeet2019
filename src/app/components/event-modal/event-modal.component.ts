@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ModalController, NavParams } from '@ionic/angular';
+import { AlertController, ModalController, NavParams } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
 import { EventService } from 'src/app/services/event.service';
@@ -30,11 +30,12 @@ export class EventModalComponent implements OnInit {
   end: string = this.today.toISOString();
 
   constructor(private navParams: NavParams, private modal: ModalController, private eventService: EventService,
-    private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private storage: Storage) {
+    private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private storage: Storage, private alertController: AlertController) {
     let typeModal = this.navParams.get('type');
+    this.group = this.navParams.get('group');
+
     if (typeModal === 'create') {
       this.uid = this.navParams.get('uid');
-      this.group = this.navParams.get('group');
       this.createEvent = true;
 
       this.event = new Event();
@@ -89,6 +90,27 @@ export class EventModalComponent implements OnInit {
 
   getUser() {
     this.storage.get('user').then((response) => this.user = response);
+  }
+
+  async deleteEvent() {
+    const alert = await this.alertController.create({
+      header: 'Delete',
+      message: 'Are you sure you want to delete this event?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.eventService.deleteEvent(this.group.id, this.event.id).then(() => {
+              this.close();
+            });
+          }
+        },
+        {
+          text: 'No'
+        }
+      ]
+    });
+    await alert.present();
   }
 
   submit() {

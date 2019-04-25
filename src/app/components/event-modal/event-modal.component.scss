@@ -44,9 +44,14 @@ ion-avatar {
     border-top-right-radius: 15px;
     border-top-left-radius: 15px;
 
-    .close {
+    .buttons {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+
+      .delete-button {
+        color: #fff;
+        margin: 0;
+      }
 
       .close-button {
         color: #fff;

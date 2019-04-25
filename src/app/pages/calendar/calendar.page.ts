@@ -119,9 +119,15 @@ export class CalendarPage implements OnInit, AfterViewInit {
         component: EventModalComponent,
         showBackdrop: true,
         backdropDismiss: true,
-        componentProps: { type: 'details', event: event }
+        componentProps: { type: 'details', group: this.group, event: event }
       }
     );
+
+    modal.onDidDismiss().then(() => {
+      this.getEvents();
+      setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+    });
+
     modal.present();
   }
 
@@ -134,18 +140,13 @@ export class CalendarPage implements OnInit, AfterViewInit {
         componentProps: { type: 'create', group: this.group, uid: this.authUser.uid }
       }
     );
+
     modal.onDidDismiss().then(() => {
       this.getEvents();
       setTimeout(() => this.calendarComponent.loadEvents(), 1000);
     });
+
     modal.present();
-  }
-
-  reloadSource(startTime, endTime) {
-  }
-
-  onRangeChanged(ev) {
-    console.log('range changed: startTime: ' + ev.startTime + ', endTime: ' + ev.endTime);
   }
 
   onViewTitleChanged(title) {
