@@ -105,7 +105,13 @@ export class CalendarPage implements OnInit, AfterViewInit {
     this.currentMonth = today.getUTCMonth() === event.getUTCMonth();
 
     if (this.calendar.mode === 'month') {
-      if (event.getFullYear() < today.getFullYear() || (event.getFullYear() === today.getFullYear() && event.getMonth() <= today.getMonth())) {
+      if (this.currentMonth) {
+        this.calendar.lockSwipeToPrev = true;
+      } else {
+        this.calendar.lockSwipeToPrev = false;
+      }
+    } else {
+      if (event.getDate() <= today.getDate()) {
         this.calendar.lockSwipeToPrev = true;
       } else {
         this.calendar.lockSwipeToPrev = false;
