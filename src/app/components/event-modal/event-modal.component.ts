@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ModalController, NavParams } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/services/models/event';
 import { Group } from 'src/app/services/models/group';
 import { User } from 'src/app/services/models/user';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-event-modal',
@@ -15,7 +16,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EventModalComponent implements OnInit {
   private uid: string;
-  private user: User = null;
+  user: User = null;
   eventDetails: FormGroup;
 
   createEvent: boolean = false;
@@ -29,22 +30,21 @@ export class EventModalComponent implements OnInit {
   end: string = this.today.toISOString();
 
   constructor(private navParams: NavParams, private modal: ModalController, private eventService: EventService,
-    private userService: UserService, private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private storage: Storage) {
     let typeModal = this.navParams.get('type');
-
     if (typeModal === 'create') {
       this.uid = this.navParams.get('uid');
       this.group = this.navParams.get('group');
       this.createEvent = true;
 
       this.event = new Event();
-      this.getUser();
     } else {
       this.event = this.navParams.get('event');
 
       this.event.startTime = moment.unix(this.event.start.seconds).toISOString();
       this.event.endTime = moment.unix(this.event.end.seconds).toISOString();
       this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
+      this.getUser();
     }
   }
 
@@ -88,7 +88,7 @@ export class EventModalComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.getUser(this.uid).subscribe((response) => this.user = response);
+    this.storage.get('user').then((response) => this.user = response);
   }
 
   submit() {

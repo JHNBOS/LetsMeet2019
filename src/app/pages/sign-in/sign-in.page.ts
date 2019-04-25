@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import { User } from 'src/app/services/models/user';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
@@ -15,7 +18,7 @@ export class SignInPage implements OnInit {
   error_messages = environment.error_messages;
 
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    public alertCtrl: AlertController) { }
+    public alertCtrl: AlertController, private userService: UserService, private storage: Storage) { }
 
   ngOnInit() {
     this.createFormGroup();
@@ -47,15 +50,23 @@ export class SignInPage implements OnInit {
     this.navController.navigateForward('/forgot-password');
   }
 
+  async getUserProfile(email: string): Promise<User> {
+    let profile = await this.userService.getUserByEmail(email);
+    return profile;
+  }
+
   async submit() {
     const credentials = { email: this.user.controls.email.value, password: this.user.controls.password.value };
     await this.authService.signInWithEmail(credentials)
-      .then((response) => {
+      .then(async (response) => {
         if (response) {
-          // Continue to home page
-          this.navController.navigateForward('/home');
+          // Get user profile
+          let profile = await this.getUserProfile(credentials.email);
+
+          this.storage.clear();
+          this.storage.set('user', profile).then(() => this.navController.navigateForward('/home'));
         }
-      }, (rejected: firebase.auth.Error) => { throw rejected; });
+      }, (rejected: firebase.auth.Error) => { throw rejected; }).then();
   }
 
 }

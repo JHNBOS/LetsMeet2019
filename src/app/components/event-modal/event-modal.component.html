@@ -19,65 +19,63 @@
             <ion-input type="text" formControlName="title" placeholder="Title">
             </ion-input>
           </ion-item>
+
           <ion-item>
             <ion-label position="fixed">All day</ion-label>
             <ion-toggle formControlName="allDay" color="primary" slot="end"></ion-toggle>
           </ion-item>
+
           <ion-item>
             <ion-label position="fixed">From</ion-label>
             <ion-datetime formControlName="start" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
               min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
           </ion-item>
+
           <ion-item>
             <ion-label position="fixed">Till</ion-label>
             <ion-datetime formControlName="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
               min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
           </ion-item>
+
           <ion-item>
             <ion-input type="text" formControlName="location" placeholder="Location">
             </ion-input>
           </ion-item>
+
           <ion-item lines="none">
             <ion-textarea formControlName="description" placeholder="Description"></ion-textarea>
           </ion-item>
+
         </form>
       </ion-list>
     </div>
 
     <div *ngIf="!createEvent && event">
       <ion-list>
+
         <ion-item>
-          <ion-input [value]="event.title" placeholder="Title" readonly>
-          </ion-input>
+          <ion-textarea [value]="event.description" placeholder="Description" readonly></ion-textarea>
         </ion-item>
+
         <ion-item>
           <ion-label position="fixed">All day</ion-label>
           <ion-toggle color="primary" slot="end" [value]="event.allDay" disabled></ion-toggle>
         </ion-item>
-        <ion-item>
-          <ion-label position="fixed">From</ion-label>
-          <ion-datetime [value]="event.startTime" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
-            style="margin-left: auto;" readonly>
-          </ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">Till</ion-label>
-          <ion-datetime [value]="event.endTime" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
-            style="margin-left: auto;" readonly>
-          </ion-datetime>
-        </ion-item>
+
         <ion-item>
           <ion-label position="fixed">Location</ion-label>
           <ion-input [value]="event.location" placeholder="Location" style="text-align: right" readonly>
           </ion-input>
         </ion-item>
-        <ion-item>
-          <ion-textarea [value]="event.description" placeholder="Description" readonly></ion-textarea>
-        </ion-item>
+
         <ion-item lines="none">
           <ion-label position="fixed">Created By</ion-label>
           <ion-input [value]="event.createdBy" placeholder="Created By" style="text-align: right" readonly></ion-input>
+          <ion-avatar>
+            <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(user?.avatar)" />
+          </ion-avatar>
         </ion-item>
+
       </ion-list>
     </div>
 

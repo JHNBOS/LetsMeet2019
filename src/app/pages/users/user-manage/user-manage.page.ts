@@ -4,11 +4,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AlertController, Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 import { User } from '../../../services/models/user';
+
 
 @Component({
   selector: 'app-user-manage',
@@ -31,7 +33,8 @@ export class UserManagePage implements OnInit {
     private camera: Camera,
     public alertCtrl: AlertController,
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private storage: Storage
   ) {
   }
 
@@ -122,7 +125,11 @@ export class UserManagePage implements OnInit {
           }
         }]
       });
-      await alert.present();
+
+      this.storage.clear();
+      this.storage.set('user', this.user).then(async () => {
+        await alert.present();
+      });
     }
   }
 

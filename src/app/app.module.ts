@@ -26,6 +26,7 @@ import { GlobalErrorHandler } from './services/helpers/global.error-handler';
   imports: [
     BrowserModule,
     IonicModule.forRoot({ mode: 'md' }),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFirestoreModule,
@@ -33,7 +34,6 @@ import { GlobalErrorHandler } from './services/helpers/global.error-handler';
     AngularFireDatabaseModule,
     ReactiveFormsModule,
     FormsModule,
-    IonicStorageModule,
     AppRoutingModule
   ],
   providers: [

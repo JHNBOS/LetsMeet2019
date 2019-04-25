@@ -39,20 +39,18 @@ export class UserService {
 
   getUserByEmail(email: string): Promise<User> {
     return this.userCollection.ref.where('email', '==', email).get().then((response) => {
+      let user: User = null;
       if (response.docs.length > 0) {
         let data = response.docs[0].data();
-        let user = new User();
+        user = new User();
         user.uid = data.uid;
         user.email = data.email;
         user.firstName = data.firstName;
         user.lastName = data.lastName;
         user.color = data.color;
         user.avatar = data.avatar;
-
-        return user;
       }
-
-      return null;
+      return user;
     }).catch((error) => {
       this.handleError(error);
       return null;
