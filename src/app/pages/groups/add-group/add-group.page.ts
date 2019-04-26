@@ -104,11 +104,14 @@ export class AddGroupPage implements OnInit, AfterViewInit {
           const alert = await this.alertCtrl.create({
             header: 'Success',
             message: 'Group was sucessfully created!',
-            buttons: ['OK']
+            buttons: [{
+              text: 'OK', handler: () => {
+                setTimeout(() => { this.router.navigate(['home']); }, 2000);
+              }
+            }]
           });
           await alert.present();
         }
-        this.router.navigate(['home']);
       }
     });
   }

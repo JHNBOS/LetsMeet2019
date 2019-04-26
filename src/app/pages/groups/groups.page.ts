@@ -24,7 +24,7 @@ export class GroupsPage implements OnInit {
     this.getGroups();
   }
 
-  ionViewWillLoad() {
+  ionViewDidEnter() {
     this.authUser = this.authenticationService.getUserAuth();
     this.getGroups();
   }
