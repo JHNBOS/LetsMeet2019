@@ -28,6 +28,10 @@
     font-weight: 600;
     text-shadow: 0px 0px 4px #0165a0;
 
+    &.hide {
+      transform: translateX(-1000px);
+    }
+
     &.dark {
       color: #920000;
       font-family: "Lato";

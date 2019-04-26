@@ -9,19 +9,18 @@
     <ion-row class="form-row">
       <ion-col>
         <ion-list>
-          <form novalidate="true" [formGroup]="user">
+          <form [formGroup]="user">
 
             <ion-item>
               <ion-input type="email" formControlName="email" placeholder="Email">
               </ion-input>
             </ion-item>
             <ion-label class="error">
-              <small [style.transform]="user.get('email').hasError('required') && 
-                (user.get('email').dirty || user.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              <small [class.hide]="user.get('email').untouched || 
+                (user.get('email').value.length > 0 && user.get('email').touched)">
                 {{ error_messages.email[0].message }}
               </small>
-              <small [style.transform]="user.get('email').hasError('pattern') && 
-                (user.get('email').dirty || user.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              <small [class.hide]="!user.get('email').hasError('pattern')">
                 {{ error_messages.email[1].message }}
               </small>
             </ion-label>
@@ -30,12 +29,15 @@
               <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
             </ion-item>
             <ion-label class="error">
-              <small [style.transform]="user.get('password').hasError('required') && 
-                (user.get('password').dirty || user.get('password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              <small [class.hide]="user.get('password').untouched || 
+                (user.get('password').value.length > 0 && user.get('password').touched)">
                 {{ error_messages.password[0].message }}
               </small>
-              <small [style.transform]="user.get('password').hasError('pattern') && 
-                (user.get('password').dirty || user.get('password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+              <small [class.hide]="!user.get('password').hasError('minlength') || 
+                user.get('password').hasError('pattern')">
+                {{ error_messages.password[1].message }}
+              </small>
+              <small [class.hide]="!user.get('password').hasError('pattern')">
                 {{ error_messages.password[2].message }}
               </small>
             </ion-label>

@@ -27,9 +27,8 @@
             </ion-input>
           </ion-item>
           <ion-label class="error">
-            <small class="dark" class="dark"
-              [style.transform]="userDetails.get('firstName').hasError('required') && 
-                (userDetails.get('firstName').dirty || userDetails.get('firstName').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+            <small class="dark" [class.hide]="userDetails.get('firstName').untouched || 
+              (userDetails.get('firstName').value.length > 0 && userDetails.get('firstName').touched)">
               {{ error_messages.firstName[0].message }}
             </small>
           </ion-label>
@@ -40,9 +39,8 @@
             </ion-input>
           </ion-item>
           <ion-label class="error">
-            <small class="dark"
-              [style.transform]="userDetails.get('lastName').hasError('required') && 
-                  (userDetails.get('lastName').dirty || userDetails.get('lastName').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+            <small class="dark" [class.hide]="userDetails.get('lastName').untouched || 
+            (userDetails.get('lastName').value.length > 0 && userDetails.get('lastName').touched)">
               {{ error_messages.lastName[0].message }}
             </small>
           </ion-label>
@@ -53,14 +51,11 @@
             </ion-input>
           </ion-item>
           <ion-label class="error">
-            <small class="dark"
-              [style.transform]="userDetails.get('email').hasError('required') && 
-                (userDetails.get('email').dirty || userDetails.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+            <small class="dark" [class.hide]="userDetails.get('email').untouched || 
+                (userDetails.get('email').value.length > 0 && userDetails.get('email').touched)">
               {{ error_messages.email[0].message }}
             </small>
-            <small class="dark"
-              [style.transform]="userDetails.get('email').hasError('pattern') && 
-                (userDetails.get('email').dirty || userDetails.get('email').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+            <small class="dark" [class.hide]="!userDetails.get('email').hasError('pattern')">
               {{ error_messages.email[1].message }}
             </small>
           </ion-label>
@@ -70,14 +65,11 @@
             <ion-input type="password" formControlName="new_password"></ion-input>
           </ion-item>
           <ion-label class="error">
-            <small class="dark"
-              [style.transform]="userDetails.get('new_password').hasError('required') && 
-                (userDetails.get('new_password').dirty || userDetails.get('new_password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
-              {{ error_messages.password[0].message }}
+            <small class="dark" [class.hide]="!userDetails.get('new_password').hasError('minlength') || 
+              userDetails.get('new_password').hasError('pattern')">
+              {{ error_messages.password[1].message }}
             </small>
-            <small class="dark"
-              [style.transform]="userDetails.get('new_password').hasError('pattern') && 
-                (userDetails.get('new_password').dirty || userDetails.get('new_password').touched) ? 'translateX(0)' : 'translateX(-500px)'">
+            <small class="dark" [class.hide]="!userDetails.get('new_password').hasError('pattern')">
               {{ error_messages.password[2].message }}
             </small>
           </ion-label>
