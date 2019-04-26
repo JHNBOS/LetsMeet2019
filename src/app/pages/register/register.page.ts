@@ -63,7 +63,7 @@ export class RegisterPage implements OnInit {
 
         // Show success alert
         const alert = await this.alertCtrl.create({
-          header: 'Success',
+          header: 'Signing up',
           message: 'Sign up was successful!',
           buttons: [{
             text: 'OK', handler: () => {

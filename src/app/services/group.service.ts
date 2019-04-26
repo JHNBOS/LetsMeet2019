@@ -73,7 +73,7 @@ export class GroupService {
         createdBy: group.createdBy,
         createdOn: new Date(),
         members: [],
-        picture: ''
+        picture: group.picture
       })
       .then(() => group)
       .catch((error) => {

@@ -1,0 +1,12 @@
+ion-list {
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+
+  ion-item {
+    margin: 0.5rem auto;
+
+    &.active {
+      --ion-item-background: #ddd;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+<ion-list>
+  <ion-item button *ngFor="let contact of contacts" (click)="add($event, contact)" [class.active]="contact.selected">
+    <ion-avatar slot="start">
+      <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
+    </ion-avatar>
+
+    <ion-label text-wrap>
+      <h3>{{ contact.name }}</h3>
+      <small>{{ contact.email }}</small>
+    </ion-label>
+  </ion-item>
+</ion-list>

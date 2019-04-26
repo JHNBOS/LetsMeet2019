@@ -3,4 +3,5 @@ export class Contact {
 	name: string;
 	email: string;
 	avatar: string;
+	selected: boolean = false;
 }

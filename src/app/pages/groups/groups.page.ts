@@ -20,6 +20,8 @@ export class GroupsPage implements OnInit {
     private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
 
   ngOnInit() {
+    this.authUser = this.authenticationService.getUserAuth();
+    this.getGroups();
   }
 
   ionViewWillEnter() {
@@ -33,6 +35,15 @@ export class GroupsPage implements OnInit {
     );
   }
 
+  refreshGroups(event: any) {
+    this.authUser = this.authenticationService.getUserAuth();
+    this.getGroups();
+
+    setTimeout(() => {
+      event.target.complete();
+    }, 1500);
+  }
+
   navigateToAdd() {
     this.router.navigate(['add-group']);
   }
@@ -44,7 +55,7 @@ export class GroupsPage implements OnInit {
 
   async signOut() {
     const alert = await this.alertController.create({
-      header: 'Sign out',
+      header: 'Signing out',
       message: 'Are you sure you want to sign out?',
       buttons: [
         {

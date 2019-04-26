@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AlertController, Platform } from '@ionic/angular';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { AlertController, IonSlides, Platform } from '@ionic/angular';
 import { GroupService } from 'src/app/services/group.service';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
+import { Contact } from 'src/app/services/models/contact';
 import { Group } from 'src/app/services/models/group';
 import { environment } from 'src/environments/environment';
 
@@ -12,11 +15,19 @@ import { environment } from 'src/environments/environment';
   templateUrl: './add-group.page.html',
   styleUrls: ['./add-group.page.scss'],
 })
-export class AddGroupPage implements OnInit {
+export class AddGroupPage implements OnInit, AfterViewInit {
   authUser: firebase.User;
+  group = new Group();
+  private members: Contact[] = [];
 
   groupDetails: FormGroup;
   error_messages = environment.error_messages;
+
+  @ViewChild('slides') slides: IonSlides;
+  slideOpts = {
+    initialSlide: 0,
+    speed: 400
+  };
 
   constructor(
     private router: Router,
@@ -24,16 +35,21 @@ export class AddGroupPage implements OnInit {
     private formBuilder: FormBuilder,
     public alertCtrl: AlertController,
     private authenticationService: AuthenticationService,
-    private groupService: GroupService
+    private groupService: GroupService,
+    public _sanitizer: DomSanitizer,
+    private camera: Camera,
   ) {
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.slides.lockSwipes(true);
   }
 
-  ionViewWillEnter() {
+  ngOnInit() {
     this.getUser();
     this.createFormGroup();
+
+    this.group.picture = environment.group_picture_placeholder;
   }
 
   getUser() {
@@ -50,31 +66,81 @@ export class AddGroupPage implements OnInit {
     });
   }
 
-  submit() {
-    let group = new Group();
-    group.name = this.groupDetails.controls.groupName.value;
-    group.createdBy = this.authUser.uid;
+  nextSlide() {
+    this.slides.lockSwipeToNext(false);
+    this.slides.slideNext(400);
+    this.slides.lockSwipeToNext(true);
+  }
 
-    this.groupService.addGroup(group).then(async (response) => {
-      // Add user to group
+  prevSlide() {
+    this.slides.lockSwipeToPrev(false);
+    this.slides.slidePrev(400);
+    this.slides.lockSwipeToPrev(true);
+  }
+
+  setContacts(event: any) {
+    this.members = event;
+  }
+
+  submit() {
+    this.group.name = this.groupDetails.controls.groupName.value;
+    this.group.createdBy = this.authUser.uid;
+
+    if (this.group.picture == '') { this.group.picture = environment.group_picture_placeholder; }
+
+    this.groupService.addGroup(this.group).then(async (response) => {
       if (typeof response !== 'boolean') {
-        this.addUserToGroup(response.id);
+        // Add user to group
+        this.addUserToGroup(response.id, this.authUser.uid);
+
+        // Add selected contacts to group
+        for (let index = 0; index < this.members.length; index++) {
+          const member = this.members[index];
+          this.addUserToGroup(response.id, member.id);
+        }
+
+        // Show success alert
+        if (response) {
+          const alert = await this.alertCtrl.create({
+            header: 'Success',
+            message: 'Group was sucessfully created!',
+            buttons: ['OK']
+          });
+          await alert.present();
+        }
+        this.router.navigate(['home']);
       }
     });
   }
 
-  addUserToGroup(id: string) {
-    this.groupService.addMember(id, this.authUser.uid).then(async (response) => {
-      // Show success alert
-      if (response) {
-        const alert = await this.alertCtrl.create({
-          header: 'Success',
-          message: 'Group was sucessfully created!',
-          buttons: ['OK']
-        });
-        await alert.present();
+  addUserToGroup(groupId: string, uid: string) {
+    this.groupService.addMember(groupId, uid);
+  }
+
+  async uploadAvatar() {
+    const options: CameraOptions = {
+      quality: 80,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      correctOrientation: true
+    };
+
+    this.platform.ready().then(() => {
+      if (this.platform.is('cordova')) {
+        this.camera.getPicture(options).then(
+          (imageData) => {
+            let base64Image = "data:image/jpeg;base64," + imageData;
+            this.group.picture = base64Image;
+          }, async (error) => {
+            const alert = await this.alertCtrl.create({
+              header: 'Error',
+              message: 'Could not upload image. Please try again!',
+              buttons: ['OK']
+            });
+            await alert.present();
+          });
       }
-      this.router.navigate(['home']);
     });
   }
 }

@@ -10,6 +10,10 @@
 </ion-header>
 
 <ion-content fullscreen="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refreshGroups($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
     <ion-item button *ngFor="let group of groups" (click)="navigateToCalendar(group)">
       <ion-thumbnail slot="start">
@@ -25,7 +29,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="secondary" (click)="navigateToAdd()">
+    <ion-fab-button color="tertiary" (click)="navigateToAdd()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
