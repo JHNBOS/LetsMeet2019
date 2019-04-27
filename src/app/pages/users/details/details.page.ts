@@ -7,8 +7,8 @@ import { UserService } from 'src/app/services/user.service';
 
 @Component({
 	selector: 'app-user-details',
-	templateUrl: './user-details.page.html',
-	styleUrls: ['./user-details.page.scss'],
+	templateUrl: './details.page.html',
+	styleUrls: ['./details.page.scss'],
 })
 export class UserDetailsPage implements OnInit {
 	user: User = null;
@@ -30,7 +30,7 @@ export class UserDetailsPage implements OnInit {
 	}
 
 	navigateToManage() {
-		this.router.navigate(['user-manage']);
+		this.router.navigate(['user/manage']);
 	}
 
 	navigateToContacts() {

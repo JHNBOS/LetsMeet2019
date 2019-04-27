@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ContactSelectModule } from 'src/app/components/contact-select/contact-select.module';
 
-import { AddGroupPage } from './add-group.page';
+import { AddGroupPage } from './add.page';
 
 const routes: Routes = [
   {

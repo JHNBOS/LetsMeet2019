@@ -12,8 +12,8 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-group',
-  templateUrl: './add-group.page.html',
-  styleUrls: ['./add-group.page.scss'],
+  templateUrl: './add.page.html',
+  styleUrls: ['./add.page.scss'],
 })
 export class AddGroupPage implements OnInit, AfterViewInit {
   authUser: firebase.User;

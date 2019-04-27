@@ -15,7 +15,7 @@ const routes: Routes = [
 			},
 			{
 				path: 'profile',
-				loadChildren: '../users/user-details/user-details.module#UserDetailsPageModule'
+				loadChildren: '../users/details/details.module#UserDetailsPageModule'
 			},
 			{
 				path: '',
@@ -24,9 +24,32 @@ const routes: Routes = [
 			},
 		]
 	},
-	{ path: 'user-details', canActivate: [AuthGuard], loadChildren: '../users/user-details/user-details.module#UserDetailsPageModule' },
-	{ path: 'user-manage', canActivate: [AuthGuard], loadChildren: '../users/user-manage/user-manage.module#UserManagePageModule' },
-	{ path: 'add-group', canActivate: [AuthGuard], loadChildren: '../groups/add-group/add-group.module#AddGroupPageModule' },
+	{
+		path: 'user',
+		children: [
+			{
+				path: 'details',
+				loadChildren: '../users/details/details.module#UserDetailsPageModule'
+			},
+			{
+				path: 'manage',
+				loadChildren: '../users/manage/manage.module#UserManagePageModule'
+			}
+		]
+	},
+	{
+		path: 'group',
+		children: [
+			{
+				path: 'details',
+				loadChildren: '../groups/details/details.module#GroupDetailsPageModule'
+			},
+			{
+				path: 'add',
+				loadChildren: '../groups/add/add.module#AddGroupPageModule'
+			}
+		]
+	},
 	{ path: 'contacts', canActivate: [AuthGuard], loadChildren: '../contacts/contacts.module#ContactsPageModule' },
 	{ path: 'calendar', canActivate: [AuthGuard], loadChildren: '../calendar/calendar.module#CalendarPageModule' },
 	{

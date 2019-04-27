@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { UserDetailsPage } from './user-details.page';
+import { UserDetailsPage } from './details.page';
 
 const routes: Routes = [
   {

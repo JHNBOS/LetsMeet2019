@@ -6,16 +6,14 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AlertController, Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
+import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
-import { User } from '../../../services/models/user';
-
-
 @Component({
   selector: 'app-user-manage',
-  templateUrl: './user-manage.page.html',
-  styleUrls: ['./user-manage.page.scss'],
+  templateUrl: './manage.page.html',
+  styleUrls: ['./manage.page.scss'],
 })
 export class UserManagePage implements OnInit {
   user: User = null;
