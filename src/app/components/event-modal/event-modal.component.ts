@@ -44,9 +44,15 @@ export class EventModalComponent implements OnInit {
 
       this.event.startTime = moment.unix(this.event.start.seconds).toISOString();
       this.event.endTime = moment.unix(this.event.end.seconds).toISOString();
-      this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
-      this.getUser();
+
+      if (this.event.allDay) {
+        this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM')}`;
+      } else {
+        this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
+      }
     }
+
+    this.getUser();
   }
 
   ngOnInit() {
@@ -61,14 +67,10 @@ export class EventModalComponent implements OnInit {
         ]), updateOn: 'change'
       }),
       description: new FormControl('', {
-        validators: Validators.compose([
-          Validators.required
-        ]), updateOn: 'change'
+        validators: Validators.compose([]), updateOn: 'change'
       }),
       location: new FormControl('', {
-        validators: Validators.compose([
-          Validators.required,
-        ]), updateOn: 'change'
+        validators: Validators.compose([]), updateOn: 'change'
       }),
       allDay: new FormControl(false, {
         validators: Validators.compose([

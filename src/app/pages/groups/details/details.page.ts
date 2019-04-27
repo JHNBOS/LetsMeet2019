@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { AlertController, ModalController } from '@ionic/angular';
 import { ContactSelectComponent } from 'src/app/components/contact-select/contact-select.component';
 import { DataService } from 'src/app/services/data.service';
 import { GroupService } from 'src/app/services/group.service';
+import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Contact } from 'src/app/services/models/contact';
 import { Group } from 'src/app/services/models/group';
 import { User } from 'src/app/services/models/user';
@@ -15,26 +17,36 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./details.page.scss'],
 })
 export class GroupDetailsPage implements OnInit {
+  authUser: firebase.User = null;
+
   group: Group = null;
   createdBy: string;
   members: User[] = [];
 
   constructor(
+    private router: Router,
     private userService: UserService,
     private groupService: GroupService,
     public _sanitizer: DomSanitizer,
     private dataService: DataService,
-    private modal: ModalController
+    private authenticationService: AuthenticationService,
+    private modal: ModalController,
+    private alertController: AlertController
   ) {
     this.dataService.serviceData.subscribe((response) => this.group = response);
   }
 
   ngOnInit() {
+    this.getUser();
     this.getCreatedBy();
     this.getMembers();
   }
 
   ionViewWillEnter() {
+  }
+
+  getUser() {
+    this.authUser = this.authenticationService.getUserAuth();
   }
 
   getCreatedBy() {
@@ -67,5 +79,25 @@ export class GroupDetailsPage implements OnInit {
 
       await this.groupService.addMember(this.group.id, member.id);
     }
+  }
+
+  async removeMember(member: User) {
+    const alert = await this.alertController.create({
+      header: 'Remove Member',
+      message: 'Are you sure you want to remove this member from the group?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.groupService.removeMember(this.group.id, member.uid).then((response) => this.ngOnInit());
+          }
+        },
+        {
+          text: 'No'
+        }
+      ]
+    });
+
+    await alert.present();
   }
 }

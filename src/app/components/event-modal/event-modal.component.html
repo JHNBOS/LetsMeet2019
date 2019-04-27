@@ -57,16 +57,11 @@
     <div *ngIf="!createEvent && event">
       <ion-list>
 
-        <ion-item>
+        <ion-item *ngIf="event.description">
           <ion-textarea [value]="event.description" placeholder="Description" readonly></ion-textarea>
         </ion-item>
 
-        <ion-item>
-          <ion-label position="fixed">All day</ion-label>
-          <ion-toggle color="primary" slot="end" [value]="event.allDay" disabled></ion-toggle>
-        </ion-item>
-
-        <ion-item>
+        <ion-item *ngIf="event.location">
           <ion-label position="fixed">Location</ion-label>
           <ion-input [value]="event.location" placeholder="Location" style="text-align: right" readonly>
           </ion-input>
