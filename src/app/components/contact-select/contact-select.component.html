@@ -1,5 +1,5 @@
 <ion-list>
-  <ion-item *ngIf="contacts.length == 0">No contacts to add.</ion-item>
+  <ion-item *ngIf="!contacts || contacts?.length == 0">No contacts to add.</ion-item>
   <ion-item button *ngFor="let contact of contacts" (click)="add($event, contact)" [class.active]="contact.selected">
     <ion-avatar slot="start">
       <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
