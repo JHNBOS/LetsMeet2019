@@ -1,0 +1,20 @@
+@import "../../../../theme/variables.scss";
+
+ion-avatar.group-avatar {
+  max-width: 200px;
+  max-height: 200px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+ion-list {
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+}

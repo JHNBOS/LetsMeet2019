@@ -9,7 +9,7 @@
 
 <ion-content fullscreen="true">
   <ion-list>
-    <ion-item-sliding *ngFor="let contact of contacts">
+    <ion-item-sliding #item *ngFor="let contact of contacts">
       <ion-item button>
         <ion-avatar slot="start">
           <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
@@ -23,7 +23,8 @@
 
       <ion-item-options side="end">
         <ion-item-option color="light">
-          <ion-icon slot="icon-only" color="danger" name="trash" (click)="deleteContact(contact)"></ion-icon>
+          <ion-icon slot="icon-only" color="danger" name="trash" (click)="deleteContact(contact);item.close();">
+          </ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

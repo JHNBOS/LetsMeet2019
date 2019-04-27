@@ -17,7 +17,7 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item-sliding *ngFor="let group of groups">
+    <ion-item-sliding #item *ngFor="let group of groups">
       <ion-item button (click)="navigateToCalendar(group)">
         <ion-thumbnail slot="start">
           <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)">
@@ -32,7 +32,11 @@
 
       <ion-item-options side="end">
         <ion-item-option color="light">
-          <ion-icon slot="icon-only" color="danger" name="trash" (click)="deleteGroup(group)"></ion-icon>
+          <ion-icon slot="icon-only" color="danger" name="trash" (click)="deleteGroup(group);item.close();"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="light">
+          <ion-icon slot="icon-only" color="primary" name="information-circle-outline"
+            (click)="navigateToDetails(group);item.close();"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { DetailsPage } from './details.page';
+import { GroupDetailsPage } from './details.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DetailsPage
+    component: GroupDetailsPage
   }
 ];
 
@@ -20,6 +20,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DetailsPage]
+  declarations: [GroupDetailsPage]
 })
 export class GroupDetailsPageModule { }

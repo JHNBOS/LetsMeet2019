@@ -68,6 +68,11 @@ export class GroupsPage implements OnInit {
     this.router.navigate(['group/add']);
   }
 
+  navigateToDetails(group: Group) {
+    this.dataService.changeData(group);
+    this.router.navigate(['group/details']);
+  }
+
   navigateToCalendar(group: Group) {
     this.dataService.changeData(group);
     this.router.navigate(['calendar']);

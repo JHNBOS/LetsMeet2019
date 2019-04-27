@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import * as firebase from 'firebase';
+import * as moment from 'moment';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/observable';
 import { map, take } from 'rxjs/operators';
@@ -29,7 +30,7 @@ export class GroupService {
             let newGroup = new Group();
             newGroup.id = data.id;
             newGroup.name = data.name;
-            newGroup.createdOn = data.createdOn;
+            newGroup.createdOn = moment.unix(data.createdOn.seconds).toDate();;
             newGroup.createdBy = data.createdBy;
             newGroup.picture = data.picture;
             newGroup.members = data.members;
@@ -46,9 +47,19 @@ export class GroupService {
   }
 
   getGroup(id: string): Observable<Group> {
-    return this.groupCollection.doc<Group>(id).valueChanges().pipe(
+    return this.groupCollection.doc(id).valueChanges().pipe(
       take(1),
-      map(group => group)
+      map((group: any) => {
+        let newGroup = new Group();
+        newGroup.id = group.id;
+        newGroup.name = group.name;
+        newGroup.createdOn = moment.unix(group.createdOn.seconds).toDate();
+        newGroup.createdBy = group.createdBy;
+        newGroup.picture = group.picture;
+        newGroup.members = group.members;
+
+        return newGroup
+      })
     );
   }
 

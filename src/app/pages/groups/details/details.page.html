@@ -1,9 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>details</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ group?.name }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding" *ngIf="group" fullscreen="true">
+  <ion-row>
+    <ion-col text-center align-self-center>
+      <ion-avatar class="group-avatar">
+        <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)" />
+      </ion-avatar>
+      <h2>{{ group.name }}</h2>
+      <small>Created by {{ createdBy }}, {{ group.createdOn | date: 'dd-MM-yyyy' }}</small>
+    </ion-col>
+  </ion-row>
 
+  <ion-item-divider>
+  </ion-item-divider>
+
+  <ion-row class="ion-margin-top">
+    <ion-col>
+      <h4>Group Members</h4>
+      <ion-list *ngIf="members.length > 0">
+        <ion-item button *ngFor="let member of members">
+          <ion-avatar slot="start">
+            <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(member?.avatar)">
+          </ion-avatar>
+
+          <ion-label text-wrap>
+            <h3>{{ member?.firstName }} {{ member?.lastName }}</h3>
+            <small>{{ member?.email }}</small>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
 </ion-content>
