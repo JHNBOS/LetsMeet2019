@@ -111,6 +111,14 @@ export class GroupService {
       });
   }
 
+  assignNewCreator(id: string): Promise<boolean> {
+    let group: Group;
+    this.getGroup(id).subscribe((response) => group = response);
+    group.createdBy = group.members[group.members.length - 1];
+
+    return this.updateGroup(group).then((response) => response);
+  }
+
   updateGroup(group: Group): Promise<boolean> {
     return this.groupCollection.doc(group.id)
       .set({

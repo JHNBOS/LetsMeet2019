@@ -51,7 +51,9 @@ export class GroupsPage implements OnInit {
           text: 'Yes',
           handler: () => {
             this.groupService.removeMember(group.id, this.authUser.uid).then((response) => {
-              this.getGroups();
+              if (group.createdBy == this.authUser.uid) {
+                this.groupService.assignNewCreator(group.id).then((response) => this.getGroups());
+              }
             });
           }
         },
