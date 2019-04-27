@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { ContactSelectModule } from 'src/app/components/contact-select/contact-select.module';
 
 import { GroupDetailsPage } from './details.page';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ContactSelectModule,
     RouterModule.forChild(routes)
   ],
   declarations: [GroupDetailsPage]

@@ -12,6 +12,7 @@ import { ContactSelectComponent } from 'src/app/components/contact-select/contac
 		IonicModule
 	],
 	exports: [ContactSelectComponent],
+	entryComponents: [ContactSelectComponent],
 	declarations: [ContactSelectComponent]
 })
 export class ContactSelectModule { }

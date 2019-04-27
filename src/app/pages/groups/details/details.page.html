@@ -18,13 +18,25 @@
     </ion-col>
   </ion-row>
 
-  <ion-item-divider>
-  </ion-item-divider>
+  <ion-item-divider></ion-item-divider>
 
   <ion-row class="ion-margin-top">
     <ion-col>
-      <h4>Group Members</h4>
-      <ion-list *ngIf="members.length > 0">
+      <ion-list lines="none">
+        <ion-item button (click)="addMember()">
+          <ion-label>
+            Add member to group
+          </ion-label>
+          <ion-icon name="add" color="primary" slot="start"></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-margin-top">
+    <ion-col>
+      <h4>Members</h4>
+      <ion-list *ngIf="members.length > 0" lines="none">
         <ion-item button *ngFor="let member of members">
           <ion-avatar slot="start">
             <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(member?.avatar)">
