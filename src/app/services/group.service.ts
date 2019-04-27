@@ -111,11 +111,9 @@ export class GroupService {
       });
   }
 
-  assignNewCreator(id: string): Promise<boolean> {
-    let group: Group;
-    this.getGroup(id).subscribe((response) => group = response);
+  assignNewCreator(group: Group): Promise<boolean> {
+    group.members.splice(group.members.findIndex(x => x == group.createdBy), 1);
     group.createdBy = group.members[group.members.length - 1];
-
     return this.updateGroup(group).then((response) => response);
   }
 
