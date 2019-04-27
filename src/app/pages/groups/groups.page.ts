@@ -20,13 +20,6 @@ export class GroupsPage implements OnInit {
     private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
 
   ngOnInit() {
-    this.authUser = this.authenticationService.getUserAuth();
-    this.getGroups();
-  }
-
-  ionViewDidEnter() {
-    this.authUser = this.authenticationService.getUserAuth();
-    this.getGroups();
   }
 
   ionViewWillEnter() {
@@ -46,7 +39,29 @@ export class GroupsPage implements OnInit {
 
     setTimeout(() => {
       event.target.complete();
-    }, 1500);
+    }, 2500);
+  }
+
+  async deleteGroup(group: Group) {
+    const alert = await this.alertController.create({
+      header: 'Leave Group',
+      message: 'Are you sure you want to leave this group?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.groupService.removeMember(group.id, this.authUser.uid).then((response) => {
+              this.getGroups();
+            });
+          }
+        },
+        {
+          text: 'No'
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   navigateToAdd() {

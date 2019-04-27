@@ -45,18 +45,6 @@ export class GroupService {
     return of(groups);
   }
 
-  addMember(id: string, uid: string): Promise<boolean> {
-    return this.groupCollection.doc(id)
-      .update({
-        members: firebase.firestore.FieldValue.arrayUnion(uid)
-      })
-      .then(() => true)
-      .catch((error) => {
-        this.handleError(error);
-        return false;
-      });
-  }
-
   getGroup(id: string): Observable<Group> {
     return this.groupCollection.doc<Group>(id).valueChanges().pipe(
       take(1),
@@ -76,6 +64,36 @@ export class GroupService {
         picture: group.picture
       })
       .then(() => group)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
+  }
+
+  addMember(id: string, uid: string): Promise<boolean> {
+    return this.groupCollection.doc(id)
+      .update({
+        members: firebase.firestore.FieldValue.arrayUnion(uid)
+      })
+      .then(() => true)
+      .catch((error) => {
+        this.handleError(error);
+        return false;
+      });
+  }
+
+  checkIfUserisCreator(id: string, uid: string): boolean {
+    let userIsCreator = false;
+    this.groupCollection.ref.where('createdBy', '==', uid).get().then((response) => userIsCreator = !response.empty);
+    return userIsCreator;
+  }
+
+  removeMember(id: string, uid: string): Promise<boolean> {
+    return this.groupCollection.doc(id)
+      .update({
+        members: firebase.firestore.FieldValue.arrayRemove(uid)
+      })
+      .then(() => true)
       .catch((error) => {
         this.handleError(error);
         return false;

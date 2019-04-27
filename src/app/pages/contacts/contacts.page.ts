@@ -31,6 +31,29 @@ export class ContactsPage implements OnInit {
       (response) => this.contacts = response);
   }
 
+  async deleteContact(contact: Contact) {
+    const alert = await this.alertController.create({
+      header: 'Delete Contact',
+      message: 'Are you sure you want to delete this contact?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.contactService.deleteContact(contact.id).then((response) => {
+              this.getContacts();
+            });
+          }
+        },
+        {
+          text: 'No'
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
   async showPrompt() {
     const alert = await this.alertController.create({
       header: 'Add Contact',
