@@ -1,8 +1,9 @@
 <div class="custom-modal">
   <div class="modal-header">
-    <div class="buttons">
-      <ion-button class="delete-button" fill="clear" (click)="deleteEvent()">
-        <ion-icon slot="icon-only" name="trash"></ion-icon>
+    <div class="buttons" [style.justify-content]="createEvent ? 'flex-end' : 'space-between'">
+      <ion-button class="delete-button" fill="clear" (click)="deleteEvent()" [hidden]="createEvent">
+        <ion-icon slot="icon-only" name="trash">
+        </ion-icon>
       </ion-button>
       <ion-button class="close-button" fill="clear" (click)="close()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
