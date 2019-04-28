@@ -27,7 +27,7 @@ export class SignInPage implements OnInit {
     this.createFormGroup();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     if (this.authService.checkSavedUser()) {
       this.navController.navigateRoot('/home');
     }
