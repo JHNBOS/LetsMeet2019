@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import * as firebase from 'firebase';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
@@ -59,13 +60,11 @@ export class SignInPage implements OnInit {
     const credentials = { email: this.user.controls.email.value, password: this.user.controls.password.value };
     await this.authService.signInWithEmail(credentials)
       .then(async (response) => {
-        if (response) {
-          // Get user profile
-          let profile = await this.getUserProfile(credentials.email);
+        // Get user profile
+        let profile = await this.getUserProfile(credentials.email);
 
-          this.storage.clear();
-          this.storage.set('user', profile).then(() => this.navController.navigateForward('/home'));
-        }
+        this.storage.clear();
+        this.storage.set('user', profile).then(() => this.navController.navigateForward('/home'));
       }, (rejected: firebase.auth.Error) => { throw rejected; }).then();
   }
 

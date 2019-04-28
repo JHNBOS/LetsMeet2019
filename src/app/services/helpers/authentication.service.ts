@@ -9,15 +9,15 @@ export class AuthenticationService {
 	private user: firebase.User;
 
 	constructor(private firebaseAuth: AngularFireAuth) {
-		firebaseAuth.authState.subscribe(user => {
-			this.user = user;
-		});
+		this.firebaseAuth.authState.subscribe(user => this.user = user);
 	}
 
 	async signInWithEmail(credentials) {
-		return await this.firebaseAuth.auth
-			.signInWithEmailAndPassword(credentials.email, credentials.password)
-			.catch(error => this.handleError(error));
+		await this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
+			return this.firebaseAuth.auth
+				.signInWithEmailAndPassword(credentials.email, credentials.password)
+				.catch(error => this.handleError(error));
+		});
 	}
 
 	async signUp(credentials) {
@@ -44,6 +44,10 @@ export class AuthenticationService {
 
 	isAuthenticated() {
 		return this.user != null;
+	}
+
+	getFireAuth() {
+		return this.firebaseAuth;
 	}
 
 	getUserAuth() {
