@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+
+import { User } from '../models/user';
+
 
 @Injectable({
 	providedIn: 'root',
@@ -8,7 +12,7 @@ import * as firebase from 'firebase/app';
 export class AuthenticationService {
 	private user: firebase.User;
 
-	constructor(private firebaseAuth: AngularFireAuth) {
+	constructor(private firebaseAuth: AngularFireAuth, private storage: Storage) {
 		this.firebaseAuth.authState.subscribe(user => this.user = user);
 	}
 
@@ -39,7 +43,18 @@ export class AuthenticationService {
 	}
 
 	async signOut(): Promise<void> {
+		this.storage.clear();
 		return await this.firebaseAuth.auth.signOut();
+	}
+
+	async saveUser(user: User): Promise<void> {
+		this.storage.clear();
+		await this.storage.set('firebase', this.user)
+			.then((response) => this.storage.set('user', user));
+	}
+
+	checkSavedUser(): Promise<boolean> {
+		return this.storage.get('firebase').then((response) => true);
 	}
 
 	isAuthenticated() {

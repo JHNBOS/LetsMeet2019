@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as firebase from 'firebase';
@@ -8,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
+
 
 @Component({
   selector: 'app-sign-in',
@@ -18,11 +20,17 @@ export class SignInPage implements OnInit {
   user: FormGroup;
   error_messages = environment.error_messages;
 
-  constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
+  constructor(private navController: NavController, private router: Router, private authService: AuthenticationService, private formBuilder: FormBuilder,
     public alertCtrl: AlertController, private userService: UserService, private storage: Storage) { }
 
   ngOnInit() {
     this.createFormGroup();
+  }
+
+  ionViewDidEnter() {
+    if (this.authService.checkSavedUser()) {
+      this.navController.navigateRoot('/home');
+    }
   }
 
   createFormGroup() {
@@ -63,8 +71,7 @@ export class SignInPage implements OnInit {
         // Get user profile
         let profile = await this.getUserProfile(credentials.email);
 
-        this.storage.clear();
-        this.storage.set('user', profile).then(() => this.navController.navigateForward('/home'));
+        await this.authService.saveUser(profile).then(() => this.navController.navigateForward('/home'));
       }, (rejected: firebase.auth.Error) => { throw rejected; }).then();
   }
 
