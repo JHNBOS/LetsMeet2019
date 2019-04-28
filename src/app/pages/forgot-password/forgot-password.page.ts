@@ -37,8 +37,9 @@ export class ForgotPasswordPage implements OnInit {
 
     this.toast = await this.toastController.create({
       message: 'An email with further instructions has been sent to this account!',
-      duration: 5000,
-      position: 'bottom'
+      duration: 2000,
+      position: 'bottom',
+      showCloseButton: true
     });
     this.toast.onDidDismiss().then(() => this.navController.navigateBack('sign-in'));
   }
@@ -62,7 +63,11 @@ export class ForgotPasswordPage implements OnInit {
       .then(async (response) => {
         this.loadingController.dismiss();
         this.toast.present();
-      }, (error) => this.loadingController.dismiss());
+      }, async (error) => {
+        this.loadingController.dismiss();
+        this.toast.messge = error.message;
+        await this.toast.present();
+      });
   }
 
 }

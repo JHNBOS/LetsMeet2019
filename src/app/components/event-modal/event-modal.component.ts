@@ -107,8 +107,9 @@ export class EventModalComponent implements OnInit {
       });
       this.toast = await this.toastController.create({
         message: 'Event was successfully created!',
-        duration: 5000,
-        position: 'bottom'
+        duration: 2000,
+        position: 'bottom',
+        showCloseButton: true
       });
     }, 0);
   }

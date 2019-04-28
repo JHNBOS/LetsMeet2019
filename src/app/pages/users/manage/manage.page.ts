@@ -57,8 +57,9 @@ export class UserManagePage implements OnInit {
       });
       this.toast = await this.toastController.create({
         message: '',
-        duration: 5000,
-        position: 'bottom'
+        duration: 2000,
+        position: 'bottom',
+        showCloseButton: true
       });
     }, 0);
   }
@@ -130,19 +131,19 @@ export class UserManagePage implements OnInit {
       if (this.userDetails.controls.new_password.value != '') {
         this.authUser.updatePassword(this.userDetails.controls.new_password.value);
       }
+
+      // Show toast
+      if (this.showSuccess) {
+        this.toast.message = 'Profile successfully updated!';
+        this.toast.onDidDismiss().then(() => this.router.navigate(['home']));
+
+        this.authenticationService.saveUser(this.user).then(async () => {
+          this.loadingController.dismiss();
+          await this.toast.present();
+        });
+      }
+      this.loadingController.dismiss();
     });
-
-    // Show toast
-    if (this.showSuccess) {
-      this.toast.message = 'Profile successfully updated!';
-      this.toast.onDidDismiss().then(() => this.router.navigate(['home']));
-
-      this.storage.set('user', this.user).then(async () => {
-        this.loadingController.dismiss();
-        await this.toast.present();
-      });
-    }
-    this.loadingController.dismiss();
   }
 
   navigateBack() {

@@ -5,7 +5,6 @@ import * as firebase from 'firebase/app';
 
 import { User } from '../models/user';
 
-
 @Injectable({
 	providedIn: 'root',
 })
@@ -53,10 +52,17 @@ export class AuthenticationService {
 			.then((response) => this.storage.set('user', user));
 	}
 
+	resetAuth() {
+		this.user = null;
+		this.storage.clear();
+	}
+
 	checkSavedUser(): Promise<boolean> {
-		return this.storage.ready().then(() => {
-			return this.storage.get('firebase').then((response) => true);
-		});
+		return this.storage.get('firebase').then((response) => true);
+	}
+
+	getSavedUser(): Promise<User> {
+		return this.storage.get('user').then((response) => response);
 	}
 
 	isAuthenticated() {

@@ -84,8 +84,9 @@ export class AddGroupPage implements OnInit, AfterViewInit {
       });
       this.toast = await this.toastController.create({
         message: '',
-        duration: 5000,
-        position: 'bottom'
+        duration: 2000,
+        position: 'bottom',
+        showCloseButton: true
       });
     }, 0);
   }

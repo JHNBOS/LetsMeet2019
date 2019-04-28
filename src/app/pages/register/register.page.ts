@@ -38,11 +38,12 @@ export class RegisterPage implements OnInit {
     });
 
     this.toast = await this.toastController.create({
-      message: 'Your account has successfully been created',
-      duration: 5000,
-      position: 'bottom'
+      message: 'Your account has successfully been created!',
+      duration: 2000,
+      position: 'bottom',
+      showCloseButton: true
     });
-    this.toast.onDidDismiss().then(() => this.navController.navigateBack('sign-in'));
+    this.toast.onDidDismiss().then(() => { this.authService.resetAuth(); this.navController.navigateBack('sign-in'); });
   }
 
   createFormGroup() {

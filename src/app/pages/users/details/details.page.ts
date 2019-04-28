@@ -29,6 +29,10 @@ export class UserDetailsPage implements OnInit {
 		this.getUser();
 	}
 
+	ionViewDidEnter() {
+		this.getUser();
+	}
+
 	navigateToManage() {
 		this.router.navigate(['user/manage']);
 	}
@@ -38,9 +42,7 @@ export class UserDetailsPage implements OnInit {
 	}
 
 	getUser() {
-		let authUser = this.authenticationService.getUserAuth();
-
-		this.memberSince = authUser.metadata.creationTime;
-		this.userService.getUser(authUser.uid).subscribe(response => (this.user = response));
+		this.memberSince = this.authenticationService.getUserAuth().metadata.creationTime;
+		this.authenticationService.getSavedUser().then((response => this.user = response));
 	}
 }
