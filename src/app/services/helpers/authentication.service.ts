@@ -54,7 +54,9 @@ export class AuthenticationService {
 	}
 
 	checkSavedUser(): Promise<boolean> {
-		return this.storage.get('firebase').then((response) => true);
+		return this.storage.ready().then(() => {
+			return this.storage.get('firebase').then((response) => true);
+		});
 	}
 
 	isAuthenticated() {

@@ -142,6 +142,7 @@ export class UserManagePage implements OnInit {
         await this.toast.present();
       });
     }
+    this.loadingController.dismiss();
   }
 
   navigateBack() {

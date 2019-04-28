@@ -90,7 +90,7 @@ export class SignInPage implements OnInit {
             this.loadingController.dismiss();
             this.navController.navigateRoot('/home');
           });
-      }, (rejected: firebase.auth.Error) => { throw rejected; }).then();
+      }, (rejected: firebase.auth.Error) => { this.loadingController.dismiss(); throw rejected; }).then();
   }
 
 }

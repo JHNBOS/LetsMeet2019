@@ -36,6 +36,7 @@ export class EventModalComponent implements OnInit {
     private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private storage: Storage, private alertController: AlertController,
     public toastController: ToastController, public loadingController: LoadingController) {
 
+    this.getUser();
     let typeModal = this.navParams.get('type');
     this.group = this.navParams.get('group');
 
@@ -56,12 +57,11 @@ export class EventModalComponent implements OnInit {
         this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
       }
     }
-
-    this.getUser();
   }
 
   ngOnInit() {
     this.createFormGroup();
+    this.init();
   }
 
   createFormGroup() {
@@ -159,7 +159,7 @@ export class EventModalComponent implements OnInit {
         await this.toast.present();
         this.close();
       }
-    });
+    }, (error) => this.loadingController.dismiss());
   }
 
   close() {

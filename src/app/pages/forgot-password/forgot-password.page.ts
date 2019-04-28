@@ -62,7 +62,7 @@ export class ForgotPasswordPage implements OnInit {
       .then(async (response) => {
         this.loadingController.dismiss();
         this.toast.present();
-      });
+      }, (error) => this.loadingController.dismiss());
   }
 
 }

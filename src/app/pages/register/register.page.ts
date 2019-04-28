@@ -85,7 +85,7 @@ export class RegisterPage implements OnInit {
 
         this.loadingController.dismiss();
         await this.toast.present();
-      }, (rejected: firebase.auth.Error) => { throw rejected; });
+      }, (rejected: firebase.auth.Error) => { this.loadingController.dismiss; throw rejected; });
   }
 
   createUser(uid: string): Promise<boolean> {

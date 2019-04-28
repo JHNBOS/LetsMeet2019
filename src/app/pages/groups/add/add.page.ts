@@ -134,7 +134,7 @@ export class AddGroupPage implements OnInit, AfterViewInit {
           await this.toast.present();
         }
       }
-    });
+    }, (error) => this.loadingController.dismiss());
   }
 
   addUserToGroup(groupId: string, uid: string) {
