@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { AlertController, Platform } from '@ionic/angular';
+import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { User } from 'src/app/services/models/user';
@@ -23,20 +23,44 @@ export class UserManagePage implements OnInit {
   userDetails: FormGroup;
   error_messages = environment.error_messages;
 
+  loader: any;
+  toast: any;
+  showSuccess = false;
+
   constructor(
-    private router: Router,
     public platform: Platform,
+    private router: Router,
+    private userService: UserService,
+    private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
     public _sanitizer: DomSanitizer,
     private camera: Camera,
-    public alertCtrl: AlertController,
-    private authenticationService: AuthenticationService,
-    private userService: UserService,
-    private storage: Storage
+    private storage: Storage,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
   ) {
   }
 
   ngOnInit() {
+    this.init();
+  }
+
+  init() {
+    setTimeout(async () => {
+      this.loader = await this.loadingController.create({
+        spinner: 'crescent',
+        message: 'Saving changes...',
+        translucent: true,
+        backdropDismiss: false,
+        showBackdrop: true,
+        keyboardClose: true
+      });
+      this.toast = await this.toastController.create({
+        message: '',
+        duration: 5000,
+        position: 'bottom'
+      });
+    }, 0);
   }
 
   ionViewWillEnter() {
@@ -87,46 +111,35 @@ export class UserManagePage implements OnInit {
             let base64Image = "data:image/jpeg;base64," + imageData;
             this.user.avatar = base64Image;
           }, async (error) => {
-            const alert = await this.alertCtrl.create({
-              header: 'Error',
-              message: 'Could not upload image. Please try again!',
-              buttons: ['OK']
-            });
-            await alert.present();
+            this.toast.message = 'Could not upload image. Please try again!';
+            await this.toast.present();
           });
       }
     });
   }
 
   async submit() {
-    let showSuccess = false;
+    await this.loader.present();
+
+    // Update properties
     this.user.firstName = this.userDetails.controls.firstName.value;
     this.user.lastName = this.userDetails.controls.lastName.value;
 
     this.userService.updateUser(this.user).then((response) => {
-      showSuccess = response;
-
-      // Check if password needs to be updated
+      this.showSuccess = response;
       if (this.userDetails.controls.new_password.value != '') {
         this.authUser.updatePassword(this.userDetails.controls.new_password.value);
       }
     });
 
-    // Show success alert
-    if (showSuccess) {
-      const alert = await this.alertCtrl.create({
-        header: 'Success',
-        message: 'Profile sucessfully updated!',
-        buttons: [{
-          text: 'OK', handler: () => {
-            this.router.navigate(['home']);
-          }
-        }]
-      });
+    // Show toast
+    if (this.showSuccess) {
+      this.toast.message = 'Profile successfully updated!';
+      this.toast.onDidDismiss().then(() => this.router.navigate(['home']));
 
-      this.storage.clear();
       this.storage.set('user', this.user).then(async () => {
-        await alert.present();
+        this.loadingController.dismiss();
+        await this.toast.present();
       });
     }
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -15,12 +15,34 @@ export class RegisterPage implements OnInit {
   user: FormGroup;
   error_messages = environment.error_messages;
 
+  loader: any;
+  toast: any;
+
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    public alertCtrl: AlertController, private userService: UserService) {
+    public toastController: ToastController, private loadingController: LoadingController, private userService: UserService) {
   }
 
   ngOnInit() {
+    this.init();
     this.createFormGroup();
+  }
+
+  async init() {
+    this.loader = await this.loadingController.create({
+      spinner: 'crescent',
+      message: 'Signing up...',
+      translucent: true,
+      backdropDismiss: false,
+      showBackdrop: true,
+      keyboardClose: true
+    });
+
+    this.toast = await this.toastController.create({
+      message: 'Your account has successfully been created',
+      duration: 5000,
+      position: 'bottom'
+    });
+    this.toast.onDidDismiss().then(() => this.navController.navigateBack('sign-in'));
   }
 
   createFormGroup() {
@@ -52,26 +74,17 @@ export class RegisterPage implements OnInit {
   }
 
   async submit() {
+    await this.loader.present();
+
     const credentials = { email: this.user.controls.email.value, password: this.user.controls.password.value };
     await this.authService.signUp(credentials)
       .then(async (response: firebase.auth.UserCredential) => {
-
-        // Create user in database
         if (response) {
           this.createUser(response.user.uid);
         }
 
-        // Show success alert
-        const alert = await this.alertCtrl.create({
-          header: 'Signing up',
-          message: 'Sign up was successful!',
-          buttons: [{
-            text: 'OK', handler: () => {
-              this.navController.navigateBack(['sign-in']);
-            }
-          }]
-        });
-        await alert.present();
+        this.loadingController.dismiss();
+        await this.toast.present();
       }, (rejected: firebase.auth.Error) => { throw rejected; });
   }
 

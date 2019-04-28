@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlertController, ModalController, NavParams } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController, NavParams, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import * as moment from 'moment';
 import { EventService } from 'src/app/services/event.service';
@@ -29,8 +29,13 @@ export class EventModalComponent implements OnInit {
   start: string = this.today.toISOString();
   end: string = this.today.toISOString();
 
+  loader: any;
+  toast: any;
+
   constructor(private navParams: NavParams, private modal: ModalController, private eventService: EventService,
-    private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private storage: Storage, private alertController: AlertController) {
+    private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private storage: Storage, private alertController: AlertController,
+    public toastController: ToastController, public loadingController: LoadingController) {
+
     let typeModal = this.navParams.get('type');
     this.group = this.navParams.get('group');
 
@@ -90,6 +95,24 @@ export class EventModalComponent implements OnInit {
     });
   }
 
+  init() {
+    setTimeout(async () => {
+      this.loader = await this.loadingController.create({
+        spinner: 'crescent',
+        message: 'Creating event...',
+        translucent: true,
+        backdropDismiss: false,
+        showBackdrop: true,
+        keyboardClose: true
+      });
+      this.toast = await this.toastController.create({
+        message: 'Event was successfully created!',
+        duration: 5000,
+        position: 'bottom'
+      });
+    }, 0);
+  }
+
   getUser() {
     this.storage.get('user').then((response) => this.user = response);
   }
@@ -115,7 +138,9 @@ export class EventModalComponent implements OnInit {
     await alert.present();
   }
 
-  submit() {
+  async submit() {
+    await this.loader.present();
+
     // Set form control values to event object
     this.event.title = this.eventDetails.controls.title.value;
     this.event.description = this.eventDetails.controls.description.value;
@@ -127,8 +152,11 @@ export class EventModalComponent implements OnInit {
     this.event.createdBy = `${this.user.firstName} ${this.user.lastName}`;
     this.event.groupId = this.group.id;
 
-    this.eventService.addEvent(this.event).then((response) => {
+    this.eventService.addEvent(this.event).then(async (response) => {
+      this.loadingController.dismiss();
+
       if (response) {
+        await this.toast.present();
         this.close();
       }
     });

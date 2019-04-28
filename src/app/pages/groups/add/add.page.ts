@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { AlertController, IonSlides, Platform } from '@ionic/angular';
+import { AlertController, IonSlides, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { GroupService } from 'src/app/services/group.service';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Contact } from 'src/app/services/models/contact';
@@ -23,6 +23,9 @@ export class AddGroupPage implements OnInit, AfterViewInit {
   groupDetails: FormGroup;
   error_messages = environment.error_messages;
 
+  loader: any;
+  toast: any;
+
   @ViewChild('slides') slides: IonSlides;
   slideOpts = {
     initialSlide: 0,
@@ -38,6 +41,8 @@ export class AddGroupPage implements OnInit, AfterViewInit {
     private groupService: GroupService,
     public _sanitizer: DomSanitizer,
     private camera: Camera,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
   ) {
   }
 
@@ -48,6 +53,7 @@ export class AddGroupPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getUser();
     this.createFormGroup();
+    this.init();
 
     this.group.picture = environment.group_picture_placeholder;
   }
@@ -66,6 +72,24 @@ export class AddGroupPage implements OnInit, AfterViewInit {
     });
   }
 
+  init() {
+    setTimeout(async () => {
+      this.loader = await this.loadingController.create({
+        spinner: 'crescent',
+        message: 'Creating group...',
+        translucent: true,
+        backdropDismiss: false,
+        showBackdrop: true,
+        keyboardClose: true
+      });
+      this.toast = await this.toastController.create({
+        message: '',
+        duration: 5000,
+        position: 'bottom'
+      });
+    }, 0);
+  }
+
   nextSlide() {
     this.slides.lockSwipeToNext(false);
     this.slides.slideNext(400);
@@ -82,15 +106,16 @@ export class AddGroupPage implements OnInit, AfterViewInit {
     this.members = event;
   }
 
-  submit() {
+  async submit() {
+    await this.loader.present();
+
+    // Set properties
     this.group.name = this.groupDetails.controls.groupName.value;
     this.group.createdBy = this.authUser.uid;
-
-    if (this.group.picture == '') { this.group.picture = environment.group_picture_placeholder; }
+    this.group.picture == '' ? environment.group_picture_placeholder : this.group.picture;
 
     this.groupService.addGroup(this.group).then(async (response) => {
       if (typeof response !== 'boolean') {
-        // Add user to group
         this.addUserToGroup(response.id, this.authUser.uid);
 
         // Add selected contacts to group
@@ -99,18 +124,14 @@ export class AddGroupPage implements OnInit, AfterViewInit {
           this.addUserToGroup(response.id, member.id);
         }
 
-        // Show success alert
+        this.loadingController.dismiss();
+
+        // Show toast
         if (response) {
-          const alert = await this.alertCtrl.create({
-            header: 'Success',
-            message: 'Group was sucessfully created!',
-            buttons: [{
-              text: 'OK', handler: () => {
-                setTimeout(() => { this.router.navigate(['home']); }, 2000);
-              }
-            }]
-          });
-          await alert.present();
+          this.toast.message = 'Group was successfully created!';
+          this.toast.onDidDismiss().then(() => setTimeout(() => { this.router.navigate(['home']); }, 2000));
+
+          await this.toast.present();
         }
       }
     });
@@ -136,12 +157,8 @@ export class AddGroupPage implements OnInit, AfterViewInit {
             let base64Image = "data:image/jpeg;base64," + imageData;
             this.group.picture = base64Image;
           }, async (error) => {
-            const alert = await this.alertCtrl.create({
-              header: 'Error',
-              message: 'Could not upload image. Please try again!',
-              buttons: ['OK']
-            });
-            await alert.present();
+            this.toast.message = 'Could not upload image. Please try again!';
+            await this.toast.present();
           });
       }
     });

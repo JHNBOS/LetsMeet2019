@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
-import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,12 +13,34 @@ export class ForgotPasswordPage implements OnInit {
   user: FormGroup;
   error_messages = environment.error_messages;
 
+  loader: any;
+  toast: any;
+
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    public alertCtrl: AlertController, private userService: UserService) {
+    public toastController: ToastController, public loadingController: LoadingController) {
   }
 
   ngOnInit() {
+    this.init();
     this.createFormGroup();
+  }
+
+  async init() {
+    this.loader = await this.loadingController.create({
+      spinner: 'crescent',
+      message: 'Resetting password...',
+      translucent: true,
+      backdropDismiss: false,
+      showBackdrop: true,
+      keyboardClose: true
+    });
+
+    this.toast = await this.toastController.create({
+      message: 'An email with further instructions has been sent to this account!',
+      duration: 5000,
+      position: 'bottom'
+    });
+    this.toast.onDidDismiss().then(() => this.navController.navigateBack('sign-in'));
   }
 
   createFormGroup() {
@@ -34,20 +55,13 @@ export class ForgotPasswordPage implements OnInit {
   }
 
   async submit() {
+    await this.loader.present();
+
     const email = this.user.controls.email.value;
     await this.authService.sendPasswordResetEmail(email)
       .then(async (response) => {
-        // Show success alert
-        const alert = await this.alertCtrl.create({
-          header: 'Success',
-          message: 'An email with further instructions has been sent to this account!',
-          buttons: [{
-            text: 'OK', handler: () => {
-              this.navController.navigateBack(['sign-in']);
-            }
-          }]
-        });
-        await alert.present();
+        this.loadingController.dismiss();
+        this.toast.present();
       });
   }
 

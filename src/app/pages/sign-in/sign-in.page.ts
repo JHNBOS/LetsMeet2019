@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+import { LoadingController, NavController } from '@ionic/angular';
 import * as firebase from 'firebase';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
-
 
 @Component({
   selector: 'app-sign-in',
@@ -20,11 +17,28 @@ export class SignInPage implements OnInit {
   user: FormGroup;
   error_messages = environment.error_messages;
 
-  constructor(private navController: NavController, private router: Router, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    public alertCtrl: AlertController, private userService: UserService, private storage: Storage) { }
+  loader: any;
+
+  constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
+    private userService: UserService, public loadingController: LoadingController) {
+  }
 
   ngOnInit() {
+    this.init();
     this.createFormGroup();
+  }
+
+  init() {
+    setTimeout(async () => {
+      this.loader = await this.loadingController.create({
+        spinner: 'crescent',
+        message: 'Signing in...',
+        translucent: true,
+        backdropDismiss: false,
+        showBackdrop: true,
+        keyboardClose: true
+      });
+    }, 0);
   }
 
   ionViewWillEnter() {
@@ -65,13 +79,17 @@ export class SignInPage implements OnInit {
   }
 
   async submit() {
+    await this.loader.present();
+
     const credentials = { email: this.user.controls.email.value, password: this.user.controls.password.value };
     await this.authService.signInWithEmail(credentials)
-      .then(async (response) => {
-        // Get user profile
+      .then(async () => {
         let profile = await this.getUserProfile(credentials.email);
-
-        await this.authService.saveUser(profile).then(() => this.navController.navigateForward('/home'));
+        await this.authService.saveUser(profile)
+          .then(() => {
+            this.loadingController.dismiss();
+            this.navController.navigateRoot('/home');
+          });
       }, (rejected: firebase.auth.Error) => { throw rejected; }).then();
   }
 
