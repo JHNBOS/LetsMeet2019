@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
 
+
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.page.html',
@@ -24,27 +26,33 @@ export class SignInPage implements OnInit {
   }
 
   ngOnInit() {
-    this.init();
     this.createFormGroup();
   }
 
-  init() {
-    setTimeout(async () => {
-      this.loader = await this.loadingController.create({
-        spinner: 'crescent',
-        message: 'Signing in...',
-        translucent: true,
-        backdropDismiss: false,
-        showBackdrop: true,
-        keyboardClose: true
-      });
-    }, 0);
+  async init() {
+    this.loader = await this.loadingController.create({
+      spinner: 'crescent',
+      message: 'Signing in...',
+      translucent: true,
+      backdropDismiss: false,
+      showBackdrop: true,
+      keyboardClose: true
+    });
   }
 
-  ionViewWillEnter() {
-    if (this.authService.checkSavedUser()) {
-      this.navController.navigateRoot('/home');
-    }
+  async ionViewWillEnter() {
+    await this.init();
+
+    this.authService.checkSavedUser().then(async (response) => {
+      if (response == true) {
+        await this.loader.present();
+
+        setTimeout(() => {
+          this.loadingController.dismiss();
+          this.navController.navigateRoot('/home');
+        }, 2000);
+      }
+    });
   }
 
   createFormGroup() {
