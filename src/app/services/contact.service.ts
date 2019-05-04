@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
 import { AuthenticationService } from './helpers/authentication.service';
 import { Contact } from './models/contact';
 import { UserService } from './user.service';
-
 
 @Injectable({
   providedIn: 'root'

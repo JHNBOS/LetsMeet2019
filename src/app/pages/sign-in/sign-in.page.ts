@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, NavController } from '@ionic/angular';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
-
-
 
 @Component({
   selector: 'app-sign-in',
@@ -52,7 +50,7 @@ export class SignInPage implements OnInit {
           this.navController.navigateRoot('/home');
         }, 2000);
       }
-    });
+    }, (error) => { this.loadingController.dismiss(); });
   }
 
   createFormGroup() {

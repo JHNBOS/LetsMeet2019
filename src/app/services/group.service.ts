@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import * as moment from 'moment';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/observable';

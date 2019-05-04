@@ -28,6 +28,8 @@ export class EventModalComponent implements OnInit {
   today: Date = new Date();
   start: string = this.today.toISOString();
   end: string = this.today.toISOString();
+  displayFormat: string = 'DD-MM-YYYY HH:mm';
+  pickerFormat: string = 'DD MMMM YYYY HH:mm';
 
   loader: any;
   toast: any;
@@ -127,7 +129,7 @@ export class EventModalComponent implements OnInit {
           text: 'Yes',
           handler: () => {
             this.eventService.deleteEvent(this.group.id, this.event.id).then(() => {
-              this.close();
+              this.modal.dismiss(true);
             });
           }
         },
@@ -140,31 +142,121 @@ export class EventModalComponent implements OnInit {
   }
 
   async submit() {
-    await this.loader.present();
+    let events = [];
 
-    // Set form control values to event object
+    await this.loader.present();
+    this.setValues();
+
+    if (this.getDifferenceInDays(this.event) > 0) {
+      events = this.checkMultiDayEvent(this.event);
+    }
+
+    if (events.length == 0) {
+      this.eventService.addEvent(this.event).then(async (response) => {
+        this.loadingController.dismiss();
+
+        if (response) {
+          await this.toast.present();
+          this.modal.dismiss(true);
+        }
+      }, (error) => this.loadingController.dismiss());
+    } else {
+      for (let index = 0; index < events.length; index++) {
+        let newEvent = events[index];
+        this.eventService.addEvent(newEvent).then(async (response) => {
+          if (index == events.length - 1) {
+            this.loadingController.dismiss();
+
+            if (response) {
+              await this.toast.present();
+              this.modal.dismiss(true);
+            }
+          }
+        }, (error) => this.loadingController.dismiss());
+      }
+    }
+  }
+
+  close() {
+    this.modal.dismiss(false);
+  }
+
+  setValues() {
     this.event.title = this.eventDetails.controls.title.value;
     this.event.description = this.eventDetails.controls.description.value;
     this.event.location = this.eventDetails.controls.location.value;
     this.event.allDay = this.eventDetails.controls.allDay.value;
     this.event.start = moment(this.eventDetails.controls.start.value).toDate();
-    this.event.end = moment(this.eventDetails.controls.end.value).toDate();
+    this.event.end = this.event.allDay == true ? this.event.start : moment(this.eventDetails.controls.end.value).toDate();
 
     this.event.createdBy = `${this.user.firstName} ${this.user.lastName}`;
     this.event.groupId = this.group.id;
-
-    this.eventService.addEvent(this.event).then(async (response) => {
-      this.loadingController.dismiss();
-
-      if (response) {
-        await this.toast.present();
-        this.close();
-      }
-    }, (error) => this.loadingController.dismiss());
   }
 
-  close() {
-    this.modal.dismiss();
+  checkMultiDayEvent(event: Event): Event[] {
+    const events: Event[] = [];
+
+    const startEvent = new Event();
+    startEvent.id = '1';
+    startEvent.title = event.title;
+    startEvent.description = event.description;
+    startEvent.allDay = event.allDay;
+    startEvent.createdBy = event.createdBy;
+    startEvent.location = event.location;
+    startEvent.groupId = event.groupId;
+    startEvent.start = moment(this.eventDetails.controls.start.value).toDate();
+    startEvent.end = moment(this.eventDetails.controls.start.value).set({ 'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 0 }).toDate();
+
+    const endEvent = new Event();
+    endEvent.id = '2';
+    endEvent.title = event.title;
+    endEvent.description = event.description;
+    endEvent.allDay = event.allDay;
+    endEvent.createdBy = event.createdBy;
+    endEvent.location = event.location;
+    endEvent.groupId = event.groupId;
+    endEvent.start = moment(this.eventDetails.controls.end.value).set({ 'hour': 0, 'minute': 0, 'second': 1, 'millisecond': 0 }).toDate();
+    endEvent.end = moment(this.eventDetails.controls.end.value).toDate();
+
+    events.push(startEvent);
+    events.push(endEvent);
+
+    if (this.getDifferenceInDays(this.event) > 1) {
+      for (let index = 1; index < this.getDifferenceInDays(this.event); index++) {
+        const newEvent = new Event();
+        newEvent.id = 'a' + index;
+        newEvent.title = event.title;
+        newEvent.description = event.description;
+        newEvent.allDay = event.allDay;
+        newEvent.createdBy = event.createdBy;
+        newEvent.location = event.location;
+        newEvent.groupId = event.groupId;
+        newEvent.start = moment(this.eventDetails.controls.start.value).set({ 'date': event.start.getDate() + index, 'hour': 0, 'minute': 0, 'second': 1, 'millisecond': 0 }).toDate();
+        newEvent.end = moment(this.eventDetails.controls.start.value).set({ 'date': event.start.getDate() + index, 'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 0 }).toDate();
+
+        events.push(newEvent);
+      }
+    }
+
+    return events;
+  }
+
+  getDifferenceInDays(event: Event) {
+    const diffTime = Math.abs(event.end.getTime() - event.start.getTime());
+    const differenceInDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return differenceInDays;
+  }
+
+  setFormat(event: any) {
+    let value = event.target.value;
+    if (value == 'on') {
+      this.displayFormat = 'DD-MM-YYYY';
+      this.pickerFormat = 'DD MMMM YYYY';
+    } else {
+      this.displayFormat = 'DD-MM-YYYY HH:mm';
+      this.pickerFormat = 'DD MMMM YYYY HH:mm';
+    }
   }
 
 }

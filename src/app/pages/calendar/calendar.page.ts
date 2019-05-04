@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar/calendar';
+import * as moment from 'moment';
 import { CalendarPopoverComponent } from 'src/app/components/calendar-popover/calendar-popover.component';
 import { EventModalComponent } from 'src/app/components/event-modal/event-modal.component';
 import { DataService } from 'src/app/services/data.service';
@@ -110,6 +111,12 @@ export class CalendarPage implements OnInit, AfterViewInit {
       } else {
         this.calendar.lockSwipeToPrev = false;
       }
+    } if (this.calendar.mode === 'week') {
+      if (moment(event).isoWeek() <= moment(today).isoWeek()) {
+        this.calendar.lockSwipeToPrev = false;
+      } else {
+        this.calendar.lockSwipeToPrev = true;
+      }
     } else {
       if (event.getDate() <= today.getDate()) {
         this.calendar.lockSwipeToPrev = true;
@@ -129,9 +136,11 @@ export class CalendarPage implements OnInit, AfterViewInit {
       }
     );
 
-    modal.onDidDismiss().then(() => {
-      this.getEvents();
-      setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+    modal.onDidDismiss().then(data => {
+      if (data['data'] == true) {
+        this.getEvents();
+        setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+      }
     });
 
     modal.present();
@@ -147,9 +156,11 @@ export class CalendarPage implements OnInit, AfterViewInit {
       }
     );
 
-    modal.onDidDismiss().then(() => {
-      this.getEvents();
-      setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+    modal.onDidDismiss().then(data => {
+      if (data['data'] == true) {
+        this.getEvents();
+        setTimeout(() => this.calendarComponent.loadEvents(), 1000);
+      }
     });
 
     modal.present();

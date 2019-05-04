@@ -26,16 +26,17 @@
 
           <ion-item>
             <ion-label position="fixed">All day</ion-label>
-            <ion-toggle formControlName="allDay" color="primary" slot="end"></ion-toggle>
+            <ion-toggle formControlName="allDay" color="primary" slot="end" (ionChange)="setFormat($event)">
+            </ion-toggle>
           </ion-item>
 
           <ion-item>
             <ion-label position="fixed">From</ion-label>
-            <ion-datetime formControlName="start" display-format="DD-MM-YYYY HH:mm" picker-format="DD MMMM YYYY HH:mm"
+            <ion-datetime formControlName="start" displayFormat="{{displayFormat}}" pickerFormat="{{pickerFormat}}"
               min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
           </ion-item>
 
-          <ion-item>
+          <ion-item [hidden]="this.eventDetails.controls['allDay'].value === true">
             <ion-label position="fixed">Till</ion-label>
             <ion-datetime formControlName="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
               min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
