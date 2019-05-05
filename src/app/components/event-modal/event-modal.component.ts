@@ -120,6 +120,26 @@ export class EventModalComponent implements OnInit {
     this.storage.get('user').then((response) => this.user = response);
   }
 
+  async checkTime() {
+    let start = this.eventDetails.controls.start.value != null ? moment(this.eventDetails.controls.start.value) : null;
+    let end = this.eventDetails.controls.end.value != null ? moment(this.eventDetails.controls.end.value) : null;
+
+    if (start != null && end == null) {
+      this.today = start.toDate();
+    } else {
+      this.today = new Date();
+    }
+
+    if (end != null && end.isBefore(start)) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: 'End of an event should be greater than the start date and time!',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
+  }
+
   async deleteEvent() {
     const alert = await this.alertController.create({
       header: 'Delete',

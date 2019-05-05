@@ -33,13 +33,13 @@
           <ion-item>
             <ion-label position="fixed">From</ion-label>
             <ion-datetime formControlName="start" displayFormat="{{displayFormat}}" pickerFormat="{{pickerFormat}}"
-              min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
+              min="{{today.toISOString()}}" (ionChange)="checkTime($event)" style="margin-left: auto;"></ion-datetime>
           </ion-item>
 
           <ion-item [hidden]="this.eventDetails.controls['allDay'].value === true">
             <ion-label position="fixed">Till</ion-label>
             <ion-datetime formControlName="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
-              min="{{today.toISOString()}}" style="margin-left: auto;"></ion-datetime>
+              min="{{today.toISOString()}}" (ionChange)="checkTime($event)" style="margin-left: auto;"></ion-datetime>
           </ion-item>
 
           <ion-item>
