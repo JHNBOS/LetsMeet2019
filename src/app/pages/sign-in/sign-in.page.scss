@@ -1,7 +1,8 @@
 @import "../../../theme/variables.scss";
 
 ion-content {
-  --background: linear-gradient(to bottom, #008fd6, #003f80);
+  //--background: linear-gradient(to bottom, #008fd6, #003f80);
+  --background: var(--main-background);
 }
 
 ion-list {
@@ -10,9 +11,17 @@ ion-list {
   --ion-item-background: transparent;
 
   ion-item {
-    margin: 1rem auto 0 auto;
-    --background: #fff;
+    // margin: 1rem auto 0 auto;
+    // --background: #fff;
+    // --border-radius: 4px;
+    margin: 1.5rem auto 0 auto;
+    --background: transparent;
     --border-radius: 4px;
+
+    --highlight-color-focused: var(--main-border-color);
+    --highlight-color-invalid: var(--main-border-color);
+    --highlight-color-valid: var(--main-border-color);
+    --padding-start: 0 !important;
 
     ion-label {
       font-weight: 500;
@@ -20,8 +29,15 @@ ion-list {
     }
 
     ion-input {
-      --placeholder-color: rgb(92, 92, 92);
-      color: rgb(51, 51, 51);
+      // --placeholder-color: rgb(92, 92, 92);
+      // color: rgb(51, 51, 51);
+      --placeholder-color: #fff;
+      --placeholder-opacity: 0.8;
+      --padding-start: 0;
+      font-family: "Roboto", sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.05rem;
+      color: #fff;
     }
   }
 }
@@ -31,8 +47,8 @@ ion-list {
 }
 
 .title {
-  font-family: "Montserrat", sans-serif;
-  font-size: 3rem;
+  font-family: var(--logo-font);
+  font-size: 3.2rem;
   color: #fff;
 }
 
@@ -40,7 +56,36 @@ ion-list {
   margin-top: 2rem;
 }
 
-#resetButton {
-  margin-top: 0.4rem;
-  font-size: 0.7rem;
+#sign-in-btn {
+  width: 220px;
+  height: 55px;
+  border-radius: 8px;
+  --background: var(--main-color);
+  color: var(--main-background);
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+#reset-link,
+#sign-up-link {
+  display: block;
+  margin-top: 0rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: var(--main-color);
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+#waves {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  height: auto;
+  max-height: 323px;
 }

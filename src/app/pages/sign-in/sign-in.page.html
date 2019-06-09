@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <h1 class="title" text-center>Let's Meet</h1>
+        <h1 class="title">Lets Meet</h1>
       </ion-col>
     </ion-row>
 
@@ -43,29 +43,33 @@
             </ion-label>
 
             <ion-row class="login-button-row">
-              <ion-col text-center>
+              <!-- <ion-col text-center>
                 <ion-button id="registerButton" expand="full" fill="solid" color="light" (click)="goToSignUp()">
                   SIGN UP
                 </ion-button>
-              </ion-col>
+              </ion-col> -->
               <ion-col text-center>
-                <ion-button expand="full" fill="solid" color="tertiary" (click)="submit()">
+                <ion-button id="sign-in-btn" fill="solid" (click)="submit()">
                   SIGN IN
                 </ion-button>
+                <a id="sign-up-link" (click)="goToSignUp()">
+                  Don't have an account yet?
+                </a>
               </ion-col>
             </ion-row>
 
-            <ion-row>
+            <!-- <ion-row>
               <ion-col text-center>
-                <ion-button id="resetButton" expand="block" fill="clear" color="light" (click)="goToForgotPass()">
+                <ion-button id="reset-link" expand="block" fill="clear" color="light" (click)="goToForgotPass()">
                   FORGOT PASSWORD?
                 </ion-button>
               </ion-col>
-            </ion-row>
+            </ion-row> -->
           </form>
         </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
 
+  <img id="waves" src="../../../assets/Wave.svg">
 </ion-content>
