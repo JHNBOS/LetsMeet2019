@@ -1,8 +1,15 @@
 @import "../../../theme/variables.scss";
 
 ion-content {
-  //--background: linear-gradient(to bottom, #008fd6, #003f80);
-  --background: var(--main-background);
+  --background: var(--main-background) url("../../../assets/Wave.svg") no-repeat bottom/contain;
+}
+
+ion-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 65%;
 }
 
 ion-list {
@@ -11,13 +18,11 @@ ion-list {
   --ion-item-background: transparent;
 
   ion-item {
-    // margin: 1rem auto 0 auto;
-    // --background: #fff;
-    // --border-radius: 4px;
     margin: 1.5rem auto 0 auto;
     --background: transparent;
     --border-radius: 4px;
 
+    --border-color: var(--main-border-color);
     --highlight-color-focused: var(--main-border-color);
     --highlight-color-invalid: var(--main-border-color);
     --highlight-color-valid: var(--main-border-color);
@@ -29,8 +34,6 @@ ion-list {
     }
 
     ion-input {
-      // --placeholder-color: rgb(92, 92, 92);
-      // color: rgb(51, 51, 51);
       --placeholder-color: #fff;
       --placeholder-opacity: 0.8;
       --padding-start: 0;
@@ -59,7 +62,7 @@ ion-list {
 #sign-in-btn {
   width: 220px;
   height: 55px;
-  border-radius: 8px;
+  --border-radius: 8px;
   --background: var(--main-color);
   color: var(--main-background);
   font-family: "Open Sans", sans-serif;
@@ -67,8 +70,7 @@ ion-list {
   font-weight: 600;
 }
 
-#reset-link,
-#sign-up-link {
+#reset-link {
   display: block;
   margin-top: 0rem;
   padding: 0.5rem 0;
@@ -79,13 +81,26 @@ ion-list {
   font-weight: 600;
 }
 
-#waves {
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100vw;
-  height: auto;
-  max-height: 323px;
+#sign-up-btn {
+  width: 205px;
+  height: 35px;
+  --border-radius: 8px;
+  --background: var(--main-background);
+  color: var(--main-color);
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  margin: 0 auto;
+}
+
+ion-footer ion-toolbar {
+  padding: 0.4rem 0;
+  padding-left: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
+  padding-right: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
+  --background: #fff;
+  --border-color: #fff;
+}
+
+.footer-md:before {
+  background-image: none;
 }
