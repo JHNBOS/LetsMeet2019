@@ -4,49 +4,19 @@ ion-content {
   --background: var(--main-background) url("../../../assets/Wave.svg") no-repeat bottom/contain;
 }
 
-ion-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 65%;
-}
-
 ion-list {
+  --ion-item-background: transparent;
   margin-right: 0.3rem;
   margin-left: 0.3rem;
-  --ion-item-background: transparent;
 
-  ion-item {
-    margin: 1.5rem auto 0 auto;
-    --background: transparent;
-    --border-radius: 4px;
-
-    --border-color: var(--main-border-color);
-    --highlight-color-focused: var(--main-border-color);
-    --highlight-color-invalid: var(--main-border-color);
-    --highlight-color-valid: var(--main-border-color);
-    --padding-start: 0 !important;
-
-    ion-label {
-      font-weight: 500;
-      --color: #fff;
-    }
-
-    ion-input {
-      --placeholder-color: #fff;
-      --placeholder-opacity: 0.8;
-      --padding-start: 0;
-      font-family: "Roboto", sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.05rem;
-      color: #fff;
+  ion-item.input {
+    ion-button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: 0;
     }
   }
-}
-
-.form-row {
-  margin-top: 3rem;
 }
 
 .title {
@@ -55,24 +25,10 @@ ion-list {
   color: #fff;
 }
 
-.login-button-row {
-  margin-top: 2rem;
-}
-
-#sign-in-btn {
-  width: 220px;
-  height: 55px;
-  --border-radius: 8px;
-  --background: var(--main-color);
-  color: var(--main-background);
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
 #reset-link {
   display: block;
-  margin-top: 0rem;
+  width: 200px;
+  margin: 0 auto;
   padding: 0.5rem 0;
   cursor: pointer;
   color: var(--main-color);
@@ -81,24 +37,19 @@ ion-list {
   font-weight: 600;
 }
 
-#sign-up-btn {
+.secondary-btn {
   width: 205px;
   height: 35px;
-  --border-radius: 8px;
-  --background: var(--main-background);
-  color: var(--main-color);
-  font-family: "Open Sans", sans-serif;
   font-size: 0.6rem;
-  font-weight: 600;
   margin: 0 auto;
 }
 
 ion-footer ion-toolbar {
+  --background: #fff;
+  --border-color: #fff;
   padding: 0.4rem 0;
   padding-left: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
   padding-right: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
-  --background: #fff;
-  --border-color: #fff;
 }
 
 .footer-md:before {

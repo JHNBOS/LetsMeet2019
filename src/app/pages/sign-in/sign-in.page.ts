@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import * as firebase from 'firebase/app';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -20,7 +20,7 @@ export class SignInPage implements OnInit {
   loader: any;
 
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    private userService: UserService, public loadingController: LoadingController) {
+    private userService: UserService, public loadingController: LoadingController, private alertController: AlertController) {
   }
 
   ngOnInit() {
@@ -59,16 +59,30 @@ export class SignInPage implements OnInit {
         validators: Validators.compose([
           Validators.required,
           Validators.pattern(environment.email_regex)
-        ]), updateOn: 'change'
+        ]), updateOn: 'blur'
       }),
       password: new FormControl('', {
         validators: Validators.compose([
           Validators.required,
           Validators.minLength(5),
           Validators.pattern(environment.password_regex)
-        ]), updateOn: 'change',
+        ]), updateOn: 'blur',
       }),
     });
+  }
+
+  async showPasswordDetails() {
+    const alert = await this.alertController.create({
+      header: 'Password Requirements',
+      message: `<span style="font-size:0.9rem;">Your password needs to:</span> <br> 
+                <ul style="padding:0 0 0 20px;font-size:0.85rem;">
+                  <li>Include both lowercase and uppercase characters</li>
+                  <li>Include at least one number</li>
+                  <li>Be at least 5 characters long</li>
+                </ul>`,
+      buttons: ['OK']
+    });
+    return await alert.present();
   }
 
   goToSignUp() {

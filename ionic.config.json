@@ -1,7 +1,8 @@
 {
   "name": "Let's Meet",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

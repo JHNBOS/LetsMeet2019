@@ -9,14 +9,38 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+@import "theme/variables.scss";
 
+// Buttons
+.primary-btn {
+  --border-radius: 8px;
+  --background: var(--main-color);
+  width: 220px;
+  height: 55px;
+  color: var(--main-background);
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.secondary-btn {
+  --border-radius: 8px;
+  --background: var(--main-background);
+  width: 220px;
+  height: 55px;
+  color: var(--main-color);
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+// Error message
 .error {
-  margin-left: 5px;
   font-size: 0.9rem;
-  color: #d6d6d6;
+  color: #fff;
   width: 100%;
   display: block;
-  padding-top: 2px;
+  padding-top: 3px;
   padding-bottom: 10px;
   position: relative;
 
@@ -26,7 +50,6 @@
     transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     font-family: "Montserrat";
     font-weight: 600;
-    text-shadow: 0px 0px 4px #0165a0;
 
     &.hide {
       transform: translateX(-1000px);
@@ -40,6 +63,42 @@
   }
 }
 
+// Input
+ion-list > form > ion-item.input {
+  --background: transparent;
+  --border-radius: 4px;
+  margin: 0.1rem auto 0 auto;
+
+  --border-color: var(--main-border-color);
+  --highlight-color-focused: var(--main-border-color);
+  --highlight-color-invalid: var(--main-border-color);
+  --highlight-color-valid: var(--main-border-color);
+  --padding-start: 0 !important;
+
+  ion-label {
+    --color: rgba(255, 255, 255, 0.8) !important;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.03rem;
+  }
+
+  ion-input {
+    --placeholder-color: #fff;
+    --placeholder-opacity: 0.8;
+    --padding-start: 0;
+    --padding-end: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    color: #fff;
+  }
+
+  ion-button {
+    --color: #fff;
+  }
+}
+
+// Modal
 .modal-fullscreen {
   .modal-wrapper {
     position: absolute;
@@ -56,7 +115,6 @@ ion-modal {
 }
 
 // Calendar popover styling
-
 .pop-over-style {
   --width: 150px;
   --ion-item-background: transparent;

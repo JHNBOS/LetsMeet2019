@@ -1,0 +1,11 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "Let's Meet",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "windowsAndroidStudioPath": "D:/Program Files/Android/Android Studio/bin/studio64.exe",
+  "server": {
+    "url": "http://localhost:8100"
+  }
+}

@@ -6,27 +6,30 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="form-row">
+    <ion-row>
       <ion-col>
         <ion-list>
-          <form [formGroup]="user">
 
-            <ion-item>
-              <ion-input type="email" formControlName="email" placeholder="Email">
-              </ion-input>
+          <form [formGroup]="user">
+            <ion-item class="input">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input inputmode="email" formControlName="email"></ion-input>
             </ion-item>
             <ion-label class="error">
-              <small [class.hide]="user.get('email').untouched || 
-                (user.get('email').value.length > 0 && user.get('email').touched)">
+              <small [class.hide]="!user.get('email').hasError('required') || user.get('email').untouched">
                 {{ error_messages.email[0].message }}
               </small>
-              <small [class.hide]="!user.get('email').hasError('pattern')">
+              <small [class.hide]="!user.get('email').hasError('pattern') || user.get('email').untouched">
                 {{ error_messages.email[1].message }}
               </small>
             </ion-label>
 
-            <ion-item>
-              <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+            <ion-item class="input">
+              <ion-label position="floating">Password</ion-label>
+              <ion-input inputmode="password" type="password" formControlName="password"></ion-input>
+              <ion-button fill="clear" slot="end" (click)="showPasswordDetails()">
+                <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+              </ion-button>
             </ion-item>
             <ion-label class="error">
               <small [class.hide]="user.get('password').untouched || 
@@ -42,29 +45,29 @@
               </small>
             </ion-label>
 
-            <ion-row class="login-button-row">
+            <ion-row class="ion-margin-top">
               <ion-col text-center>
-                <ion-button id="sign-in-btn" fill="solid" (click)="submit()">
+                <ion-button class="primary-btn" (click)="submit()" [disabled]="user.invalid">
                   SIGN IN
                 </ion-button>
-                <!-- <a id="sign-up-link" (click)="goToSignUp()">
-                  Don't have an account yet?
-                </a> -->
                 <a id="reset-link" (click)="goToForgotPass()">
                   Forgot your password?
                 </a>
               </ion-col>
             </ion-row>
+
           </form>
+
         </ion-list>
       </ion-col>
     </ion-row>
+
   </ion-grid>
 </ion-content>
 
 <ion-footer translucent="true">
   <ion-toolbar>
-    <ion-button expand="block" id="sign-up-btn" (click)="goToSignUp()">
+    <ion-button class="secondary-btn" expand="block" (click)="goToSignUp()">
       Don't have an account yet?
     </ion-button>
   </ion-toolbar>

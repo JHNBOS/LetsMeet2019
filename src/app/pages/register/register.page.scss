@@ -1,22 +1,31 @@
 @import "../../../theme/variables.scss";
 
-.form-row {
-  margin-top: 2rem;
+ion-header {
+  ion-toolbar {
+    --opacity: 1;
+    --color: var(--main-background);
+    --background: var(--main-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
 }
 
-.button-row {
-  margin-top: 2rem;
+ion-content {
+  --background: var(--main-background) url("../../../assets/Wave.svg") no-repeat bottom/contain;
 }
 
 ion-list {
+  --ion-item-background: transparent;
   margin-right: 0.3rem;
   margin-left: 0.3rem;
 
-  ion-item {
-    margin: 1rem auto 0 auto;
-
-    ion-label {
-      font-weight: 500;
+  ion-item.input {
+    ion-button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: 0;
     }
   }
 }

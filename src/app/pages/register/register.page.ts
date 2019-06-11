@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -19,7 +19,8 @@ export class RegisterPage implements OnInit {
   toast: any;
 
   constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    public toastController: ToastController, private loadingController: LoadingController, private userService: UserService) {
+    public toastController: ToastController, private loadingController: LoadingController, private userService: UserService,
+    private alertController: AlertController) {
   }
 
   ngOnInit() {
@@ -72,6 +73,20 @@ export class RegisterPage implements OnInit {
         ]), updateOn: 'change'
       }),
     });
+  }
+
+  async showPasswordDetails() {
+    const alert = await this.alertController.create({
+      header: 'Password Requirements',
+      message: `<span style="font-size:0.9rem;">Your password needs to:</span> <br> 
+                <ul style="padding:0 0 0 20px;font-size:0.85rem;">
+                  <li>Include both lowercase and uppercase characters</li>
+                  <li>Include at least one number</li>
+                  <li>Be at least 5 characters long</li>
+                </ul>`,
+      buttons: ['OK']
+    });
+    return await alert.present();
   }
 
   async submit() {
