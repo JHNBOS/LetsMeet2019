@@ -3,7 +3,9 @@
     <name>Let's Meet</name>
     <description>A calendar sharing app</description>
     <author email="bosbosjohan@gmail.com" href="http://ionicframework.com/">J. Bos</author>
-    <content src="index.html" />
+    <allow-navigation href="*" />
+    <content original-src="index.html" src="http://localhost:8100" />
+    <content original-src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -91,4 +93,5 @@
     <plugin name="cordova-plugin-camera" spec="https://github.com/apache/cordova-plugin-camera">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
+    <allow-navigation href="http://localhost:8100" sessionid="dcd4bfcf" />
 </widget>

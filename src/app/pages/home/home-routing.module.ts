@@ -18,6 +18,10 @@ const routes: Routes = [
 				loadChildren: '../users/details/details.module#UserDetailsPageModule'
 			},
 			{
+				path: 'contacts',
+				loadChildren: '../contacts/contacts.module#ContactsPageModule'
+			},
+			{
 				path: '',
 				redirectTo: '/home/groups',
 				pathMatch: 'full',

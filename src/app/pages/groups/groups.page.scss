@@ -1,9 +1,55 @@
 @import "../../../theme/variables.scss";
 
-ion-list {
-  margin-right: 0.3rem;
-  margin-left: 0.3rem;
+ion-content {
+  --background: var(--main-background) url("../../../assets/Circles.svg") no-repeat -55vw 40vh / 120% 120%;
 
-  ion-item {
+  .primary-btn {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -70%);
   }
+}
+
+ion-list {
+  --ion-item-background: transparent;
+  max-height: 45vh;
+  margin-top: 0.5rem;
+  overflow-y: scroll;
+
+  ion-item-sliding {
+    border-bottom: 1px solid var(--main-border-color);
+    margin-bottom: 0.5rem;
+
+    ion-item {
+      --color: var(--main-color);
+      --border-color: transparent;
+
+      ion-thumbnail {
+        position: relative;
+        left: -5%;
+        width: 60px;
+        height: 60px;
+
+        img {
+          border-radius: 50%;
+        }
+      }
+
+      ion-label h2 {
+        font-family: "Open Sans", sans-serif;
+        font-size: 1.2rem;
+      }
+
+      ion-icon {
+        color: var(--main-color);
+      }
+    }
+  }
+}
+
+.title {
+  font-family: var(--logo-font);
+  font-size: 3.2rem;
+  color: #fff;
 }

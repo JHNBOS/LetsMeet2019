@@ -98,6 +98,11 @@ ion-list > form > ion-item.input {
   }
 }
 
+// List
+ion-list {
+  --color: var(--main-color);
+}
+
 // Modal
 .modal-fullscreen {
   .modal-wrapper {
