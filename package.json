@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "android": "ionic cordova run android -l",
+    "android": "ionic cordova run android -l -c",
     "apk": "ionic cordova build android"
   },
   "private": true,
@@ -35,6 +35,7 @@
     "angularfire2": "^5.1.2",
     "build": "0.1.4",
     "cordova-android": "7.1.4",
+    "cordova-browser": "6.0.0",
     "cordova-plugin-camera": "git+https://github.com/apache/cordova-plugin-camera.git",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
@@ -102,7 +103,8 @@
       "cordova-sqlite-storage": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }

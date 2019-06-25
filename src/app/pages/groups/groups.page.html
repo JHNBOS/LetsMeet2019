@@ -8,7 +8,62 @@
 
     <ion-row>
       <ion-col>
-        <ion-list>
+        <ion-list *ngIf="!groups">
+          <ion-item button>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+
+            <ion-label text-wrap>
+              <h2>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h2>
+            </ion-label>
+
+            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
+          </ion-item>
+          <ion-item button>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+
+            <ion-label text-wrap>
+              <h2>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h2>
+            </ion-label>
+
+            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
+          </ion-item>
+          <ion-item button>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+
+            <ion-label text-wrap>
+              <h2>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h2>
+            </ion-label>
+
+            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
+          </ion-item>
+          <ion-item button>
+            <ion-thumbnail slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-thumbnail>
+
+            <ion-label text-wrap>
+              <h2>
+                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+              </h2>
+            </ion-label>
+
+            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
+          </ion-item>
+        </ion-list>
+
+        <ion-list *ngIf="groups">
           <ion-item-sliding #item *ngFor="let group of groups">
             <ion-item button (click)="navigateToCalendar(group)">
               <ion-thumbnail slot="start">

@@ -1,12 +1,14 @@
 @import "../../../theme/variables.scss";
 
-// ion-tab-bar {
-//   @include tabsgradient();
+ion-tab-bar {
+  --background: var(--main-background);
+  --color: var(--main-color);
 
-//   opacity: 0.8;
-//   --color: rgba(255, 255, 255, 0.5);
-//   --color-selected: #fff;
-// }
+  ion-tab-button {
+    --color: rgba(255, 255, 255, 0.65);
+    --color-selected: var(--main-color);
+  }
+}
 
 ion-tabs ion-label {
   font-family: "Open Sans", sans-serif;

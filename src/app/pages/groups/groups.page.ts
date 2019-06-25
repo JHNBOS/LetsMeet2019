@@ -14,17 +14,20 @@ import { Group } from 'src/app/services/models/group';
 })
 export class GroupsPage implements OnInit {
   authUser: firebase.User = null;
-  groups: Group[] = null;
+  groups: Group[];
 
   constructor(private router: Router, private groupService: GroupService, public _sanitizer: DomSanitizer,
     private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
 
   ngOnInit() {
+    console.log('Groups');
+    this.authUser = this.authenticationService.getUserAuth();
   }
 
   ionViewWillEnter() {
-    this.authUser = this.authenticationService.getUserAuth();
-    this.getGroups();
+    setTimeout(() => {
+      this.getGroups();
+    }, 2500);
   }
 
   getGroups() {

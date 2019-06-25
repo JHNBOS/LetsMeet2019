@@ -15,8 +15,8 @@ export class AuthenticationService {
 		this.firebaseAuth.authState.subscribe(user => this.user = user);
 	}
 
-	async signInWithEmail(credentials) {
-		await this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
+	async signInWithEmail(credentials): Promise<void | firebase.auth.UserCredential> {
+		return await this.firebaseAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(async () => {
 			return this.firebaseAuth.auth
 				.signInWithEmailAndPassword(credentials.email, credentials.password)
 				.catch(error => this.handleError(error));
@@ -47,9 +47,11 @@ export class AuthenticationService {
 	}
 
 	async saveUser(user: User): Promise<void> {
-		this.storage.clear();
-		await this.storage.set('firebase', this.user)
-			.then((response) => this.storage.set('user', user));
+		await this.storage.ready().then(() => {
+			this.storage.clear();
+			this.storage.set('firebase', this.user)
+				.then((response) => this.storage.set('user', user));
+		});
 	}
 
 	resetAuth() {

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
-import * as firebase from 'firebase/app';
+import { Storage } from '@ionic/storage';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 import { AuthenticationService } from '../../services/helpers/authentication.service';
+
 
 @Component({
   selector: 'app-sign-in',
@@ -19,8 +21,8 @@ export class SignInPage implements OnInit {
 
   loader: any;
 
-  constructor(private navController: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder,
-    private userService: UserService, public loadingController: LoadingController, private alertController: AlertController) {
+  constructor(private navController: NavController, private router: Router, private authService: AuthenticationService, private formBuilder: FormBuilder,
+    private userService: UserService, public loadingController: LoadingController, private alertController: AlertController, private storage: Storage) {
   }
 
   ngOnInit() {
@@ -93,24 +95,24 @@ export class SignInPage implements OnInit {
     this.navController.navigateForward('/forgot-password');
   }
 
-  async getUserProfile(email: string): Promise<User> {
-    let profile = await this.userService.getUserByEmail(email);
-    return profile;
+  getUserProfile(email: string): Promise<User> {
+    return this.userService.getUserByEmail(email)
+      .then((result) => { return result; });
   }
 
   async submit() {
     await this.loader.present();
 
     const credentials = { email: this.user.controls.email.value, password: this.user.controls.password.value };
-    await this.authService.signInWithEmail(credentials)
-      .then(async () => {
-        let profile = await this.getUserProfile(credentials.email);
-        await this.authService.saveUser(profile)
-          .then(() => {
-            this.loadingController.dismiss();
+    await this.authService.signInWithEmail(credentials).then(() => {
+      this.getUserProfile(credentials.email).then(async (profile) => {
+        this.authService.saveUser(profile).then(async () => {
+          await this.loadingController.dismiss().then(() => {
             this.navController.navigateRoot('/home');
-          });
-      }, (rejected: firebase.auth.Error) => { this.loadingController.dismiss(); throw rejected; }).then();
+          }, (err) => console.log(err));
+        });
+      });
+    }, (rejected: firebase.auth.Error) => { this.loadingController.dismiss(); throw rejected; });
   }
 
 }

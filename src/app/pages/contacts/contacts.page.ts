@@ -57,7 +57,7 @@ export class ContactsPage implements OnInit {
   async showPrompt() {
     const alert = await this.alertController.create({
       header: 'Add Contact',
-      message: 'Please enter email address of the contact you would like to add.',
+      message: 'Please enter the email of the contact you would like to add.',
       inputs: [
         {
           name: 'contactEmail',
