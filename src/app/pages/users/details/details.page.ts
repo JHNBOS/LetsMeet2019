@@ -3,7 +3,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { User } from 'src/app/services/models/user';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
 	selector: 'app-user-details',
@@ -17,7 +16,6 @@ export class UserDetailsPage implements OnInit {
 	constructor(
 		private router: Router,
 		private authenticationService: AuthenticationService,
-		private userService: UserService,
 		public _sanitizer: DomSanitizer,
 	) {
 	}

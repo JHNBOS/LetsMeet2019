@@ -11,6 +11,17 @@ ion-content {
   }
 }
 
+#topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  ion-icon {
+    font-size: 1.8rem;
+    color: var(--main-color);
+  }
+}
+
 ion-skeleton-text {
   --background-rgb: 255, 255, 255;
 }
@@ -18,7 +29,7 @@ ion-skeleton-text {
 ion-list {
   --ion-item-background: transparent;
   max-height: 42vh;
-  margin-top: 0.5rem;
+  margin-top: 0.9rem;
   overflow-y: scroll;
 
   ion-item-sliding {

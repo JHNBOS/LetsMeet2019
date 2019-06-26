@@ -31,10 +31,19 @@ export class UserManagePage implements OnInit {
     private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private camera: Camera, public toastController: ToastController,
     public loadingController: LoadingController, private alertController: AlertController
   ) {
+    this.getUser();
   }
 
   ngOnInit() {
     this.init();
+  }
+
+  ionViewWillEnter() {
+    this.getUser();
+  }
+
+  ionViewDidEnter() {
+    this.getUser();
   }
 
   init() {
@@ -54,10 +63,6 @@ export class UserManagePage implements OnInit {
         showCloseButton: true
       });
     }, 0);
-  }
-
-  ionViewWillEnter() {
-    this.getUser();
   }
 
   getUser() {
