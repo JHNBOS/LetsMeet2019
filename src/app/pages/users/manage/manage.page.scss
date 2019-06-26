@@ -1,36 +1,45 @@
 @import "../../../../theme/variables.scss";
 
+ion-header {
+  ion-toolbar {
+    --opacity: 1;
+    --color: var(--main-background);
+    --background: var(--main-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+}
+
 ion-avatar {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 160px;
+  max-height: 160px;
   width: 100%;
   height: 100%;
   margin: 0 auto;
 
   img {
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     object-fit: cover;
   }
 }
 
-.form-row {
-  margin-top: 2rem;
-}
-
-.button-row {
-  margin-top: 2rem;
+ion-content {
+  --background: var(--main-background);
 }
 
 ion-list {
+  --ion-item-background: transparent;
   margin-right: 0.3rem;
   margin-left: 0.3rem;
 
-  ion-item {
-    margin: 1rem auto 0 auto;
-
-    ion-label {
-      font-weight: 500;
+  ion-item.input {
+    ion-button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: 0;
     }
   }
 }

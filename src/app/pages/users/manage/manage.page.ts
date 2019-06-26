@@ -3,8 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { LoadingController, Platform, ToastController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
+import { AlertController, LoadingController, Platform, ToastController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { User } from 'src/app/services/models/user';
 import { UserService } from 'src/app/services/user.service';
@@ -28,16 +27,9 @@ export class UserManagePage implements OnInit {
   showSuccess = false;
 
   constructor(
-    public platform: Platform,
-    private router: Router,
-    private userService: UserService,
-    private authenticationService: AuthenticationService,
-    private formBuilder: FormBuilder,
-    public _sanitizer: DomSanitizer,
-    private camera: Camera,
-    private storage: Storage,
-    public toastController: ToastController,
-    public loadingController: LoadingController,
+    public platform: Platform, private router: Router, private userService: UserService, private authenticationService: AuthenticationService,
+    private formBuilder: FormBuilder, public _sanitizer: DomSanitizer, private camera: Camera, public toastController: ToastController,
+    public loadingController: LoadingController, private alertController: AlertController
   ) {
   }
 
@@ -94,6 +86,20 @@ export class UserManagePage implements OnInit {
         ]), updateOn: 'change'
       }),
     });
+  }
+
+  async showPasswordDetails() {
+    const alert = await this.alertController.create({
+      header: 'Password Requirements',
+      message: `<span style="font-size:0.9rem;">Your password needs to:</span> <br> 
+                <ul style="padding:0 0 0 20px;font-size:0.85rem;">
+                  <li>Include both lowercase and uppercase characters</li>
+                  <li>Include at least one number</li>
+                  <li>Be at least 5 characters long</li>
+                </ul>`,
+      buttons: ['OK']
+    });
+    return await alert.present();
   }
 
   async uploadAvatar() {
