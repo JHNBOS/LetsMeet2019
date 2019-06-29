@@ -3,10 +3,10 @@ import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/fires
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-
 import { AuthenticationService } from './helpers/authentication.service';
 import { Contact } from './models/contact';
 import { UserService } from './user.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +28,8 @@ export class ContactService {
         return actions.map(a => {
           const data = a.payload.doc.data();
           const id = a.payload.doc.id;
-          const contact = new Contact();
-          contact.id = id;
-          contact.name = data.name;
-          contact.email = data.email;
-          contact.avatar = data.avatar;
 
-          return contact;
+          return new Contact(data);
         });
       })
     );

@@ -18,31 +18,14 @@ export class EventService {
 
   getEvents(groupId: string): Observable<Event[]> {
     let events: Event[] = [];
-    this.eventCollection.doc(groupId).ref.collection('events')
-      .get()
+
+    this.eventCollection.doc(groupId).ref.collection('events').get()
       .then((response) => {
-        if (response.docs.length > 0) {
-          response.docs.forEach(groupDoc => {
-            let data = groupDoc.data();
-
-            let event = new Event();
-            event.id = data.id;
-            event.title = data.title;
-            event.description = data.description;
-            event.createdBy = data.createdBy;
-            event.location = data.location;
-            event.allDay = data.allDay;
-            event.start = data.start;
-            event.end = data.end;
-            event.groupId = data.groupId;
-
-            event.startTime = moment.unix(event.start.seconds).toDate();
-            event.endTime = moment.unix(event.end.seconds).toDate();
-
-            events.push(event);
-          });
-        }
-      }).catch((error) => {
+        response.docs.forEach(doc => {
+          let data = doc.data();
+          events.push(new Event(data));
+        });
+      }, (error) => {
         this.handleError(error);
         return null;
       });

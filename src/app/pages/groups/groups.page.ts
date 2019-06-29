@@ -20,14 +20,8 @@ export class GroupsPage implements OnInit {
     private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
 
   ngOnInit() {
-    console.log('Groups');
     this.authUser = this.authenticationService.getUserAuth();
-  }
-
-  ionViewWillEnter() {
-    setTimeout(() => {
-      this.getGroups();
-    }, 2500);
+    this.getGroups();
   }
 
   getGroups() {
@@ -37,12 +31,10 @@ export class GroupsPage implements OnInit {
   }
 
   refreshGroups(event: any) {
-    this.authUser = this.authenticationService.getUserAuth();
-    this.getGroups();
-
     setTimeout(() => {
+      this.getGroups();
       event.target.complete();
-    }, 2500);
+    }, 2000);
   }
 
   async deleteGroup(group: Group) {

@@ -8,6 +8,7 @@ import { map, take } from 'rxjs/operators';
 
 import { Group } from './models/group';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,25 +21,14 @@ export class GroupService {
 
   getGroups(uid: string): Observable<Group[]> {
     let groups: Group[] = [];
-    this.groupCollection.ref.where('members', 'array-contains', uid)
-      .get()
+
+    this.groupCollection.ref.where('members', 'array-contains', uid).get()
       .then((response) => {
-        if (response.docs.length > 0) {
-          response.docs.forEach(groupDoc => {
-            let data = groupDoc.data();
-
-            let newGroup = new Group();
-            newGroup.id = data.id;
-            newGroup.name = data.name;
-            newGroup.createdOn = moment.unix(data.createdOn.seconds).toDate();;
-            newGroup.createdBy = data.createdBy;
-            newGroup.picture = data.picture;
-            newGroup.members = data.members;
-
-            groups.push(newGroup);
-          });
-        }
-      }).catch((error) => {
+        response.docs.forEach(doc => {
+          let data = doc.data();
+          groups.push(new Group(data));
+        });
+      }, (error) => {
         this.handleError(error);
         return null;
       });
@@ -49,16 +39,8 @@ export class GroupService {
   getGroup(id: string): Observable<Group> {
     return this.groupCollection.doc(id).valueChanges().pipe(
       take(1),
-      map((group: any) => {
-        let newGroup = new Group();
-        newGroup.id = group.id;
-        newGroup.name = group.name;
-        newGroup.createdOn = moment.unix(group.createdOn.seconds).toDate();
-        newGroup.createdBy = group.createdBy;
-        newGroup.picture = group.picture;
-        newGroup.members = group.members;
-
-        return newGroup
+      map((data) => {
+        return new Group(data);
       })
     );
   }
