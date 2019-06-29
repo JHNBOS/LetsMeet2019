@@ -19,9 +19,6 @@ export class ContactsPage implements OnInit {
     private authenticationService: AuthenticationService, private alertController: AlertController) { }
 
   ngOnInit() {
-  }
-
-  ionViewWillEnter() {
     this.authUser = this.authenticationService.getUserAuth();
     this.getContacts();
   }
@@ -29,6 +26,13 @@ export class ContactsPage implements OnInit {
   getContacts() {
     this.contactService.getContacts(this.authUser.uid).subscribe(
       (response) => this.contacts = response);
+  }
+
+  refreshContacts(event: any) {
+    setTimeout(() => {
+      this.getContacts();
+      event.target.complete();
+    }, 2000);
   }
 
   async deleteContact(contact: Contact) {

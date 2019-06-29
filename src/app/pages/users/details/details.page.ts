@@ -21,13 +21,6 @@ export class UserDetailsPage implements OnInit {
 	}
 
 	ngOnInit() {
-	}
-
-	ionViewWillEnter() {
-		this.getUser();
-	}
-
-	ionViewDidEnter() {
 		this.getUser();
 	}
 
