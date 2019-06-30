@@ -209,7 +209,7 @@ export class EventModalComponent implements OnInit {
     this.event.start = moment(this.eventDetails.controls.start.value).toDate();
     this.event.end = this.event.allDay == true ? this.event.start : moment(this.eventDetails.controls.end.value).toDate();
 
-    this.event.createdBy = `${this.user.firstName} ${this.user.lastName}`;
+    this.event.createdBy = this.user;
     this.event.groupId = this.group.id;
   }
 

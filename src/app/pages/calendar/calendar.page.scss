@@ -1,13 +1,47 @@
 @import "../../../theme/variables.scss";
 
-ion-label h2 {
-  margin-bottom: 1rem;
-  font-size: 18px;
-  color: #000;
-  font-weight: 600;
+ion-header {
+  ion-toolbar {
+    --opacity: 1;
+    --color: var(--main-color);
+    --background: var(--main-background);
+
+    ion-title {
+      font-family: "Open Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+    }
+  }
 }
 
-ion-fab-button {
-  display: inline-block;
-  margin: 0 0.3rem;
+ion-content {
+  --background: var(--main-background);
+  --color: var(--main-color);
+
+  ion-grid {
+    margin-top: 3rem;
+  }
+
+  ion-item-divider {
+    --background: var(--main-background);
+    --color: var(--main-color);
+  }
+
+  ion-label {
+    --color: var(--main-color);
+  }
+}
+
+// Date text
+ion-label h2 {
+  width: 100%;
+  padding: 1rem;
+  margin: 0;
+  color: var(--main-color);
+  background: rgba(255, 255, 255, 0.25);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
 }

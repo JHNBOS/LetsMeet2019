@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar/calendar';
-import * as moment from 'moment';
 import { CalendarPopoverComponent } from 'src/app/components/calendar-popover/calendar-popover.component';
 import { EventModalComponent } from 'src/app/components/event-modal/event-modal.component';
 import { DataService } from 'src/app/services/data.service';
@@ -33,7 +33,7 @@ export class CalendarPage implements OnInit, AfterViewInit {
   viewTitle: any = new Date().toLocaleString("en", { month: "long" });
 
   constructor(private popoverController: PopoverController, private dataService: DataService, private eventService: EventService,
-    private authenticationService: AuthenticationService, private modal: ModalController) {
+    private authenticationService: AuthenticationService, private modal: ModalController, public _sanitizer: DomSanitizer) {
     this.dataService.serviceData.subscribe((response) => this.group = response);
     this.authUser = this.authenticationService.getUserAuth();
   }
@@ -102,28 +102,32 @@ export class CalendarPage implements OnInit, AfterViewInit {
     today.setHours(0, 0, 0, 0);
     event.setHours(0, 0, 0, 0);
 
-    this.isToday = today.getTime() === event.getTime();
-    this.currentMonth = today.getUTCMonth() === event.getUTCMonth();
-
     if (this.calendar.mode === 'month') {
-      if (this.currentMonth) {
-        this.calendar.lockSwipeToPrev = true;
-      } else {
-        this.calendar.lockSwipeToPrev = false;
-      }
-    } if (this.calendar.mode === 'week') {
-      if (moment(event).isoWeek() <= moment(today).isoWeek()) {
-        this.calendar.lockSwipeToPrev = false;
-      } else {
-        this.calendar.lockSwipeToPrev = true;
-      }
-    } else {
-      if (event.getDate() <= today.getDate()) {
+      if (event.getFullYear() < today.getFullYear() || (event.getFullYear() === today.getFullYear() && event.getMonth() <= today.getMonth())) {
         this.calendar.lockSwipeToPrev = true;
       } else {
         this.calendar.lockSwipeToPrev = false;
       }
     }
+    // if (this.calendar.mode === 'month') {
+    //   if (this.currentMonth) {
+    //     this.calendar.lockSwipeToPrev = true;
+    //   } else {
+    //     this.calendar.lockSwipeToPrev = false;
+    //   }
+    // } if (this.calendar.mode === 'week') {
+    //   if (moment(event).isoWeek() <= moment(today).isoWeek()) {
+    //     this.calendar.lockSwipeToPrev = false;
+    //   } else {
+    //     this.calendar.lockSwipeToPrev = true;
+    //   }
+    // } else {
+    //   if (event.getDate() <= today.getDate()) {
+    //     this.calendar.lockSwipeToPrev = true;
+    //   } else {
+    //     this.calendar.lockSwipeToPrev = false;
+    //   }
+    // }
   }
 
   async onEventSelected(event) {

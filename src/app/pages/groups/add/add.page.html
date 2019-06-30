@@ -37,12 +37,6 @@
                   <ion-label position="floating">Group Name</ion-label>
                   <ion-input inputmode="text" autocapitalize="on" formControlName="groupName"></ion-input>
                 </ion-item>
-                <ion-label class="error">
-                  <small [class.hide]="groupDetails.get('groupName').untouched || 
-                    (groupDetails.get('groupName').value.length > 0 && groupDetails.get('groupName').touched)">
-                    {{ error_messages.groupName[0].message }}
-                  </small>
-                </ion-label>
               </form>
             </ion-list>
           </ion-col>

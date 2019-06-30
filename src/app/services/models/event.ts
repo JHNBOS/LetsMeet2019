@@ -1,10 +1,12 @@
 import { firestore } from 'firebase';
 import * as moment from 'moment';
 
+import { User } from './user';
+
 export class Event {
     id: string;
     groupId: string;
-    createdBy: string;
+    createdBy: User;
     title: string;
     description: string;
     location: string;

@@ -70,7 +70,8 @@
 
         <ion-item lines="none">
           <ion-label position="fixed">Created By</ion-label>
-          <ion-input [value]="event.createdBy" placeholder="Created By" style="text-align: right" readonly></ion-input>
+          <ion-input [value]="event.createdBy.first_name" placeholder="Created By" style="text-align: right" readonly>
+          </ion-input>
           <ion-avatar>
             <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(user?.avatar)" />
           </ion-avatar>
