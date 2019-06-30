@@ -25,7 +25,8 @@ export class ContactsPage implements OnInit {
 
   getContacts() {
     this.contactService.getContacts(this.authUser.uid).subscribe(
-      (response) => this.contacts = response);
+      (response) => { setTimeout(() => this.contacts = response, 1200); }
+    );
   }
 
   refreshContacts(event: any) {
@@ -87,12 +88,11 @@ export class ContactsPage implements OnInit {
                   const errorAlert = await this.alertController.create({
                     header: 'Error',
                     message: 'No user found matching this email!',
-                    buttons: [{ text: 'OK', handler: () => this.router.navigate(['contacts']) }]
+                    buttons: [{ text: 'OK', handler: () => this.getContacts() }]
                   });
                   await errorAlert.present();
                 } else {
                   alert.dismiss();
-                  this.router.navigate(['contacts']);
                 }
               });
           }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { GroupService } from 'src/app/services/group.service';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
@@ -14,9 +14,10 @@ import { Group } from 'src/app/services/models/group';
 })
 export class GroupsPage implements OnInit {
   authUser: firebase.User = null;
-  groups: Group[];
+  groups: Group[] = null;
 
-  constructor(private router: Router, private groupService: GroupService, public _sanitizer: DomSanitizer,
+
+  constructor(private router: Router, private groupService: GroupService, public _sanitizer: DomSanitizer, private navController: NavController,
     private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
 
   ngOnInit() {
@@ -26,7 +27,7 @@ export class GroupsPage implements OnInit {
 
   getGroups() {
     this.groupService.getGroups(this.authUser.uid).subscribe(
-      (response) => this.groups = response
+      (response) => { setTimeout(() => this.groups = response, 1200); }
     );
   }
 
@@ -90,7 +91,7 @@ export class GroupsPage implements OnInit {
           handler: () => {
             alert.dismiss();
             this.authenticationService.signOut();
-            this.router.navigate(['sign-in']);
+            this.navController.navigateRoot('sign-in');
           }
         },
       ]
