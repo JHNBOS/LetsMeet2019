@@ -262,10 +262,10 @@ export class EventModalComponent implements OnInit {
   }
 
   getDifferenceInDays(event: Event) {
-    const diffTime = Math.abs(event.end.getTime() - event.start.getTime());
-    const differenceInDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    let begin = moment(event.start);
+    let end = moment(event.end);
 
-    return differenceInDays;
+    return begin.diff(end, 'days');
   }
 
   setFormat(event: any) {
