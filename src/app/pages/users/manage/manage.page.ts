@@ -123,8 +123,10 @@ export class UserManagePage implements OnInit {
             let base64Image = "data:image/jpeg;base64," + imageData;
             this.user.avatar = base64Image;
           }, async (error) => {
-            this.toast.message = 'Could not upload image. Please try again!';
-            await this.toast.present();
+            if (error != 'No Image Selected') {
+              this.toast.message = 'Could not upload image. Please try again!';
+              await this.toast.present();
+            }
           });
       }
     });

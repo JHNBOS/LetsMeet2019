@@ -1,7 +1,7 @@
-<ion-header>
-  <ion-toolbar color="primary">
+<ion-header translucent="true" no-border>
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ group?.name }}</ion-title>
   </ion-toolbar>
@@ -27,7 +27,7 @@
           <ion-label>
             Add member to group
           </ion-label>
-          <ion-icon name="add" color="primary" slot="start"></ion-icon>
+          <ion-icon name="add" color="light" slot="start"></ion-icon>
         </ion-item>
       </ion-list>
     </ion-col>
@@ -52,7 +52,7 @@
 
           <ion-item-options side="end" *ngIf="group.createdBy == authUser.uid">
             <ion-item-option color="light">
-              <ion-icon slot="icon-only" color="danger" name="trash" (click)="removeMember(member);item.close();">
+              <ion-icon slot="icon-only" color="light" name="trash" (click)="removeMember(member);item.close();">
               </ion-icon>
             </ion-item-option>
           </ion-item-options>

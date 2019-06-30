@@ -1,7 +1,7 @@
-<ion-header>
-  <ion-toolbar color="primary">
+<ion-header translucent="true" no-border>
+  <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title>Create Group</ion-title>
   </ion-toolbar>
@@ -10,20 +10,16 @@
 <ion-content>
   <ion-slides #slides pager="false" [options]="slideOpts">
     <ion-slide>
-      <h1>Group Members</h1>
-
       <app-contact-select (selectedContacts)="setContacts($event)"></app-contact-select>
 
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="primary" (click)="nextSlide()">
+      <ion-fab id="forward" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="light" (click)="nextSlide()">
           <ion-icon name="arrow-forward"></ion-icon>
         </ion-fab-button>
       </ion-fab>
     </ion-slide>
 
     <ion-slide>
-      <h1>Group Details</h1>
-
       <ion-grid>
         <ion-row>
           <ion-col text-center align-self-center>
@@ -33,18 +29,16 @@
           </ion-col>
         </ion-row>
 
-        <ion-row class="form-row" *ngIf="groupDetails">
+        <ion-row *ngIf="groupDetails">
           <ion-col>
             <ion-list>
               <form novalidate [formGroup]="groupDetails">
-
-                <ion-item>
+                <ion-item class="input">
                   <ion-label position="floating">Group Name</ion-label>
-                  <ion-input type="text" formControlName="groupName">
-                  </ion-input>
+                  <ion-input inputmode="text" autocapitalize="on" formControlName="groupName"></ion-input>
                 </ion-item>
                 <ion-label class="error">
-                  <small class="dark" [class.hide]="groupDetails.get('groupName').untouched || 
+                  <small [class.hide]="groupDetails.get('groupName').untouched || 
                     (groupDetails.get('groupName').value.length > 0 && groupDetails.get('groupName').touched)">
                     {{ error_messages.groupName[0].message }}
                   </small>
@@ -55,14 +49,14 @@
         </ion-row>
       </ion-grid>
 
-      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab id="finish" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="tertiary" (click)="submit()" [disabled]="groupDetails.invalid">
           <ion-icon name="checkmark"></ion-icon>
         </ion-fab-button>
       </ion-fab>
 
-      <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-        <ion-fab-button color="primary" (click)="prevSlide()">
+      <ion-fab id="backward" vertical="bottom" horizontal="start" slot="fixed">
+        <ion-fab-button color="light" (click)="prevSlide()">
           <ion-icon name="arrow-back"></ion-icon>
         </ion-fab-button>
       </ion-fab>

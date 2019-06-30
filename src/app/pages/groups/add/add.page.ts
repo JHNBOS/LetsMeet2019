@@ -158,8 +158,10 @@ export class AddGroupPage implements OnInit, AfterViewInit {
             let base64Image = "data:image/jpeg;base64," + imageData;
             this.group.picture = base64Image;
           }, async (error) => {
-            this.toast.message = 'Could not upload image. Please try again!';
-            await this.toast.present();
+            if (error != 'No Image Selected') {
+              this.toast.message = 'Could not upload image. Please try again!';
+              await this.toast.present();
+            }
           });
       }
     });

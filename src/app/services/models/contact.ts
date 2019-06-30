@@ -8,10 +8,12 @@ export class Contact {
 	selected: boolean = false;
 
 	constructor(data?: firestore.DocumentData) {
-		this.id = data.id;
-		this.name = data.name;
-		this.email = data.email;
-		this.avatar = data.avatar;
+		if (data) {
+			this.id = data.id;
+			this.name = data.name;
+			this.email = data.email;
+			this.avatar = data.avatar;
+		}
 		this.selected = false;
 	}
 }

@@ -1,5 +1,51 @@
 @import "../../../../theme/variables.scss";
 
+ion-header {
+  ion-toolbar {
+    --opacity: 1;
+    --color: var(--main-color);
+    --background: var(--main-background);
+
+    ion-title {
+      font-family: "Open Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+    }
+  }
+}
+
+ion-content {
+  --background: var(--main-background);
+  --color: var(--main-color);
+  color: var(--main-color);
+
+  ion-label {
+    --color: var(--main-color);
+  }
+
+  ion-list {
+    --ion-item-background: var(--main-background);
+    margin-right: 0.3rem;
+    margin-left: 0.3rem;
+
+    form {
+      margin-right: 1rem;
+      margin-left: 1rem;
+    }
+
+    ion-item.input {
+      ion-button {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin: 0;
+      }
+    }
+  }
+}
+
 ion-avatar {
   max-width: 200px;
   max-height: 200px;
@@ -14,33 +60,46 @@ ion-avatar {
   }
 }
 
-.form-row {
+ion-slides {
+  height: calc(100% - 2rem);
   margin-top: 2rem;
-}
 
-.button-row {
-  margin-top: 2rem;
-}
+  ion-slide {
+    display: block;
 
-ion-list {
-  margin-right: 0.3rem;
-  margin-left: 0.3rem;
-
-  ion-item {
-    margin: 0.5rem auto;
-
-    ion-label {
-      font-weight: 300;
+    h2 {
+      text-transform: uppercase;
+      text-align: left;
+      margin-left: 3rem;
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      font-weight: 400;
     }
   }
-}
 
-ion-slides {
-  height: 100%;
-}
+  ion-fab#forward {
+    ion-fab-button {
+      ion-icon {
+        color: var(--main-background);
+      }
+    }
+  }
 
-ion-slide {
-  display: block;
+  ion-fab#backward {
+    ion-fab-button {
+      ion-icon {
+        color: var(--main-background);
+      }
+    }
+  }
+
+  ion-fab#finish {
+    ion-fab-button {
+      ion-icon {
+        color: var(--main-color);
+      }
+    }
+  }
 }
 
 .slide-zoom {

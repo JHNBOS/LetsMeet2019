@@ -42,7 +42,7 @@ const routes: Routes = [
 		]
 	},
 	{
-		path: 'group',
+		path: 'groups',
 		children: [
 			{
 				path: 'details',

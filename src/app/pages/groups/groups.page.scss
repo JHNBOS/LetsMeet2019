@@ -27,7 +27,7 @@ ion-skeleton-text {
 }
 
 ion-list {
-  --ion-item-background: transparent;
+  --ion-item-background: var(--main-background);
   max-height: 42vh;
   margin-top: 0.9rem;
   overflow-y: scroll;
@@ -35,6 +35,12 @@ ion-list {
   ion-item-sliding {
     border-bottom: 1px solid var(--main-border-color);
     margin-bottom: 0.5rem;
+
+    ion-item-options {
+      ion-item-option {
+        background: rgba(0, 0, 0, 0.01);
+      }
+    }
   }
 
   ion-item {

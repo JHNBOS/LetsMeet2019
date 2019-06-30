@@ -3,11 +3,16 @@
 ion-header {
   ion-toolbar {
     --opacity: 1;
-    --color: var(--main-background);
-    --background: var(--main-color);
-    font-family: "Open Sans", sans-serif;
-    font-size: 0.8rem;
-    font-weight: 800;
+    --color: var(--main-color);
+    --background: var(--main-background);
+
+    ion-title {
+      font-family: "Open Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+    }
   }
 }
 
@@ -27,6 +32,10 @@ ion-avatar {
 
 ion-content {
   --background: var(--main-background);
+
+  ion-grid {
+    margin-top: 2rem;
+  }
 }
 
 ion-list {
