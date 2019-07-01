@@ -20,7 +20,7 @@ ion-avatar {
 .custom-modal {
   display: flex;
   width: 98vw;
-  height: 75vh;
+  height: auto;
   box-sizing: border-box;
   padding: 0;
 
@@ -50,13 +50,15 @@ ion-avatar {
     justify-content: flex-end;
     align-items: center;
 
-    background: var(--main-background) url("../../../assets/Triangle.svg") no-repeat -90vw -22vh/200% 200%;
+    background: var(--main-background);
 
     color: var(--main-color);
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
 
     .buttons {
+      display: flex;
+      width: 100%;
       padding: 0;
       margin: 0;
 

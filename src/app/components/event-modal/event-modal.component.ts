@@ -15,7 +15,7 @@ import { User } from 'src/app/services/models/user';
   styleUrls: ['./event-modal.component.scss'],
 })
 export class EventModalComponent implements OnInit {
-  private uid: string;
+  uid: string;
   user: User = null;
   eventDetails: FormGroup;
 
@@ -39,31 +39,12 @@ export class EventModalComponent implements OnInit {
     public toastController: ToastController, public loadingController: LoadingController) {
 
     this.getUser();
-    let typeModal = this.navParams.get('type');
-    this.group = this.navParams.get('group');
-
-    if (typeModal === 'create') {
-      this.uid = this.navParams.get('uid');
-      this.createEvent = true;
-
-      this.event = new Event();
-    } else {
-      this.event = this.navParams.get('event');
-
-      this.event.startTime = moment.unix(this.event.start.seconds).toISOString();
-      this.event.endTime = moment.unix(this.event.end.seconds).toISOString();
-
-      if (this.event.allDay) {
-        this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM')}`;
-      } else {
-        this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
-      }
-    }
+    this.init();
   }
 
   ngOnInit() {
     this.createFormGroup();
-    this.init();
+    this.initLoader();
   }
 
   createFormGroup() {
@@ -95,25 +76,6 @@ export class EventModalComponent implements OnInit {
         ]), updateOn: 'change'
       }),
     });
-  }
-
-  init() {
-    setTimeout(async () => {
-      this.loader = await this.loadingController.create({
-        spinner: 'crescent',
-        message: 'Creating event...',
-        translucent: true,
-        backdropDismiss: false,
-        showBackdrop: true,
-        keyboardClose: true
-      });
-      this.toast = await this.toastController.create({
-        message: 'Event was successfully created!',
-        duration: 2000,
-        position: 'bottom',
-        showCloseButton: true
-      });
-    }, 0);
   }
 
   getUser() {
@@ -163,14 +125,17 @@ export class EventModalComponent implements OnInit {
 
   async submit() {
     let events = [];
+    this.setEvent();
 
     await this.loader.present();
-    this.setValues();
 
+    // Check if the event is multiple days long
     if (this.getDifferenceInDays(this.event) > 0) {
       events = this.checkMultiDayEvent(this.event);
     }
 
+    // If not multiple days long, then submit single event to database
+    // Else, check how many days, and for each day, create a new event
     if (events.length == 0) {
       this.eventService.addEvent(this.event).then(async (response) => {
         this.loadingController.dismiss();
@@ -201,7 +166,61 @@ export class EventModalComponent implements OnInit {
     this.modal.dismiss(false);
   }
 
-  setValues() {
+  // Change datepicker format when all day is selected
+  setFormat(event: any) {
+    let value = event.target.value;
+    if (value == 'on') {
+      this.displayFormat = 'DD-MM-YYYY';
+      this.pickerFormat = 'DD MMMM YYYY';
+    } else {
+      this.displayFormat = 'DD-MM-YYYY HH:mm';
+      this.pickerFormat = 'DD MMMM YYYY HH:mm';
+    }
+  }
+
+  private init() {
+    let typeModal = this.navParams.get('type');
+    this.group = this.navParams.get('group');
+
+    if (typeModal === 'create') {
+      this.uid = this.navParams.get('uid');
+      this.createEvent = true;
+      this.event = new Event();
+    } else {
+      this.event = this.navParams.get('event');
+
+      this.event.startTime = moment.unix(this.event.start.seconds).toISOString();
+      this.event.endTime = moment.unix(this.event.end.seconds).toISOString();
+
+      if (this.event.allDay) {
+        this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM')}`;
+      } else {
+        this.eventDate = `${moment.unix(this.event.start.seconds).format('dddd D MMMM, HH:mm')} - ${moment.unix(this.event.end.seconds).format('HH:mm')}`;
+      }
+    }
+  }
+
+  private initLoader() {
+    setTimeout(async () => {
+      this.loader = await this.loadingController.create({
+        spinner: 'crescent',
+        message: 'Creating event...',
+        translucent: true,
+        backdropDismiss: false,
+        showBackdrop: true,
+        keyboardClose: true
+      });
+      this.toast = await this.toastController.create({
+        message: 'Event was successfully created!',
+        duration: 2000,
+        position: 'bottom',
+        showCloseButton: true
+      });
+    }, 0);
+  }
+
+  // Set all the properties values of event object
+  private setEvent() {
     this.event.title = this.eventDetails.controls.title.value;
     this.event.description = this.eventDetails.controls.description.value;
     this.event.location = this.eventDetails.controls.location.value;
@@ -213,7 +232,8 @@ export class EventModalComponent implements OnInit {
     this.event.groupId = this.group.id;
   }
 
-  checkMultiDayEvent(event: Event): Event[] {
+  // Create multiple events when its duration is over one day
+  private checkMultiDayEvent(event: Event): Event[] {
     const events: Event[] = [];
 
     const startEvent = new Event();
@@ -235,13 +255,14 @@ export class EventModalComponent implements OnInit {
     endEvent.createdBy = event.createdBy;
     endEvent.location = event.location;
     endEvent.groupId = event.groupId;
-    endEvent.start = moment(this.eventDetails.controls.end.value).set({ 'hour': 0, 'minute': 0, 'second': 1, 'millisecond': 0 }).toDate();
+    endEvent.start = moment(this.eventDetails.controls.end.value).set({ 'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 0 }).toDate();
     endEvent.end = moment(this.eventDetails.controls.end.value).toDate();
 
     events.push(startEvent);
     events.push(endEvent);
 
     if (this.getDifferenceInDays(this.event) > 1) {
+      // For every day in between the start and end time, create a new event
       for (let index = 1; index < this.getDifferenceInDays(this.event); index++) {
         const newEvent = new Event();
         newEvent.id = 'a' + index;
@@ -251,7 +272,7 @@ export class EventModalComponent implements OnInit {
         newEvent.createdBy = event.createdBy;
         newEvent.location = event.location;
         newEvent.groupId = event.groupId;
-        newEvent.start = moment(this.eventDetails.controls.start.value).set({ 'date': event.start.getDate() + index, 'hour': 0, 'minute': 0, 'second': 1, 'millisecond': 0 }).toDate();
+        newEvent.start = moment(this.eventDetails.controls.start.value).set({ 'date': event.start.getDate() + index, 'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 0 }).toDate();
         newEvent.end = moment(this.eventDetails.controls.start.value).set({ 'date': event.start.getDate() + index, 'hour': 23, 'minute': 59, 'second': 59, 'millisecond': 0 }).toDate();
 
         events.push(newEvent);
@@ -261,22 +282,12 @@ export class EventModalComponent implements OnInit {
     return events;
   }
 
-  getDifferenceInDays(event: Event) {
+  // Get the difference in days between start and end of an event
+  private getDifferenceInDays(event: Event) {
     let begin = moment(event.start);
     let end = moment(event.end);
 
     return begin.diff(end, 'days');
-  }
-
-  setFormat(event: any) {
-    let value = event.target.value;
-    if (value == 'on') {
-      this.displayFormat = 'DD-MM-YYYY';
-      this.pickerFormat = 'DD MMMM YYYY';
-    } else {
-      this.displayFormat = 'DD-MM-YYYY HH:mm';
-      this.pickerFormat = 'DD MMMM YYYY HH:mm';
-    }
   }
 
 }

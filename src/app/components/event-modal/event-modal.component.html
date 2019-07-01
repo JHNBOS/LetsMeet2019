@@ -16,7 +16,7 @@
         <form [formGroup]="eventDetails">
 
           <ion-item>
-            <ion-input type="text" formControlName="title" placeholder="What will you be doing..."></ion-input>
+            <ion-input inputmode="text" formControlName="title" placeholder="What will you be doing..."></ion-input>
           </ion-item>
 
           <ion-item>
@@ -38,7 +38,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-input type="text" formControlName="location" placeholder="Location"></ion-input>
+            <ion-input inputmode="text" formControlName="location" placeholder="Location"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -54,24 +54,25 @@
 
     <div *ngIf="!createEvent && event">
       <ion-list>
+        <ion-item>
+          <ion-input [value]="event.title" readonly></ion-input>
+        </ion-item>
 
         <ion-item *ngIf="event.description">
-          <ion-textarea [value]="event.description" placeholder="Description" readonly></ion-textarea>
+          <ion-textarea [value]="event.description" readonly></ion-textarea>
         </ion-item>
 
-        <ion-item *ngIf="event.location">
-          <ion-label position="fixed">Location</ion-label>
-          <ion-input [value]="event.location" placeholder="Location" style="text-align: right" readonly>
+        <ion-item *ngIf="event.location" style="color: rgba(255, 255, 255, 0.85);">
+          <ion-label position="fixed" style="color:rgba(255, 255, 255, 0.85);">Location</ion-label>
+          <ion-input [value]="event.location" style="text-align: right" readonly>
           </ion-input>
         </ion-item>
 
-        <ion-item lines="none">
-          <ion-label position="fixed">Created By</ion-label>
-          <ion-input [value]="event.createdBy.firstName" placeholder="Created By" style="text-align: right" readonly>
+        <ion-item style="color: rgba(255, 255, 255, 0.85);">
+          <ion-label position="fixed" style="color:rgba(255, 255, 255, 0.85);">Created By</ion-label>
+          <ion-input [value]="event.createdBy.firstName + ' ' + event.createdBy.lastName" placeholder="Created By"
+            style="text-align: right" readonly>
           </ion-input>
-          <ion-avatar>
-            <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(user?.avatar)" />
-          </ion-avatar>
         </ion-item>
 
       </ion-list>
