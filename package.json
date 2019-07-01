@@ -1,8 +1,7 @@
 {
   "name": "LetsMeet",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "version": "2.0.0",
+  "author": "Johan Bos",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
