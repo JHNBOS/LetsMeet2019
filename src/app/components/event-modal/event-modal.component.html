@@ -2,31 +2,26 @@
   <div class="modal-header">
     <div class="buttons" [style.justify-content]="createEvent ? 'flex-end' : 'space-between'">
       <ion-button class="delete-button" fill="clear" (click)="deleteEvent()" [hidden]="createEvent">
-        <ion-icon slot="icon-only" name="trash">
-        </ion-icon>
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>
       <ion-button class="close-button" fill="clear" (click)="close()">
         <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button>
     </div>
-    <div class="title">
-      <h2 *ngIf="createEvent">Create Event</h2>
-      <h2 *ngIf="!createEvent && event">{{ event.title }}</h2>
-      <p *ngIf="!createEvent && event">{{ eventDate }}</p>
-    </div>
   </div>
+
   <div class="modal-body">
     <div *ngIf="createEvent && event">
       <ion-list>
-        <form novalidate [formGroup]="eventDetails">
+        <form [formGroup]="eventDetails">
+
           <ion-item>
-            <ion-input type="text" formControlName="title" placeholder="Title">
-            </ion-input>
+            <ion-input type="text" formControlName="title" placeholder="What will you be doing..."></ion-input>
           </ion-item>
 
           <ion-item>
             <ion-label position="fixed">All day</ion-label>
-            <ion-toggle formControlName="allDay" color="primary" slot="end" (ionChange)="setFormat($event)">
+            <ion-toggle formControlName="allDay" color="success" slot="end" (ionChange)="setFormat($event)">
             </ion-toggle>
           </ion-item>
 
@@ -36,19 +31,21 @@
               min="{{today.toISOString()}}" (ionChange)="checkTime($event)" style="margin-left: auto;"></ion-datetime>
           </ion-item>
 
-          <ion-item [hidden]="this.eventDetails.controls['allDay'].value === true">
+          <ion-item [hidden]="this.eventDetails.controls['allDay'].value == true">
             <ion-label position="fixed">Till</ion-label>
             <ion-datetime formControlName="end" display-format="DD-MM-YYYY HH:mm" picker-format="DDD MMMM YYYY HH:mm"
               min="{{today.toISOString()}}" (ionChange)="checkTime($event)" style="margin-left: auto;"></ion-datetime>
           </ion-item>
 
           <ion-item>
-            <ion-input type="text" formControlName="location" placeholder="Location">
-            </ion-input>
+            <ion-input type="text" formControlName="location" placeholder="Location"></ion-input>
           </ion-item>
 
-          <ion-item lines="none">
+          <ion-item>
             <ion-textarea formControlName="description" placeholder="Description"></ion-textarea>
+          </ion-item>
+
+          <ion-item [hidden]="this.eventDetails.controls['allDay'].value == false">
           </ion-item>
 
         </form>
@@ -79,11 +76,11 @@
 
       </ion-list>
     </div>
-
-    <div class="modal-footer">
-      <ion-button expand="full" fill="solid" color="primary" (click)="submit()" *ngIf="createEvent"
-        [disabled]="eventDetails.invalid">
-        SAVE
-      </ion-button>
-    </div>
   </div>
+
+  <div class="modal-footer">
+    <ion-button class="primary-btn" (click)="submit()" *ngIf="createEvent" [disabled]="eventDetails.invalid">
+      SAVE
+    </ion-button>
+  </div>
+</div>

@@ -74,10 +74,10 @@ export class EventModalComponent implements OnInit {
         ]), updateOn: 'change'
       }),
       description: new FormControl('', {
-        validators: Validators.compose([]), updateOn: 'change'
+        validators: Validators.compose([]), updateOn: 'blur'
       }),
       location: new FormControl('', {
-        validators: Validators.compose([]), updateOn: 'change'
+        validators: Validators.compose([]), updateOn: 'blur'
       }),
       allDay: new FormControl(false, {
         validators: Validators.compose([

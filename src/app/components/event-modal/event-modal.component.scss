@@ -19,58 +19,62 @@ ion-avatar {
 
 .custom-modal {
   display: flex;
-  width: 90vw;
+  width: 98vw;
+  height: 75vh;
+  box-sizing: border-box;
+  padding: 0;
+
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+
   position: absolute;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  box-sizing: border-box;
-  padding: 0;
-  border-radius: 15px;
-  background: #f7f7f7;
+
+  font-family: "Open Sans", sans-serif;
+  border-radius: 4px;
+  background: var(--main-background);
   box-shadow: 4px 4px 5px 2px rgba(0, 0, 0, 0.3);
 
   .modal-header {
     display: flex;
-    flex-direction: column;
     width: 100%;
-    background: var(--ion-color-primary);
-    color: #fff;
-    padding: 0.3rem;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
+    height: 20vh;
+    padding: 0.5rem 0 1rem 0;
+    margin: 0;
+
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    background: var(--main-background) url("../../../assets/Triangle.svg") no-repeat -90vw -22vh/200% 200%;
+
+    color: var(--main-color);
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
 
     .buttons {
-      display: flex;
+      padding: 0;
+      margin: 0;
+
+      align-self: flex-start;
       justify-content: unset;
 
       .delete-button {
-        color: #fff;
+        height: 24px;
         margin: 0;
+
+        color: var(--main-color);
       }
 
       .close-button {
-        color: #fff;
+        height: 24px;
         margin: 0;
-      }
-    }
 
-    .title {
-      padding: 0.5rem 1rem;
-
-      h2 {
-        margin-top: 0px;
-        margin-bottom: 8px;
-      }
-
-      p {
-        margin-top: 0px;
-        margin-bottom: 5px;
-        color: rgba(255, 255, 255, 0.98);
+        color: var(--main-color);
       }
     }
   }
@@ -79,12 +83,42 @@ ion-avatar {
     width: 100%;
 
     ion-list {
+      background: var(--main-background);
+
+      ion-item:nth-child(1) {
+        font-size: 1.3rem;
+
+        ion-input {
+          --placeholder-color: var(--main-color);
+          --placeholder-opacity: 0.75;
+        }
+      }
+
       ion-item {
-        padding-bottom: 0.3rem;
+        --background: var(--main-background);
+        --border-color: rgba(255, 255, 255, 0.2);
+        --color: var(--main-color);
+        --highlight-background: var(--main-background);
+
+        padding: 0.4rem;
+
+        font-family: "Open Sans", sans-serif;
 
         ion-label {
-          font-size: 16px;
-          color: rgb(85, 85, 85);
+          font-size: 1rem;
+          color: var(--main-color);
+        }
+
+        ion-input {
+          --placeholder-color: var(--main-color);
+          --placeholder-opacity: 1;
+
+          --highlight-background: var(--main-background);
+        }
+
+        ion-textarea {
+          --placeholder-color: var(--main-color);
+          --placeholder-opacity: 1;
         }
       }
     }
@@ -92,16 +126,12 @@ ion-avatar {
 
   .modal-footer {
     width: 100%;
-    padding: 0rem;
-    border-bottom-right-radius: 15px;
-    border-bottom-left-radius: 15px;
-    background: var(--ion-color-light);
+    padding: 0.6rem;
 
-    ion-button {
-      width: 100%;
-      margin: 0 auto;
-      border-bottom-right-radius: 15px;
-      border-bottom-left-radius: 15px;
-    }
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background: var(--main-background);
+
+    text-align: center;
   }
 }
