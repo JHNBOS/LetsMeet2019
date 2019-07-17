@@ -3,6 +3,34 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:100,200,300,400,700|Montserrat:400,500,600,700");
 @import url("https://fonts.googleapis.com/css?family=Baloo+Chettan|Open+Sans:300,400,600,700|Roboto:300,400,500,700&display=swap");
 
+@font-face {
+  font-family: "Champagne and Limousines";
+  src: url("/assets/fonts/ChampagneLimousines.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Champagne and Limousines Italic";
+  src: url("/assets/fonts/ChampagneLimousinesItalic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Champagne and Limousines Bold";
+  src: url("/assets/fonts/ChampagneLimousinesBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Champagne and Limousines Bold Italic";
+  src: url("/assets/fonts/ChampagneLimousinesBoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
 /** Ionic CSS Variables **/
 :root {
   --ion-font-family: "Roboto", sans-serif;

@@ -1,0 +1,72 @@
+<ion-content class="ion-padding" fullscreen="true">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<h1 class="title">Let's Meet</h1>
+			</ion-col>
+		</ion-row>
+
+		<ion-row id="sign-in">
+			<ion-col>
+				<ion-list>
+
+					<form [formGroup]="user">
+						<ion-item class="input">
+							<!-- <ion-label position="floating">Email</ion-label> -->
+							<ion-input inputmode="email" formControlName="email" placeholder="Email"></ion-input>
+							<ion-icon class="prepend" name="mail" slot="start"></ion-icon>
+						</ion-item>
+						<!-- <ion-label class="error">
+              <small [class.hide]="!user.get('email').hasError('required') || user.get('email').untouched">
+                {{ error_messages.email[0].message }}
+              </small>
+              <small [class.hide]="!user.get('email').hasError('pattern') || user.get('email').untouched">
+                {{ error_messages.email[1].message }}
+              </small>
+            </ion-label> -->
+
+						<ion-item class="input">
+							<!-- <ion-label position="floating">Password</ion-label> -->
+							<ion-input inputmode="password" type="password" formControlName="password" placeholder="Password">
+							</ion-input>
+							<ion-icon class="prepend" name="lock" slot="start"></ion-icon>
+							<ion-button fill="clear" slot="end" (click)="showPasswordDetails()">
+								<ion-icon name="help-circle"></ion-icon>
+							</ion-button>
+						</ion-item>
+						<!-- <ion-label class="error">
+              <small [class.hide]="user.get('password').untouched || 
+                (user.get('password').value.length > 0 && user.get('password').touched)">
+                {{ error_messages.password[0].message }}
+              </small>
+              <small [class.hide]="!user.get('password').hasError('minlength') || 
+                user.get('password').hasError('pattern')">
+                {{ error_messages.password[1].message }}
+              </small>
+              <small [class.hide]="!user.get('password').hasError('pattern')">
+                {{ error_messages.password[2].message }}
+              </small>
+            </ion-label> -->
+
+						<ion-row>
+							<ion-col style="padding:0;">
+								<ion-button id="sign-in-btn" (click)="submit()">
+									SIGN IN
+								</ion-button>
+								<a id="reset-link" (click)="goToForgotPass()">
+									Forgot password
+								</a>
+								<a id="sign-up-link" (click)="goToSignUp()">
+									Sign up
+								</a>
+							</ion-col>
+						</ion-row>
+
+					</form>
+
+				</ion-list>
+			</ion-col>
+		</ion-row>
+
+	</ion-grid>
+</ion-content>
