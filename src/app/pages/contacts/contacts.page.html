@@ -1,112 +1,151 @@
 <ion-header translucent="true" no-border>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="toggleSideNav()">
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Contacts</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-button (click)="toggleSideNav()">
+				<ion-icon slot="icon-only" name="menu"></ion-icon>
+			</ion-button>
+		</ion-buttons>
+		<ion-title>Contacts</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" fullscreen="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refreshContacts($event)">
+	<!-- <ion-refresher slot="fixed" (ionRefresh)="refreshContacts($event)">
     <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  </ion-refresher> -->
 
-  <div id="search-bar">
-    <ion-item class="input">
-      <ion-input inputmode="text" placeholder="Search"></ion-input>
-      <ion-icon class="prepend" name="search" slot="start"></ion-icon>
-    </ion-item>
-  </div>
+	<div id="search-bar">
+		<ion-item class="input">
+			<ion-input
+				inputmode="text"
+				placeholder="Search"
+				[(ngModel)]="searchQuery"
+			></ion-input>
+			<ion-icon class="prepend" name="search" slot="start"></ion-icon>
+		</ion-item>
+	</div>
 
-  <ion-grid>
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-list *ngIf="!contacts">
+					<ion-item button>
+						<ion-thumbnail slot="start">
+							<ion-skeleton-text animated></ion-skeleton-text>
+						</ion-thumbnail>
 
-    <ion-row>
-      <ion-col>
-        <ion-list *ngIf="!contacts">
-          <ion-item button>
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
+						<ion-label text-wrap>
+							<h2>
+								<ion-skeleton-text
+									animated
+									style="width: 60%"
+								></ion-skeleton-text>
+							</h2>
+						</ion-label>
 
-            <ion-label text-wrap>
-              <h2>
-                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-              </h2>
-            </ion-label>
+						<ion-icon
+							class="transparent"
+							slot="end"
+							name="arrow-dropright"
+						></ion-icon>
+					</ion-item>
+					<ion-item button>
+						<ion-thumbnail slot="start">
+							<ion-skeleton-text animated></ion-skeleton-text>
+						</ion-thumbnail>
 
-            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
-          </ion-item>
-          <ion-item button>
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
+						<ion-label text-wrap>
+							<h2>
+								<ion-skeleton-text
+									animated
+									style="width: 60%"
+								></ion-skeleton-text>
+							</h2>
+						</ion-label>
 
-            <ion-label text-wrap>
-              <h2>
-                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-              </h2>
-            </ion-label>
+						<ion-icon
+							class="transparent"
+							slot="end"
+							name="arrow-dropright"
+						></ion-icon>
+					</ion-item>
+					<ion-item button>
+						<ion-thumbnail slot="start">
+							<ion-skeleton-text animated></ion-skeleton-text>
+						</ion-thumbnail>
 
-            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
-          </ion-item>
-          <ion-item button>
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
+						<ion-label text-wrap>
+							<h2>
+								<ion-skeleton-text
+									animated
+									style="width: 60%"
+								></ion-skeleton-text>
+							</h2>
+						</ion-label>
 
-            <ion-label text-wrap>
-              <h2>
-                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-              </h2>
-            </ion-label>
+						<ion-icon
+							class="transparent"
+							slot="end"
+							name="arrow-dropright"
+						></ion-icon>
+					</ion-item>
+					<ion-item button>
+						<ion-thumbnail slot="start">
+							<ion-skeleton-text animated></ion-skeleton-text>
+						</ion-thumbnail>
 
-            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
-          </ion-item>
-          <ion-item button>
-            <ion-thumbnail slot="start">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-thumbnail>
+						<ion-label text-wrap>
+							<h2>
+								<ion-skeleton-text
+									animated
+									style="width: 60%"
+								></ion-skeleton-text>
+							</h2>
+						</ion-label>
 
-            <ion-label text-wrap>
-              <h2>
-                <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-              </h2>
-            </ion-label>
+						<ion-icon
+							class="transparent"
+							slot="end"
+							name="arrow-dropright"
+						></ion-icon>
+					</ion-item>
+				</ion-list>
 
-            <ion-icon class="transparent" slot="end" name="arrow-dropright"></ion-icon>
-          </ion-item>
-        </ion-list>
+				<ion-list *ngIf="contacts">
+					<ion-item-sliding #item *ngFor="let contact of contacts">
+						<ion-item button>
+							<ion-thumbnail slot="start">
+								<img
+									[src]="
+										_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)
+									"
+								/>
+							</ion-thumbnail>
 
-        <ion-list *ngIf="contacts">
-          <ion-item-sliding #item *ngFor="let contact of contacts">
-            <ion-item button>
-              <ion-thumbnail slot="start">
-                <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
-              </ion-thumbnail>
+							<ion-label text-wrap>
+								<h3>{{ contact.name }}</h3>
+								<small>{{ contact.email }}</small>
+							</ion-label>
+						</ion-item>
 
-              <ion-label text-wrap>
-                <h3>{{ contact.name }}</h3>
-                <small>{{ contact.email }}</small>
-              </ion-label>
-            </ion-item>
+						<ion-item-options side="end">
+							<ion-item-option color="light">
+								<ion-icon
+									slot="icon-only"
+									color="light"
+									name="trash"
+									(click)="deleteContact(contact); item.close()"
+								>
+								</ion-icon>
+							</ion-item-option>
+						</ion-item-options>
+					</ion-item-sliding>
+				</ion-list>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
-            <ion-item-options side="end">
-              <ion-item-option color="light">
-                <ion-icon slot="icon-only" color="light" name="trash" (click)="deleteContact(contact);item.close();">
-                </ion-icon>
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-button id="add-contact-btn" (click)="showPrompt()">
-    <ion-icon name="add"></ion-icon>
-  </ion-button>
-
+	<ion-button id="add-contact-btn" (click)="showPrompt()">
+		<ion-icon name="add"></ion-icon>
+	</ion-button>
 </ion-content>

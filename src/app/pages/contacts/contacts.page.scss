@@ -87,9 +87,12 @@ ion-skeleton-text {
 }
 
 ion-grid {
-  position: absolute;
+  position: fixed;
   left: 0;
+  top: 15vh;
+  bottom: 0;
   width: 100%;
+  height: 85vh;
 }
 
 ion-list {
@@ -97,8 +100,10 @@ ion-list {
 
   position: absolute;
   left: 0;
+  top: 0;
   width: 100%;
-  max-height: 42vh;
+  min-height: 10vh;
+  max-height: 72vh;
   margin-top: 0.9rem;
   overflow-y: scroll;
 
@@ -114,7 +119,7 @@ ion-list {
   }
 
   ion-item {
-    --color: var(--main-color);
+    --color: #fff;
     --border-color: transparent;
 
     height: 70px;
@@ -131,12 +136,30 @@ ion-list {
       }
     }
 
-    ion-label h2 {
-      margin-left: 1.5rem;
+    ion-label {
+      h2 {
+        margin-left: 1.5rem;
+  
+        font-family: "Segoe UI", sans-serif;
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
 
-      font-family: "Segoe UI", sans-serif;
-      font-size: 1.3rem;
-      color: rgba(255, 255, 255, 0.8);
+      h3 {
+        margin-left: 1.5rem;
+  
+        font-family: "Segoe UI", sans-serif;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      small {
+        margin-left: 1.5rem;
+  
+        font-family: "Segoe UI", sans-serif;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+      }
     }
 
     ion-icon {
@@ -166,6 +189,8 @@ ion-list {
   font-family: "Segoe UI", sans-serif;
   font-weight: 400;
   font-size: 2rem;
+
+  overflow: hidden;
 
   ion-icon {
     position: absolute;
