@@ -11,27 +11,15 @@
 @import "~@ionic/angular/css/flex-utils.css";
 @import "theme/variables.scss";
 
-// Buttons
-.primary-btn {
-  --border-radius: 8px;
-  --background: var(--main-color);
-  width: 220px;
-  height: 55px;
-  color: var(--main-background);
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
+body {
+  background: rgba(0, 51, 255, 1);
 }
 
-.secondary-btn {
-  --border-radius: 8px;
-  --background: var(--main-background);
-  width: 220px;
-  height: 55px;
-  color: var(--main-color);
-  font-family: "Open Sans", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
+.refresher-pulling-icon,
+.refresher-pulling-text,
+.refresher-refreshing-icon,
+.refresher-refreshing-text {
+  color: #fff !important;
 }
 
 // Error message
@@ -48,8 +36,8 @@
     position: absolute;
     transform: translateX(0px);
     transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    font-family: "Montserrat";
-    font-weight: 600;
+    font-family: "Segoe UI", sans-serif;
+    font-weight: 400;
 
     &.hide {
       transform: translateX(-1000px);
@@ -57,17 +45,14 @@
 
     &.dark {
       color: #920000;
-      font-family: "Lato";
       text-shadow: none;
     }
   }
 }
 
-// Input
-
 // List
 ion-list {
-  --color: var(--main-color);
+  --color: #fff;
 }
 
 // Modal
@@ -83,7 +68,7 @@ ion-list {
 }
 
 ion-modal {
-  --background: transparent !important;
+  --background: rgba(0, 0, 0, 0.1) !important;
 }
 
 // Calendar popover styling
@@ -114,7 +99,7 @@ table.table-bordered {
 
     tr {
       th {
-        background: rgba(255, 255, 255, 0.25) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
         color: rgb(235, 235, 235);
         border-left: none !important;
         border-bottom: none !important;
@@ -138,7 +123,7 @@ table.table-bordered {
         }
 
         &.monthview-current {
-          background: rgba(255, 255, 255, 0.3) !important;
+          background: rgba(255, 255, 255, 0.2) !important;
           font-weight: 600;
         }
 
@@ -181,20 +166,20 @@ table.table-bordered {
 
 // Event list
 ion-list.event-detail-container {
-  --background: var(--main-background) !important;
+  --background: transparent !important;
   padding: 0;
 
   ion-item {
-    --background: var(--main-background) !important;
-    --color: var(--main-color);
+    --background: rgb(14, 130, 255) !important;
+    --color: #fff;
     --border-color: rgba(255, 255, 255, 0);
 
     border-bottom: 2px solid rgba(56, 151, 214, 0.75);
-    font-family: "Open Sans", sans-serif !important;
+    font-family: "Segoe UI", sans-serif !important;
 
     h3 {
-      font-family: "Open Sans", sans-serif !important;
-      color: var(--main-color);
+      font-family: "Segoe UI", sans-serif !important;
+      color: #fff;
       font-size: 1rem;
     }
 
@@ -210,14 +195,14 @@ ion-list.event-detail-container {
     }
 
     ion-icon {
-      color: var(--main-color);
+      color: #fff;
     }
   }
 }
 
 .dayview-allday-table,
 .weekview-allday-table {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
 }
 
 .weekview-allday-content-table td {
@@ -227,14 +212,14 @@ ion-list.event-detail-container {
 
 // Event list time
 .monthview-eventdetail-timecolumn {
-  font-family: "Open Sans", sans-serif !important;
+  font-family: "Segoe UI", sans-serif !important;
   font-size: 0.75rem !important;
 }
 
 .calendar-event-inner {
-  background-color: var(--main-background) !important;
+  background-color: transparent !important;
 }
 
 .no-events-label {
-  color: var(--main-color) !important;
+  color: #fff !important;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, MenuController } from '@ionic/angular';
 import { ContactService } from 'src/app/services/contact.service';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { Contact } from 'src/app/services/models/contact';
@@ -16,7 +16,8 @@ export class ContactsPage implements OnInit {
   contacts: Contact[] = null;
 
   constructor(private router: Router, private contactService: ContactService, public _sanitizer: DomSanitizer,
-    private authenticationService: AuthenticationService, private alertController: AlertController) { }
+    private authenticationService: AuthenticationService, private alertController: AlertController,
+    public menuController: MenuController) { }
 
   ngOnInit() {
     this.authUser = this.authenticationService.getUserAuth();
@@ -27,6 +28,10 @@ export class ContactsPage implements OnInit {
     this.contactService.getContacts(this.authUser.uid).subscribe(
       (response) => { setTimeout(() => this.contacts = response, 1200); }
     );
+  }
+
+  toggleSideNav() {
+    this.menuController.toggle();
   }
 
   refreshContacts(event: any) {

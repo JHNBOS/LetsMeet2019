@@ -3,34 +3,36 @@
 ion-header {
   ion-toolbar {
     --opacity: 1;
-    --color: var(--main-color);
-    --background: var(--main-background);
+    --color: #fff;
+    --background: transparent;
 
     ion-title {
-      font-family: "Open Sans", sans-serif;
+      font-family: "Champagne and Limousines", sans-serif;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 300;
       letter-spacing: 0.05rem;
       text-transform: uppercase;
+      color: #fff;
     }
   }
 }
 
 ion-content {
-  --background: var(--main-background);
-  --color: var(--main-color);
+  --background: rgb(0, 51, 255);
+  --background: linear-gradient(180deg, rgba(0, 51, 255, 1) 0%, rgba(29, 209, 255, 1) 100%);
+  --color: #fff;
 
   ion-grid {
     margin-top: 3rem;
   }
 
   ion-item-divider {
-    --background: var(--main-background);
-    --color: var(--main-color);
+    --background: transparent;
+    --color: #fff;
   }
 
   ion-label {
-    --color: var(--main-color);
+    --color: #fff;
   }
 }
 
@@ -39,9 +41,8 @@ ion-label h2 {
   width: 100%;
   padding: 1rem;
   margin: 0;
-  color: var(--main-color);
-  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
   font-size: 1rem;
   font-weight: 600;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }

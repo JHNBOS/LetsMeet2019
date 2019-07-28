@@ -1,18 +1,37 @@
-<ion-tabs>
-  <ion-tab-bar slot="bottom" translucent="true">
-    <ion-tab-button tab="groups">
-      <ion-label>Home</ion-label>
-      <ion-icon name="home"></ion-icon>
-    </ion-tab-button>
+<ion-menu side="start">
+  <ion-header translucent="true" no-border>
+    <ion-toolbar>
+      <ion-title>Navigation</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list lines="full">
+      <ion-menu-toggle auto-hide="false">
+        <ion-item routerDirection="root" [routerLink]="'/home/groups'">
+          Groups
+          <ion-icon name="calendar" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item routerDirection="root" [routerLink]="'/home/profile'">
+          Profile
+          <ion-icon name="contact" slot="start"></ion-icon>
+        </ion-item>
+        <ion-item routerDirection="root" [routerLink]="'/home/contacts'">
+          Contacts
+          <ion-icon name="people" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
+  <ion-footer>
+    <ion-list lines="none">
+      <ion-menu-toggle auto-hide="false">
+        <ion-item (click)="signOut()">
+          Sign out
+          <ion-icon name="exit" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-footer>
+</ion-menu>
 
-    <ion-tab-button tab="profile">
-      <ion-label>Profile</ion-label>
-      <ion-icon name="person"></ion-icon>
-    </ion-tab-button>
-
-    <ion-tab-button tab="contacts">
-      <ion-label>Contacts</ion-label>
-      <ion-icon name="people"></ion-icon>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+<ion-router-outlet main></ion-router-outlet>

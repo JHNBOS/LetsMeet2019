@@ -1,0 +1,75 @@
+<ion-content class="ion-padding" fullscreen="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h1 class="title">Lets Meet</h1>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-list>
+
+          <form [formGroup]="user">
+            <ion-item class="input">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input inputmode="email" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-label class="error">
+              <small [class.hide]="!user.get('email').hasError('required') || user.get('email').untouched">
+                {{ error_messages.email[0].message }}
+              </small>
+              <small [class.hide]="!user.get('email').hasError('pattern') || user.get('email').untouched">
+                {{ error_messages.email[1].message }}
+              </small>
+            </ion-label>
+
+            <ion-item class="input">
+              <ion-label position="floating">Password</ion-label>
+              <ion-input inputmode="password" type="password" formControlName="password">
+              </ion-input>
+              <ion-button fill="clear" slot="end" (click)="showPasswordDetails()">
+                <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-label class="error">
+              <small [class.hide]="user.get('password').untouched || 
+                (user.get('password').value.length > 0 && user.get('password').touched)">
+                {{ error_messages.password[0].message }}
+              </small>
+              <small [class.hide]="!user.get('password').hasError('minlength') || 
+                user.get('password').hasError('pattern')">
+                {{ error_messages.password[1].message }}
+              </small>
+              <small [class.hide]="!user.get('password').hasError('pattern')">
+                {{ error_messages.password[2].message }}
+              </small>
+            </ion-label>
+
+            <ion-row class="ion-margin-top">
+              <ion-col text-center>
+                <ion-button class="primary-btn" (click)="submit()" [disabled]="user.invalid">
+                  SIGN IN
+                </ion-button>
+                <a id="reset-link" (click)="goToForgotPass()">
+                  Forgot your password?
+                </a>
+              </ion-col>
+            </ion-row>
+
+          </form>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
+
+<ion-footer translucent="true">
+  <ion-toolbar>
+    <ion-button class="secondary-btn" expand="block" (click)="goToSignUp()">
+      Don't have an account yet?
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

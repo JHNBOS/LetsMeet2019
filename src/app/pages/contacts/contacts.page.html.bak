@@ -1,25 +1,7 @@
-<ion-header translucent="true" no-border>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="toggleSideNav()">
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Contacts</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding" fullscreen="true">
   <ion-refresher slot="fixed" (ionRefresh)="refreshContacts($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
-  <div id="search-bar">
-    <ion-item class="input">
-      <ion-input inputmode="text" placeholder="Search"></ion-input>
-      <ion-icon class="prepend" name="search" slot="start"></ion-icon>
-    </ion-item>
-  </div>
 
   <ion-grid>
 
@@ -105,8 +87,8 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button id="add-contact-btn" (click)="showPrompt()">
-    <ion-icon name="add"></ion-icon>
+  <ion-button class="primary-btn" (click)="showPrompt()">
+    ADD
   </ion-button>
 
 </ion-content>

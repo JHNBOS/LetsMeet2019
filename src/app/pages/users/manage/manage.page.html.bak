@@ -1,0 +1,90 @@
+<ion-header translucent="true" no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" fullscreen="true">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-list>
+
+          <form [formGroup]="userDetails" *ngIf="user">
+
+            <ion-item class="input">
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input inputmode="text" autocapitalize="on" formControlName="firstName">
+              </ion-input>
+            </ion-item>
+            <ion-label class="error">
+              <small class="dark" [class.hide]="userDetails.get('firstName').untouched || 
+                    (userDetails.get('firstName').value.length > 0 && userDetails.get('firstName').touched)">
+                {{ error_messages.firstName[0].message }}
+              </small>
+            </ion-label>
+
+            <ion-item class="input">
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input inputmode="text" autocapitalize="on" formControlName="lastName">
+              </ion-input>
+            </ion-item>
+            <ion-label class="error">
+              <small class="dark" [class.hide]="userDetails.get('lastName').untouched || 
+                  (userDetails.get('lastName').value.length > 0 && userDetails.get('lastName').touched)">
+                {{ error_messages.lastName[0].message }}
+              </small>
+            </ion-label>
+
+            <ion-item class="input">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input inputmode="email" formControlName="email" readonly="true">
+              </ion-input>
+            </ion-item>
+            <ion-label class="error">
+              <small class="dark" [class.hide]="userDetails.get('email').untouched || 
+                      (userDetails.get('email').value.length > 0 && userDetails.get('email').touched)">
+                {{ error_messages.email[0].message }}
+              </small>
+              <small class="dark" [class.hide]="!userDetails.get('email').hasError('pattern')">
+                {{ error_messages.email[1].message }}
+              </small>
+            </ion-label>
+
+            <ion-item class="input">
+              <ion-label position="floating">New Password</ion-label>
+              <ion-input inputmode="password" type="password" formControlName="new_password"></ion-input>
+              <ion-button fill="clear" slot="end" (click)="showPasswordDetails()">
+                <ion-icon slot="icon-only" name="help-circle"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-label class="error">
+              <small [class.hide]="!userDetails.get('new_password').hasError('minlength') || 
+                  userDetails.get('new_password').hasError('pattern')">
+                {{ error_messages.password[1].message }}
+              </small>
+              <small [class.hide]="!userDetails.get('new_password').hasError('pattern')">
+                {{ error_messages.password[2].message }}
+              </small>
+            </ion-label>
+
+            <ion-row class="ion-margin-top">
+              <ion-col text-center>
+                <ion-button expand="full" fill="solid" color="primary" (click)="submit()"
+                  [disabled]="userDetails.invalid">
+                  SAVE
+                </ion-button>
+              </ion-col>
+            </ion-row>
+
+          </form>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

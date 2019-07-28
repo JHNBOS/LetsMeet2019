@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, MenuController, NavController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { GroupService } from 'src/app/services/group.service';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
@@ -18,7 +18,8 @@ export class GroupsPage implements OnInit {
 
 
   constructor(private router: Router, private groupService: GroupService, public _sanitizer: DomSanitizer, private navController: NavController,
-    private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService) { }
+    private authenticationService: AuthenticationService, private alertController: AlertController, private dataService: DataService,
+    public menuController: MenuController) { }
 
   ngOnInit() {
     this.authUser = this.authenticationService.getUserAuth();
@@ -62,6 +63,10 @@ export class GroupsPage implements OnInit {
     await alert.present();
   }
 
+  toggleSideNav() {
+    this.menuController.toggle();
+  }
+
   navigateToAdd() {
     this.router.navigate(['groups/add']);
   }
@@ -74,28 +79,5 @@ export class GroupsPage implements OnInit {
   navigateToCalendar(group: Group) {
     this.dataService.changeData(group);
     this.router.navigate(['calendar']);
-  }
-
-  async signOut() {
-    const alert = await this.alertController.create({
-      header: 'Signing out',
-      message: 'Are you sure you want to sign out?',
-      buttons: [
-        {
-          text: 'No',
-          role: 'cancel',
-          handler: () => alert.dismiss()
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            alert.dismiss();
-            this.authenticationService.signOut();
-            this.navController.navigateRoot('sign-in');
-          }
-        },
-      ]
-    });
-    await alert.present();
   }
 }

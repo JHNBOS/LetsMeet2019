@@ -1,31 +1,21 @@
-<ion-header translucent="true" no-border>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="toggleSideNav()">
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Contacts</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding" fullscreen="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refreshContacts($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="refreshGroups($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div id="search-bar">
-    <ion-item class="input">
-      <ion-input inputmode="text" placeholder="Search"></ion-input>
-      <ion-icon class="prepend" name="search" slot="start"></ion-icon>
-    </ion-item>
-  </div>
-
   <ion-grid>
+    <ion-row>
+      <ion-col id="topbar">
+        <h1 class="title">Lets Meet</h1>
+        <ion-button fill="clear" (click)="signOut()">
+          <ion-icon name="log-out"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-list *ngIf="!contacts">
+        <ion-list *ngIf="!groups">
           <ion-item button>
             <ion-thumbnail slot="start">
               <ion-skeleton-text animated></ion-skeleton-text>
@@ -80,23 +70,28 @@
           </ion-item>
         </ion-list>
 
-        <ion-list *ngIf="contacts">
-          <ion-item-sliding #item *ngFor="let contact of contacts">
-            <ion-item button>
+        <ion-list *ngIf="groups">
+          <ion-item-sliding #item *ngFor="let group of groups">
+            <ion-item button (click)="navigateToCalendar(group)">
               <ion-thumbnail slot="start">
-                <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
+                <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)">
               </ion-thumbnail>
 
               <ion-label text-wrap>
-                <h3>{{ contact.name }}</h3>
-                <small>{{ contact.email }}</small>
+                <h2>{{ group.name }}</h2>
               </ion-label>
+
+              <ion-icon slot="end" name="arrow-dropright"></ion-icon>
             </ion-item>
 
             <ion-item-options side="end">
               <ion-item-option color="light">
-                <ion-icon slot="icon-only" color="light" name="trash" (click)="deleteContact(contact);item.close();">
+                <ion-icon slot="icon-only" color="light" name="trash" (click)="deleteGroup(group);item.close();">
                 </ion-icon>
+              </ion-item-option>
+              <ion-item-option color="light">
+                <ion-icon slot="icon-only" color="light" name="information-circle-outline"
+                  (click)="navigateToDetails(group);item.close();"></ion-icon>
               </ion-item-option>
             </ion-item-options>
           </ion-item-sliding>
@@ -105,8 +100,8 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button id="add-contact-btn" (click)="showPrompt()">
-    <ion-icon name="add"></ion-icon>
+  <ion-button class="primary-btn" (click)="navigateToAdd()">
+    CREATE
   </ion-button>
 
 </ion-content>

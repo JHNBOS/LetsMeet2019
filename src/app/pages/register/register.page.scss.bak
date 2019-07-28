@@ -1,0 +1,40 @@
+@import "../../../theme/variables.scss";
+
+ion-header {
+  ion-toolbar {
+    --opacity: 1;
+    --color: var(--main-color);
+    --background: var(--main-background);
+
+    ion-title {
+      font-family: "Open Sans", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+    }
+  }
+}
+
+ion-content {
+  --background: var(--main-background) url("../../../assets/Wave.svg") no-repeat bottom/contain;
+
+  ion-grid {
+    margin-top: 2rem;
+  }
+}
+
+ion-list {
+  --ion-item-background: transparent;
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+
+  ion-item.input {
+    ion-button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: 0;
+    }
+  }
+}

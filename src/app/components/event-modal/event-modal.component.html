@@ -38,7 +38,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-input inputmode="text" formControlName="location" placeholder="Location"></ion-input>
+            <ion-input inputmode="text" formControlName="location" placeholder="Where"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -80,7 +80,7 @@
   </div>
 
   <div class="modal-footer">
-    <ion-button class="primary-btn" (click)="submit()" *ngIf="createEvent" [disabled]="eventDetails.invalid">
+    <ion-button id="save-event-btn" (click)="submit()" *ngIf="createEvent">
       SAVE
     </ion-button>
   </div>

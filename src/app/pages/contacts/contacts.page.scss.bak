@@ -1,0 +1,69 @@
+@import "../../../theme/variables.scss";
+
+ion-content {
+  --background: var(--main-background) url("../../../assets/Lines.svg") no-repeat -20vw -2vh / 175% 175%;
+
+  .primary-btn {
+    position: absolute;
+    left: 50%;
+    top: 75%;
+    transform: translate(-50%, -75%);
+  }
+}
+
+ion-skeleton-text {
+  --background-rgb: 255, 255, 255;
+}
+
+ion-list {
+  --ion-item-background: var(--main-background);
+  max-height: 42vh;
+  margin-top: 0.5rem;
+  overflow-y: scroll;
+
+  ion-item-sliding {
+    border-bottom: 1px solid var(--main-border-color);
+    margin-bottom: 0.5rem;
+
+    ion-item-options {
+      ion-item-option {
+        background: rgba(0, 0, 0, 0.01);
+      }
+    }
+  }
+
+  ion-item {
+    --color: var(--main-color);
+    --border-color: transparent;
+
+    ion-thumbnail {
+      position: relative;
+      left: -5%;
+      width: 60px;
+      height: 60px;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    ion-label h2 {
+      font-family: "Open Sans", sans-serif;
+      font-size: 1.2rem;
+    }
+
+    ion-icon {
+      color: var(--main-color);
+
+      &.transparent {
+        color: rgba(255, 255, 255, 0.32);
+      }
+    }
+  }
+}
+
+.title {
+  font-family: var(--logo-font);
+  font-size: 3.2rem;
+  color: #fff;
+}

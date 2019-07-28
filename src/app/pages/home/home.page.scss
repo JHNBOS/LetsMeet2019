@@ -1,15 +1,53 @@
 @import "../../../theme/variables.scss";
 
-ion-tab-bar {
-  --background: var(--main-background);
-  --color: var(--main-color);
+ion-menu {
+  --background: linear-gradient(180deg, rgba(0, 51, 255, 0.6) 0%, rgba(29, 209, 255, 0.6) 100%);
+  --color: #fff;
 
-  ion-tab-button {
-    --color: rgba(255, 255, 255, 0.65);
-    --color-selected: var(--main-color);
+  .menu-animated {
+    transition: all 2s ease-in-out;
+    -moz-transition: all 2s ease-in-out;
+    -webkit-transition: all 2s ease-in-out;
+
+    transition-delay: 3s;
+    -moz-transition-delay: 3s;
+    -webkit-transition-delay: 3s;
   }
-}
 
-ion-tabs ion-label {
-  font-family: "Open Sans", sans-serif;
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  ion-toolbar {
+    --background: transparent;
+    --color: #fff;
+  }
+
+  ion-content {
+    --background: transparent;
+    --color: #fff;
+  }
+
+  ion-list {
+    background: transparent;
+
+    ion-item {
+      --background: transparent;
+      --color: #fff;
+      --border-color: rgba(255, 255, 255, 0.2);
+
+      padding: 10px 0px;
+
+      ion-icon {
+        color: #fff;
+      }
+    }
+  }
 }

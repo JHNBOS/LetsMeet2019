@@ -18,6 +18,9 @@ ion-avatar {
 }
 
 .custom-modal {
+  background: rgba(0, 51, 255, 0.6) !important;
+  background: linear-gradient(180deg, rgba(0, 51, 255, 0.6) 0%, rgba(29, 209, 255, 0.6) 100%) !important;
+
   display: flex;
   width: 98vw;
   height: auto;
@@ -36,13 +39,12 @@ ion-avatar {
 
   font-family: "Open Sans", sans-serif;
   border-radius: 4px;
-  background: var(--main-background);
   box-shadow: 4px 4px 5px 2px rgba(0, 0, 0, 0.3);
 
   .modal-header {
     display: flex;
     width: 100%;
-    height: 20vh;
+    height: auto;
     padding: 0.5rem 0 1rem 0;
     margin: 0;
 
@@ -50,9 +52,9 @@ ion-avatar {
     justify-content: flex-end;
     align-items: center;
 
-    background: var(--main-background);
+    background: transparent;
 
-    color: var(--main-color);
+    color: #fff;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
 
@@ -69,14 +71,14 @@ ion-avatar {
         height: 24px;
         margin: 0;
 
-        color: var(--main-color);
+        color: #fff;
       }
 
       .close-button {
         height: 24px;
         margin: 0;
 
-        color: var(--main-color);
+        color: #fff;
       }
     }
   }
@@ -85,21 +87,21 @@ ion-avatar {
     width: 100%;
 
     ion-list {
-      background: var(--main-background);
+      background: transparent;
 
       ion-item:nth-child(1) {
         font-size: 1.3rem;
 
         ion-input {
-          --placeholder-color: var(--main-color);
+          --placeholder-color: #fff;
           --placeholder-opacity: 0.75;
         }
       }
 
       ion-item {
-        --background: var(--main-background);
+        --background: transparent;
         --border-color: rgba(255, 255, 255, 0.2);
-        --color: var(--main-color);
+        --color: #fff;
         --highlight-background: var(--main-background);
 
         padding: 0.4rem;
@@ -108,21 +110,82 @@ ion-avatar {
 
         ion-label {
           font-size: 1rem;
-          color: var(--main-color);
+          color: #fff;
         }
 
         ion-input {
-          --placeholder-color: var(--main-color);
-          --placeholder-opacity: 1;
+          --placeholder-color: #fff;
+          --placeholder-opacity: 0.75;
 
           --highlight-background: var(--main-background);
         }
 
         ion-textarea {
-          --placeholder-color: var(--main-color);
-          --placeholder-opacity: 1;
+          --placeholder-color: #fff;
+          --placeholder-opacity: 0.75;
+
+          --padding-start: 0px;
         }
       }
+    }
+  }
+
+  ion-item.input {
+    --border-color: transparent;
+    --highlight-color-focused: transparent;
+    --highlight-color-invalid: transparent;
+    --highlight-color-valid: transparent;
+    --padding-start: 25px !important;
+
+    margin-top: 12px;
+    margin-right: 0.1rem;
+    margin-left: 0.1rem;
+
+    height: 45px;
+    --background: rgba(255, 255, 255, 0.1);
+
+    ion-label {
+      --color: rgba(255, 255, 255, 0.8) !important;
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.03rem;
+    }
+
+    ion-input,
+    ion-textarea {
+      --placeholder-color: #fff;
+      --placeholder-opacity: 0.6;
+      --padding-start: 18px !important;
+      --padding-end: 0;
+      --background: rgba(255, 255, 255, 0);
+      --border-radius: 3px;
+
+      margin: 0 auto;
+      padding: 20px 0 20px 10px;
+
+      font-family: "Segoe UI", sans-serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.05rem;
+      color: #fff;
+    }
+
+    ion-icon.prepend {
+      color: rgba(255, 255, 255, 0.4);
+      position: absolute;
+      left: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+    }
+
+    ion-button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      margin: 0;
+      --color: rgba(255, 255, 255, 0.4);
     }
   }
 
@@ -132,8 +195,20 @@ ion-avatar {
 
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
-    background: var(--main-background);
+    background: transparent;
 
     text-align: center;
   }
+}
+
+#save-event-btn {
+  --border-radius: 3px;
+  --background: #fff;
+  margin-top: 11px;
+  width: 100%;
+  height: 55px;
+  color: #0086d5;
+  font-family: "Segoe UI", sans-serif;
+  font-weight: 400;
+  font-size: 1.4rem;
 }

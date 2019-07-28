@@ -1,0 +1,57 @@
+@import "../../../theme/variables.scss";
+
+ion-content {
+  --background: var(--main-background) url("../../../assets/Wave.svg") no-repeat bottom/contain;
+}
+
+ion-list {
+  --ion-item-background: transparent;
+  margin-right: 0.3rem;
+  margin-left: 0.3rem;
+
+  ion-item.input {
+    ion-button {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: 0;
+    }
+  }
+}
+
+.title {
+  font-family: var(--logo-font);
+  font-size: 3.2rem;
+  color: #fff;
+}
+
+#reset-link {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  color: var(--main-color);
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.secondary-btn {
+  width: 205px;
+  height: 35px;
+  font-size: 0.6rem;
+  margin: 0 auto;
+}
+
+ion-footer ion-toolbar {
+  --background: #fff;
+  --border-color: #fff;
+  padding: 0.4rem 0;
+  padding-left: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
+  padding-right: var(--ion-grid-padding-xs, var(--ion-grid-padding, 5px));
+}
+
+.footer-md:before {
+  background-image: none;
+}

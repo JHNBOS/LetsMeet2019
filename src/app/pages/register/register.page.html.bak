@@ -3,47 +3,47 @@
     <ion-buttons slot="start">
       <ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Edit Profile</ion-title>
+    <ion-title>Sign Up</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" fullscreen="true">
   <ion-grid>
-    <ion-row id="edit-profile">
+    <ion-row>
       <ion-col>
         <ion-list>
 
-          <form [formGroup]="userDetails" *ngIf="user">
+          <form novalidate [formGroup]="user">
             <ion-item class="input">
-              <ion-input inputmode="text" autocapitalize="on" formControlName="firstName" placeholder="First Name">
+              <ion-label position="floating">First Name</ion-label>
+              <ion-input inputmode="text" autocapitalize="on" formControlName="firstName">
               </ion-input>
-              <ion-icon class="prepend" name="create" slot="start"></ion-icon>
             </ion-item>
-            <!-- <ion-label class="error">
+            <ion-label class="error">
               <small [class.hide]="user.get('firstName').untouched || 
                   (user.get('firstName').value.length > 0 && user.get('firstName').touched)">
                 {{ error_messages.firstName[0].message }}
               </small>
-            </ion-label> -->
+            </ion-label>
 
             <ion-item class="input">
-              <ion-input inputmode="text" autocapitalize="on" formControlName="lastName" placeholder="Last Name">
+              <ion-label position="floating">Last Name</ion-label>
+              <ion-input inputmode="text" autocapitalize="on" formControlName="lastName">
               </ion-input>
-              <ion-icon class="prepend" name="create" slot="start"></ion-icon>
             </ion-item>
-            <!-- <ion-label class="error">
+            <ion-label class="error">
               <small [class.hide]="user.get('lastName').untouched || 
                 (user.get('lastName').value.length > 0 && user.get('lastName').touched)">
                 {{ error_messages.lastName[0].message }}
               </small>
-            </ion-label> -->
-            
+            </ion-label>
+
             <ion-item class="input">
-              <ion-input inputmode="email" formControlName="email" placeholder="Email">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input inputmode="email" formControlName="email">
               </ion-input>
-              <ion-icon class="prepend" name="mail" slot="start"></ion-icon>
             </ion-item>
-            <!-- <ion-label class="error">
+            <ion-label class="error">
               <small [class.hide]="user.get('email').untouched || 
                       (user.get('email').value.length > 0 && user.get('email').touched)">
                 {{ error_messages.email[0].message }}
@@ -51,17 +51,16 @@
               <small [class.hide]="!user.get('email').hasError('pattern')">
                 {{ error_messages.email[1].message }}
               </small>
-            </ion-label> -->
+            </ion-label>
 
             <ion-item class="input">
-              <ion-input inputmode="password" type="password" formControlName="new_password" placeholder="New password">
-              </ion-input>
-              <ion-icon class="prepend" name="lock" slot="start"></ion-icon>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input inputmode="password" type="password" formControlName="password"></ion-input>
               <ion-button fill="clear" slot="end" (click)="showPasswordDetails()">
-                <ion-icon name="help-circle"></ion-icon>
+                <ion-icon slot="icon-only" name="help-circle"></ion-icon>
               </ion-button>
             </ion-item>
-            <!-- <ion-label class="error">
+            <ion-label class="error">
               <small [class.hide]="user.get('password').untouched || 
                     (user.get('password').value.length > 0 && user.get('password').touched)">
                 {{ error_messages.password[0].message }}
@@ -73,12 +72,12 @@
               <small [class.hide]="!user.get('password').hasError('pattern')">
                 {{ error_messages.password[2].message }}
               </small>
-            </ion-label> -->
+            </ion-label>
 
-            <ion-row>
-              <ion-col style="padding:0;">
-                <ion-button id="save-btn" (click)="submit()">
-                  SAVE
+            <ion-row class="ion-margin-top">
+              <ion-col text-center>
+                <ion-button class="primary-btn" (click)="submit()" [disabled]="user.invalid">
+                  SIGN UP
                 </ion-button>
               </ion-col>
             </ion-row>

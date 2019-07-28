@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/helpers/authentication.service';
 import { User } from 'src/app/services/models/user';
 
@@ -14,14 +15,17 @@ export class UserDetailsPage implements OnInit {
 	memberSince: string;
 
 	constructor(
-		private router: Router,
-		private authenticationService: AuthenticationService,
-		public _sanitizer: DomSanitizer,
+		private router: Router, private authenticationService: AuthenticationService, public _sanitizer: DomSanitizer,
+		public menuController: MenuController
 	) {
 	}
 
 	ngOnInit() {
 		this.getUser();
+	}
+
+	toggleSideNav() {
+		this.menuController.toggle();
 	}
 
 	navigateToManage() {
