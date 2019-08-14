@@ -34,6 +34,8 @@ ion-refresher {
 ion-content {
   --background: rgb(0, 51, 255);
   --background: linear-gradient(180deg, rgba(0, 51, 255, 1) 0%, rgba(29, 209, 255, 1) 100%);
+
+  overflow-y: hidden;
 }
 
 ion-skeleton-text {
@@ -93,6 +95,7 @@ ion-grid {
   bottom: 0;
   width: 100%;
   height: 85vh;
+  padding: 0;
 }
 
 ion-list {
@@ -156,16 +159,18 @@ ion-list {
 }
 
 #add-group-btn {
-  --border-radius: 50%;
+  --border-radius: 0;
   --background: #fff;
 
   position: absolute;
-  bottom: -75px;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, 10px);
+  transform: translate(-50%, 0);
 
   width: 150px;
-  height: 150px;
+  height: 75px;
+  padding: 0;
+  margin: 0;
 
   color: #0086d5;
   font-family: "Segoe UI", sans-serif;
@@ -174,8 +179,14 @@ ion-list {
 
   overflow: hidden;
 
+  z-index: 3;
+
+  border-top-left-radius: 100% 200%;
+  border-top-right-radius: 100% 200%;
+
   ion-icon {
     position: absolute;
-    top: 20px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

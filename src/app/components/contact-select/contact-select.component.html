@@ -1,19 +1,31 @@
 <ion-list>
-  <ion-item *ngIf="!contacts || contacts?.length == 0">No contacts to add.</ion-item>
-  <ion-item button *ngFor="let contact of contacts" (click)="add($event, contact)" [class.active]="contact.selected">
-    <ion-avatar slot="start">
-      <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)">
-    </ion-avatar>
+	<ion-item *ngIf="!contacts || contacts?.length == 0">
+		No contacts to add.
+	</ion-item>
+	<ion-item
+		button
+		*ngFor="let contact of contacts"
+		(click)="add($event, contact)"
+		[class.active]="contact.selected"
+	>
+		<ion-avatar slot="start">
+			<img [src]="_sanitizer.bypassSecurityTrustResourceUrl(contact.avatar)" />
+		</ion-avatar>
 
-    <ion-label text-wrap>
-      <h3>{{ contact.name }}</h3>
-      <small>{{ contact.email }}</small>
-    </ion-label>
-  </ion-item>
+		<ion-label text-wrap>
+			<h3>{{ contact.name }}</h3>
+			<small>{{ contact.email }}</small>
+		</ion-label>
+	</ion-item>
 </ion-list>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="contactsAlreadySelected">
-  <ion-fab-button color="tertiary" (click)="dismiss()">
-    <ion-icon name="checkmark"></ion-icon>
-  </ion-fab-button>
+<ion-fab
+	vertical="bottom"
+	horizontal="end"
+	slot="fixed"
+	*ngIf="contactsAlreadySelected"
+>
+	<ion-fab-button color="tertiary" (click)="dismiss()">
+		<ion-icon name="checkmark"></ion-icon>
+	</ion-fab-button>
 </ion-fab>

@@ -1,20 +1,30 @@
 ion-list {
-  --ion-item-background: var(--main-background);
-  margin: 0;
-  padding: 0.5rem;
+  --ion-item-background: transparent;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 10vh;
+  max-height: 72vh;
+  margin-top: 0.9rem;
   overflow-y: scroll;
-  height: 100%;
 
   ion-item {
-    --color: var(--main-color);
+    --color: #fff;
+    --border-color: transparent;
+
+    height: 70px;
+    margin-bottom: 4px;
 
     &.active {
       --ion-item-background: rgba(255, 255, 255, 0.3);
     }
 
     ion-label h3 {
-      font-family: "Open Sans", sans-serif;
+      font-family: "Segoe UI", sans-serif;
       font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
     }
   }
 }

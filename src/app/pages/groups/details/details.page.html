@@ -1,63 +1,81 @@
 <ion-header translucent="true" no-border>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ group?.name }}</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
+		</ion-buttons>
+		<ion-title>{{ group?.name }}</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="group" fullscreen="true">
-  <ion-row>
-    <ion-col text-center align-self-center>
-      <ion-avatar class="group-avatar">
-        <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)" />
-      </ion-avatar>
-      <h2>{{ group.name }}</h2>
-      <small>Created by {{ createdBy }}, {{ group.createdOn | date: 'dd-MM-yyyy' }}</small>
-    </ion-col>
-  </ion-row>
+	<ion-grid>
+		<ion-row>
+			<ion-col text-center align-self-center>
+				<ion-avatar class="group-avatar">
+					<img
+						[src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)"
+					/>
+				</ion-avatar>
+				<h2>{{ group.name }}</h2>
+				<small
+					>Created by {{ createdBy }},
+					{{ group.createdOn | date: 'dd-MM-yyyy' }}</small
+				>
+			</ion-col>
+		</ion-row>
 
-  <ion-item-divider></ion-item-divider>
+		<ion-item-divider></ion-item-divider>
 
-  <ion-row class="ion-margin-top">
-    <ion-col>
-      <ion-list lines="none">
-        <ion-item button (click)="addMember()">
-          <ion-label>
-            Add member to group
-          </ion-label>
-          <ion-icon name="add" color="light" slot="start"></ion-icon>
-        </ion-item>
-      </ion-list>
-    </ion-col>
-  </ion-row>
+		<ion-row class="ion-margin-top">
+			<ion-col>
+				<ion-list lines="none">
+					<ion-item button (click)="addMember()">
+						<ion-label>
+							Add member to group
+						</ion-label>
+						<ion-icon name="add" color="light" slot="start"></ion-icon>
+					</ion-item>
+				</ion-list>
+			</ion-col>
+		</ion-row>
 
-  <ion-row class="ion-margin-top">
-    <ion-col>
-      <h4>Members</h4>
-      <ion-list *ngIf="members.length > 0" lines="none">
+		<ion-row class="ion-margin-top">
+			<ion-col>
+				<h4>Members</h4>
+				<ion-list *ngIf="members.length > 0" lines="none">
+					<ion-item-sliding #item *ngFor="let member of members">
+						<ion-item button>
+							<ion-avatar slot="start">
+								<img
+									[src]="
+										_sanitizer.bypassSecurityTrustResourceUrl(member?.avatar)
+									"
+								/>
+							</ion-avatar>
 
-        <ion-item-sliding #item *ngFor="let member of members">
-          <ion-item button>
-            <ion-avatar slot="start">
-              <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(member?.avatar)">
-            </ion-avatar>
+							<ion-label text-wrap>
+								<h3>{{ member?.firstName }} {{ member?.lastName }}</h3>
+								<small>{{ member?.email }}</small>
+							</ion-label>
+						</ion-item>
 
-            <ion-label text-wrap>
-              <h3>{{ member?.firstName }} {{ member?.lastName }}</h3>
-              <small>{{ member?.email }}</small>
-            </ion-label>
-          </ion-item>
-
-          <ion-item-options side="end" *ngIf="group.createdBy == authUser.uid">
-            <ion-item-option color="light">
-              <ion-icon slot="icon-only" color="light" name="trash" (click)="removeMember(member);item.close();">
-              </ion-icon>
-            </ion-item-option>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-    </ion-col>
-  </ion-row>
+						<ion-item-options
+							side="end"
+							*ngIf="group.createdBy == authUser.uid"
+						>
+							<ion-item-option color="light">
+								<ion-icon
+									slot="icon-only"
+									color="light"
+									name="trash"
+									(click)="removeMember(member); item.close()"
+								>
+								</ion-icon>
+							</ion-item-option>
+						</ion-item-options>
+					</ion-item-sliding>
+				</ion-list>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>

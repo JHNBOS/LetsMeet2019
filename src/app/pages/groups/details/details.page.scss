@@ -2,18 +2,102 @@
 
 ion-header {
   ion-toolbar {
-    --opacity: 1;
-    --color: var(--main-color);
-    --background: var(--main-background);
+    --opacity: 0;
+    --color: #fff;
+    --background: transparent;
+
+    ion-buttons {
+      padding-top: 10px;
+
+      ion-icon {
+        font-size: 1.9rem;
+        color: #fff;
+      }
+    }
 
     ion-title {
-      font-family: "Open Sans", sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.05rem;
-      text-transform: uppercase;
+      margin-right: 3rem;
+      padding-top: 10px;
+      font-family: "Champagne and Limousines", sans-serif;
+      font-size: 1.95rem;
+      font-weight: normal;
+      text-align: center;
     }
   }
+}
+
+ion-content {
+  --background: rgb(0, 51, 255);
+  --background: linear-gradient(180deg, rgba(0, 51, 255, 1) 0%, rgba(29, 209, 255, 1) 100%);
+}
+
+ion-grid {
+  width: 100%;
+}
+
+ion-item-divider {
+  --background: transparent;
+}
+
+ion-list {
+  --ion-item-background: transparent;
+
+  width: 100%;
+  margin-top: 0.9rem;
+  overflow-y: scroll;
+
+  ion-item-sliding {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.5rem;
+
+    ion-item-options {
+      ion-item-option {
+        background: rgba(0, 0, 0, 0.01);
+      }
+    }
+  }
+
+  ion-item {
+    --color: #fff;
+    --border-color: transparent;
+
+    height: 70px;
+    margin-bottom: 4px;
+
+    ion-thumbnail {
+      position: relative;
+      left: 0;
+      width: 55px;
+      height: 55px;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    ion-label h2 {
+      margin-left: 1.5rem;
+
+      font-family: "Segoe UI", sans-serif;
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    ion-icon {
+      font-size: 1.6rem;
+      color: rgba(255, 255, 255, 0.8);
+
+      &.transparent {
+        color: rgba(255, 255, 255, 0.32);
+      }
+    }
+  }
+}
+
+h2,
+h4,
+small {
+  color: #fff;
 }
 
 ion-avatar.group-avatar {
@@ -43,46 +127,5 @@ ion-avatar {
     width: 50px;
     height: 50px;
     object-fit: cover;
-  }
-}
-
-ion-content {
-  --background: var(--main-background);
-  --color: var(--main-color);
-
-  ion-grid {
-    margin-top: 3rem;
-  }
-
-  ion-item-divider {
-    --background: var(--main-background);
-    --color: var(--main-color);
-  }
-
-  ion-label {
-    --color: var(--main-color);
-  }
-
-  ion-list {
-    --ion-item-background: var(--main-background);
-    margin-right: 0.3rem;
-    margin-left: 0.3rem;
-
-    ion-item-sliding {
-      ion-item-options {
-        ion-item-option {
-          background: rgba(0, 0, 0, 0.01);
-        }
-      }
-    }
-
-    ion-item.input {
-      ion-button {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        margin: 0;
-      }
-    }
   }
 }

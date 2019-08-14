@@ -1,59 +1,76 @@
 <ion-header translucent="true" no-border>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Create Group</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button icon="ios-arrow-back" defaultHref="/"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Create Group</ion-title>
+	</ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-slides #slides pager="false" [options]="slideOpts">
-    <ion-slide>
-      <app-contact-select (selectedContacts)="setContacts($event)"></app-contact-select>
+<ion-content class="ion-padding" fullscreen="true">
+	<ion-slides #slides pager="false" [options]="slideOpts">
+		<ion-slide>
+			<app-contact-select
+				(selectedContacts)="setContacts($event)"
+			></app-contact-select>
 
-      <ion-fab id="forward" vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="light" (click)="nextSlide()">
-          <ion-icon name="arrow-forward"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-slide>
+			<ion-fab id="forward" vertical="bottom" horizontal="end" slot="fixed">
+				<ion-fab-button color="light" (click)="nextSlide()">
+					<ion-icon name="arrow-forward"></ion-icon>
+				</ion-fab-button>
+			</ion-fab>
+		</ion-slide>
 
-    <ion-slide>
-      <ion-grid>
-        <ion-row>
-          <ion-col text-center align-self-center>
-            <ion-avatar (click)="uploadAvatar()">
-              <img [src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)" />
-            </ion-avatar>
-          </ion-col>
-        </ion-row>
+		<ion-slide>
+			<ion-grid>
+				<ion-row>
+					<ion-col text-center align-self-center>
+						<ion-avatar (click)="uploadAvatar()">
+							<img
+								[src]="_sanitizer.bypassSecurityTrustResourceUrl(group.picture)"
+							/>
+						</ion-avatar>
+					</ion-col>
+				</ion-row>
 
-        <ion-row *ngIf="groupDetails">
-          <ion-col>
-            <ion-list>
-              <form novalidate [formGroup]="groupDetails">
-                <ion-item class="input">
-                  <ion-label position="floating">Group Name</ion-label>
-                  <ion-input inputmode="text" autocapitalize="on" formControlName="groupName"></ion-input>
-                </ion-item>
-              </form>
-            </ion-list>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+				<ion-row *ngIf="groupDetails">
+					<ion-col>
+						<ion-list>
+							<form novalidate [formGroup]="groupDetails">
+								<ion-item class="input">
+									<ion-input
+										inputmode="text"
+										formControlName="groupName"
+										placeholder="Group Name"
+									>
+									</ion-input>
+									<ion-icon
+										class="prepend"
+										name="create"
+										slot="start"
+									></ion-icon>
+								</ion-item>
+							</form>
+						</ion-list>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 
-      <ion-fab id="finish" vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="tertiary" (click)="submit()" [disabled]="groupDetails.invalid">
-          <ion-icon name="checkmark"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
+			<ion-fab id="finish" vertical="bottom" horizontal="end" slot="fixed">
+				<ion-fab-button
+					color="tertiary"
+					(click)="submit()"
+					[disabled]="groupDetails.invalid"
+				>
+					<ion-icon name="checkmark"></ion-icon>
+				</ion-fab-button>
+			</ion-fab>
 
-      <ion-fab id="backward" vertical="bottom" horizontal="start" slot="fixed">
-        <ion-fab-button color="light" (click)="prevSlide()">
-          <ion-icon name="arrow-back"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-slide>
-  </ion-slides>
+			<ion-fab id="backward" vertical="bottom" horizontal="start" slot="fixed">
+				<ion-fab-button color="light" (click)="prevSlide()">
+					<ion-icon name="arrow-back"></ion-icon>
+				</ion-fab-button>
+			</ion-fab>
+		</ion-slide>
+	</ion-slides>
 </ion-content>
